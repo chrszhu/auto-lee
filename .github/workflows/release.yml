@@ -1,0 +1,42 @@
+name: Release
+
+# Build installers for Windows + macOS and publish them (with the latest.yml /
+# latest-mac.yml metadata that electron-updater needs) to a GitHub Release
+# whenever a version tag is pushed, e.g. `git tag v0.5.3 && git push --tags`.
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            build: npx electron-builder --win --x64 --publish always
+          - os: macos-latest
+            build: npx electron-builder --mac --publish always
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build & publish
+        run: ${{ matrix.build }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # macOS: don't attempt code signing (no cert) — build unsigned.
+          CSC_IDENTITY_AUTO_DISCOVERY: false

@@ -145,10 +145,30 @@ function setButtonsEnabled(s) {
 
 let opponentFocused = false;
 
+function renderUpdateBanner(s) {
+  const banner = $('update-banner');
+  const text = $('update-text');
+  const btn = $('btn-restart-update');
+  const u = s.appUpdate;
+  if (!u || u.status === 'idle' || u.status === 'checking' || u.status === 'error') {
+    banner.classList.add('hidden');
+    return;
+  }
+  banner.classList.remove('hidden');
+  if (u.status === 'downloading') {
+    text.textContent = `Downloading update${u.version ? ` ${u.version}` : ''}… ${u.percent || 0}%`;
+    btn.classList.add('hidden');
+  } else if (u.status === 'ready') {
+    text.textContent = `Update ${u.version || ''} ready.`;
+    btn.classList.remove('hidden');
+  }
+}
+
 function render(s) {
   renderStatus(s);
   renderChampion(s);
   renderDataLine(s);
+  renderUpdateBanner(s);
   setButtonsEnabled(s);
 
   // Reflect an in-progress data update.
@@ -263,6 +283,7 @@ window.addEventListener('DOMContentLoaded', async () => {
   $('auto-import').addEventListener('change', (e) => window.companion.setAutoImport(e.target.checked));
   $('flash-right').addEventListener('change', (e) => window.companion.setFlashSide(e.target.checked));
   $('role-select').addEventListener('change', (e) => window.companion.setRole(e.target.value));
+  $('btn-restart-update').addEventListener('click', () => window.companion.restartToUpdate());
   $('btn-runes').addEventListener('click', () => importNow('runes'));
   $('btn-spells').addEventListener('click', () => importNow('spells'));
   $('btn-items').addEventListener('click', () => importNow('items'));

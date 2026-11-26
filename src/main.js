@@ -7,6 +7,7 @@ const ddragon = require('./ddragon');
 const importer = require('./importer');
 const dataClient = require('./dataClient');
 const config = require('./config');
+const { autoUpdater } = require('electron-updater');
 
 const POLL_MS = 2000;
 
@@ -27,7 +28,8 @@ const state = {
   role: null, // null = auto-detect position; or TOP/JUNGLE/MIDDLE/BOTTOM/UTILITY
   lastImport: null, // { ok, runes, items, error, at }
   dataInfo: null, // { source, patch, updatedAt, live, remote }
-  updating: null, // { done, total, champion } while an update runs
+  updating: null, // { done, total, champion } while a data update runs
+  appUpdate: { status: 'idle', version: null, percent: 0 }, // app auto-update
   error: null,
 };
 
@@ -235,6 +237,33 @@ function startLoop() {
   pollTimer = setInterval(tick, POLL_MS);
 }
 
+// ---- App auto-update (electron-updater via GitHub Releases) ----
+function setupAutoUpdate() {
+  if (!app.isPackaged) return; // only in installed builds
+  autoUpdater.autoDownload = true;
+  autoUpdater.autoInstallOnAppQuit = true;
+
+  const setUpdate = (patch) => {
+    state.appUpdate = { ...state.appUpdate, ...patch };
+    push();
+  };
+
+  autoUpdater.on('checking-for-update', () => setUpdate({ status: 'checking' }));
+  autoUpdater.on('update-not-available', () => setUpdate({ status: 'idle' }));
+  autoUpdater.on('update-available', (info) => setUpdate({ status: 'downloading', version: info && info.version, percent: 0 }));
+  autoUpdater.on('download-progress', (p) => setUpdate({ status: 'downloading', percent: Math.round(p.percent || 0) }));
+  autoUpdater.on('update-downloaded', (info) => setUpdate({ status: 'ready', version: info && info.version, percent: 100 }));
+  autoUpdater.on('error', (err) => {
+    // Unsigned macOS can't self-update (Squirrel requires a signature) — don't
+    // crash, just surface it quietly.
+    setUpdate({ status: 'error', error: String((err && err.message) || err) });
+  });
+
+  // Check now and then hourly.
+  autoUpdater.checkForUpdates().catch(() => {});
+  setInterval(() => autoUpdater.checkForUpdates().catch(() => {}), 60 * 60 * 1000);
+}
+
 // ---- IPC ----
 ipcMain.handle('get-state', () => state);
 ipcMain.handle('set-opponent', async (_e, name) => {
@@ -322,11 +351,21 @@ ipcMain.handle('update-data', async () => {
   }
 });
 
+ipcMain.handle('restart-to-update', () => {
+  try {
+    autoUpdater.quitAndInstall(true, true); // silent, then relaunch
+  } catch (e) {
+    return { ok: false, error: String((e && e.message) || e) };
+  }
+  return { ok: true };
+});
+
 app.whenReady().then(async () => {
   dataClient.configure({ userDir: path.join(app.getPath('userData'), 'data') });
   await refreshDataInfo();
   createWindow();
   startLoop();
+  setupAutoUpdate();
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
   });
