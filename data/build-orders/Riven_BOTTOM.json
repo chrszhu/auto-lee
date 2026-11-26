@@ -1,0 +1,561 @@
+{
+  "champion": "Riven",
+  "opponent": "",
+  "position": "BOTTOM",
+  "availablePositions": [
+    {
+      "position": "TOP",
+      "games": 526
+    },
+    {
+      "position": "MIDDLE",
+      "games": 262
+    },
+    {
+      "position": "BOTTOM",
+      "games": 60
+    },
+    {
+      "position": "JUNGLE",
+      "games": 22
+    },
+    {
+      "position": "UTILITY",
+      "games": 11
+    }
+  ],
+  "available": true,
+  "totalGames": 47,
+  "window": {
+    "patches": [
+      "16.21",
+      "16.20",
+      "16.19"
+    ],
+    "games": 47,
+    "from_ms": 1790202730950,
+    "to_ms": 1792901847229
+  },
+  "slots": [
+    {
+      "slot": 1,
+      "totalGames": 47,
+      "items": [
+        {
+          "itemId": 6696,
+          "name": "Axiom Arc",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/6696.png",
+          "games": 43,
+          "pct": 91.5
+        }
+      ]
+    },
+    {
+      "slot": 2,
+      "totalGames": 43,
+      "items": [
+        {
+          "itemId": 2517,
+          "name": "Endless Hunger",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/2517.png",
+          "games": 37,
+          "pct": 86.0
+        },
+        {
+          "itemId": 6333,
+          "name": "Death's Dance",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/6333.png",
+          "games": 6,
+          "pct": 14.0
+        }
+      ]
+    },
+    {
+      "slot": 3,
+      "totalGames": 37,
+      "items": [
+        {
+          "itemId": 6333,
+          "name": "Death's Dance",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/6333.png",
+          "games": 29,
+          "pct": 78.4
+        },
+        {
+          "itemId": 2517,
+          "name": "Endless Hunger",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/2517.png",
+          "games": 4,
+          "pct": 10.8
+        },
+        {
+          "itemId": 3156,
+          "name": "Maw of Malmortius",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3156.png",
+          "games": 4,
+          "pct": 10.8
+        }
+      ]
+    },
+    {
+      "slot": 4,
+      "totalGames": 21,
+      "items": [
+        {
+          "itemId": 3156,
+          "name": "Maw of Malmortius",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3156.png",
+          "games": 16,
+          "pct": 76.2
+        },
+        {
+          "itemId": 6333,
+          "name": "Death's Dance",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/6333.png",
+          "games": 3,
+          "pct": 14.3
+        }
+      ]
+    },
+    {
+      "slot": 5,
+      "totalGames": 3,
+      "items": [
+        {
+          "itemId": 3026,
+          "name": "Guardian Angel",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3026.png",
+          "games": 1,
+          "pct": 33.3
+        },
+        {
+          "itemId": 3139,
+          "name": "Mercurial Scimitar",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3139.png",
+          "games": 1,
+          "pct": 33.3
+        },
+        {
+          "itemId": 3036,
+          "name": "Lord Dominik's Regards",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3036.png",
+          "games": 1,
+          "pct": 33.3
+        }
+      ]
+    }
+  ],
+  "boots": {
+    "totalGames": 46,
+    "items": [
+      {
+        "itemId": 3158,
+        "name": "Ionian Boots of Lucidity",
+        "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3158.png",
+        "games": 25,
+        "pct": 54.3
+      },
+      {
+        "itemId": 3111,
+        "name": "Mercury's Treads",
+        "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3111.png",
+        "games": 11,
+        "pct": 23.9
+      },
+      {
+        "itemId": 3008,
+        "name": "Gluttonous Greaves",
+        "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3008.png",
+        "games": 7,
+        "pct": 15.2
+      }
+    ]
+  },
+  "trinket": {
+    "totalGames": 42,
+    "items": [
+      {
+        "itemId": 3363,
+        "name": "Farsight Alteration",
+        "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3363.png",
+        "games": 28,
+        "pct": 66.7
+      },
+      {
+        "itemId": 3364,
+        "name": "Oracle Lens",
+        "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3364.png",
+        "games": 10,
+        "pct": 23.8
+      }
+    ]
+  },
+  "starting": {
+    "totalGames": 53,
+    "items": [
+      {
+        "itemId": 1055,
+        "name": "Doran's Blade",
+        "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1055.png",
+        "games": 45,
+        "pct": 84.9
+      }
+    ]
+  },
+  "earlyItems": {
+    "totalGames": 47,
+    "items": []
+  },
+  "supportItem": {
+    "totalGames": 0,
+    "items": []
+  },
+  "summonerSpells": {
+    "totalGames": 47,
+    "items": [
+      {
+        "spellId": 4,
+        "name": "Flash",
+        "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/spell/SummonerFlash.png",
+        "games": 47,
+        "pct": 100.0
+      },
+      {
+        "spellId": 14,
+        "name": "Ignite",
+        "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/spell/SummonerDot.png",
+        "games": 20,
+        "pct": 42.6
+      },
+      {
+        "spellId": 1,
+        "name": "Cleanse",
+        "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/spell/SummonerBoost.png",
+        "games": 11,
+        "pct": 23.4
+      },
+      {
+        "spellId": 6,
+        "name": "Ghost",
+        "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/spell/SummonerHaste.png",
+        "games": 10,
+        "pct": 21.3
+      }
+    ]
+  },
+  "keystones": {
+    "totalGames": 47,
+    "items": [
+      {
+        "runeId": 8010,
+        "name": "Conqueror",
+        "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Precision/Conqueror/Conqueror.png",
+        "games": 47,
+        "pct": 100.0
+      }
+    ]
+  },
+  "primaryStyles": {
+    "totalGames": 47,
+    "items": [
+      {
+        "runeId": 8000,
+        "name": "Precision",
+        "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/7201_Precision.png",
+        "games": 47,
+        "pct": 100.0
+      }
+    ]
+  },
+  "secondaryStyles": {
+    "totalGames": 47,
+    "items": [
+      {
+        "runeId": 8300,
+        "name": "Inspiration",
+        "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/7203_Whimsy.png",
+        "games": 45,
+        "pct": 95.7
+      }
+    ]
+  },
+  "primaryRunes": {
+    "totalGames": 47,
+    "slots": [
+      {
+        "slot": 1,
+        "items": [
+          {
+            "runeId": 9111,
+            "name": "Triumph",
+            "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Precision/Triumph.png",
+            "games": 47,
+            "pct": 100.0
+          }
+        ]
+      },
+      {
+        "slot": 2,
+        "items": [
+          {
+            "runeId": 9105,
+            "name": "Legend: Haste",
+            "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Precision/LegendHaste/LegendHaste.png",
+            "games": 47,
+            "pct": 100.0
+          }
+        ]
+      },
+      {
+        "slot": 3,
+        "items": [
+          {
+            "runeId": 8299,
+            "name": "Last Stand",
+            "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/LastStand/LastStand.png",
+            "games": 47,
+            "pct": 100.0
+          }
+        ]
+      }
+    ]
+  },
+  "secondaryRunes": {
+    "totalGames": 47,
+    "items": [
+      {
+        "runeId": 8316,
+        "name": "Jack Of All Trades",
+        "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Inspiration/JackOfAllTrades/JackofAllTrades2.png",
+        "games": 44,
+        "pct": 93.6
+      },
+      {
+        "runeId": 8321,
+        "name": "Cash Back",
+        "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Inspiration/CashBack/CashBack2.png",
+        "games": 42,
+        "pct": 89.4
+      }
+    ]
+  },
+  "statShards": {
+    "totalGames": 47,
+    "slots": [
+      {
+        "slot": 0,
+        "label": "Offense",
+        "items": [
+          {
+            "runeId": 5007,
+            "name": "Ability Haste",
+            "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/StatModsCDRScalingIcon.png",
+            "games": 47,
+            "pct": 100.0
+          }
+        ]
+      },
+      {
+        "slot": 1,
+        "label": "Flex",
+        "items": [
+          {
+            "runeId": 5008,
+            "name": "Adaptive Force",
+            "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/StatModsAdaptiveForceIcon.png",
+            "games": 47,
+            "pct": 100.0
+          }
+        ]
+      },
+      {
+        "slot": 2,
+        "label": "Defense",
+        "items": [
+          {
+            "runeId": 5001,
+            "name": "Health Scaling",
+            "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/StatModsHealthPlusIcon.png",
+            "games": 37,
+            "pct": 78.7
+          },
+          {
+            "runeId": 5013,
+            "name": "Tenacity & Slow Resist",
+            "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/StatModsTenacityIcon.png",
+            "games": 7,
+            "pct": 14.9
+          }
+        ]
+      }
+    ]
+  },
+  "runePages": [
+    {
+      "keystoneId": 8010,
+      "keystone": {
+        "runeId": 8010,
+        "name": "Conqueror",
+        "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Precision/Conqueror/Conqueror.png",
+        "games": 47,
+        "pct": 100.0
+      },
+      "games": 47,
+      "pct": 100.0,
+      "secondaryStyleId": 8300,
+      "primaryRows": [
+        {
+          "slot": 1,
+          "items": [
+            {
+              "runeId": 9111,
+              "name": "Triumph",
+              "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Precision/Triumph.png",
+              "games": 47,
+              "pct": 100.0
+            }
+          ]
+        },
+        {
+          "slot": 2,
+          "items": [
+            {
+              "runeId": 9105,
+              "name": "Legend: Haste",
+              "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Precision/LegendHaste/LegendHaste.png",
+              "games": 47,
+              "pct": 100.0
+            }
+          ]
+        },
+        {
+          "slot": 3,
+          "items": [
+            {
+              "runeId": 8299,
+              "name": "Last Stand",
+              "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/LastStand/LastStand.png",
+              "games": 47,
+              "pct": 100.0
+            }
+          ]
+        }
+      ],
+      "secondary": [
+        {
+          "runeId": 8316,
+          "name": "Jack Of All Trades",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Inspiration/JackOfAllTrades/JackofAllTrades2.png",
+          "games": 44,
+          "pct": 93.6
+        },
+        {
+          "runeId": 8321,
+          "name": "Cash Back",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Inspiration/CashBack/CashBack2.png",
+          "games": 42,
+          "pct": 89.4
+        }
+      ],
+      "shards": [
+        {
+          "slot": 0,
+          "label": "Offense",
+          "items": [
+            {
+              "runeId": 5007,
+              "name": "Ability Haste",
+              "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/StatModsCDRScalingIcon.png",
+              "games": 47,
+              "pct": 100.0
+            }
+          ]
+        },
+        {
+          "slot": 1,
+          "label": "Flex",
+          "items": [
+            {
+              "runeId": 5008,
+              "name": "Adaptive Force",
+              "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/StatModsAdaptiveForceIcon.png",
+              "games": 47,
+              "pct": 100.0
+            }
+          ]
+        },
+        {
+          "slot": 2,
+          "label": "Defense",
+          "items": [
+            {
+              "runeId": 5001,
+              "name": "Health Scaling",
+              "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/StatModsHealthPlusIcon.png",
+              "games": 37,
+              "pct": 78.7
+            },
+            {
+              "runeId": 5013,
+              "name": "Tenacity & Slow Resist",
+              "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/StatModsTenacityIcon.png",
+              "games": 7,
+              "pct": 14.9
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "skillOrder": {
+    "available": true,
+    "games": 47,
+    "maxOrder": [
+      "Q",
+      "E",
+      "W"
+    ],
+    "maxOrderPct": 97.9,
+    "perLevel": [
+      "Q",
+      "E",
+      "W",
+      "Q",
+      "Q",
+      "R",
+      "Q",
+      "E",
+      "Q",
+      "E",
+      "R",
+      "E",
+      "E",
+      "W",
+      "W",
+      "R",
+      "W",
+      "W"
+    ],
+    "openings": [
+      {
+        "sequence": [
+          "Q",
+          "E",
+          "W",
+          "Q"
+        ],
+        "pct": 78.7
+      },
+      {
+        "sequence": [
+          "Q",
+          "W",
+          "E",
+          "Q"
+        ],
+        "pct": 19.1
+      }
+    ]
+  },
+  "_cached_at": "2026-10-26T02:53:19.515544+00:00"
+}

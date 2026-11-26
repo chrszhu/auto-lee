@@ -1,0 +1,17 @@
+'use strict';
+
+const { contextBridge, ipcRenderer } = require('electron');
+
+// Minimal, explicit surface exposed to the renderer — no raw ipcRenderer.
+contextBridge.exposeInMainWorld('companion', {
+  onState: (cb) => {
+    const handler = (_e, state) => cb(state);
+    ipcRenderer.on('state', handler);
+    return () => ipcRenderer.removeListener('state', handler);
+  },
+  getState: () => ipcRenderer.invoke('get-state'),
+  setOpponent: (name) => ipcRenderer.invoke('set-opponent', name),
+  setAutoImport: (on) => ipcRenderer.invoke('set-auto-import', on),
+  testConnection: () => ipcRenderer.invoke('test-connection'),
+  importNow: (what) => ipcRenderer.invoke('import', what), // 'runes' | 'spells' | 'items' | 'all'
+});

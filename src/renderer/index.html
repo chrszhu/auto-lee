@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LoL Companion</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header>
+      <div class="brand">LoL Companion <span class="tag">ad-free</span></div>
+      <div id="status" class="status">
+        <span class="dot" id="dot"></span><span id="status-text">Starting…</span>
+      </div>
+    </header>
+
+    <main>
+      <section class="card" id="champ-card">
+        <div class="champ-empty" id="champ-empty">
+          <p>Waiting for champ select…</p>
+          <p class="muted" id="phase-line"></p>
+        </div>
+
+        <div class="champ-active hidden" id="champ-active">
+          <div class="champ-head">
+            <h2 id="champ-name">—</h2>
+            <span class="pill" id="position-pill"></span>
+          </div>
+          <div class="matchup muted" id="matchup-line"></div>
+
+          <div class="rec-block">
+            <h3>Runes</h3>
+            <div id="rune-rec" class="rec"></div>
+          </div>
+
+          <div class="rec-block">
+            <h3>Summoner spells</h3>
+            <div id="spell-rec" class="rec"></div>
+          </div>
+
+          <div class="rec-block">
+            <h3>Build</h3>
+            <div id="item-rec" class="rec"></div>
+          </div>
+
+          <div id="rec-error" class="error hidden"></div>
+        </div>
+      </section>
+
+      <section class="card">
+        <label class="field">
+          <span>Lane opponent (override)</span>
+          <input id="opponent-input" type="text" placeholder="auto-detected — e.g. Thresh" />
+        </label>
+
+        <label class="toggle">
+          <input id="auto-import" type="checkbox" />
+          <span>Auto-import on champ select</span>
+        </label>
+
+        <button id="btn-test" class="btn" style="margin-top:12px;width:100%">Test connection (read-only)</button>
+        <div id="test-result" class="import-result"></div>
+      </section>
+
+      <section class="actions">
+        <button id="btn-runes" class="btn">Runes</button>
+        <button id="btn-spells" class="btn">Spells</button>
+        <button id="btn-items" class="btn">Build</button>
+      </section>
+      <section class="actions">
+        <button id="btn-all" class="btn primary">Import all (runes + spells + build)</button>
+      </section>
+
+      <div id="import-result" class="import-result"></div>
+    </main>
+
+    <footer class="muted">
+      Uses Riot's local client (LCU) API + your local analytics backend. Not affiliated with Riot Games.
+    </footer>
+
+    <script src="renderer.js"></script>
+  </body>
+</html>

@@ -1,0 +1,51 @@
+{
+  "name": "lol-companion",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Ad-free League of Legends companion: auto-imports runes and item builds into the client via the LCU API.",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev",
+    "test": "node test/verify.js && node test/verify-import.js",
+    "dist": "electron-builder",
+    "dist:win": "electron-builder --win --x64",
+    "dist:mac": "electron-builder --mac"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^31.7.0",
+    "electron-builder": "^24.13.3"
+  },
+  "build": {
+    "appId": "com.lolcompanion.app",
+    "productName": "LoL Companion",
+    "copyright": "LoL Companion. Not affiliated with Riot Games.",
+    "directories": {
+      "output": "dist-installers"
+    },
+    "files": [
+      "src/**/*",
+      "data/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "artifactName": "LoLCompanion-Setup-${version}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true
+    },
+    "mac": {
+      "target": [
+        "dmg"
+      ],
+      "category": "public.app-category.utilities"
+    }
+  }
+}

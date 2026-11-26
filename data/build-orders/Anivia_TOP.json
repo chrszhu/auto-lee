@@ -1,0 +1,868 @@
+{
+  "champion": "Anivia",
+  "opponent": "",
+  "position": "TOP",
+  "availablePositions": [
+    {
+      "position": "MIDDLE",
+      "games": 620
+    },
+    {
+      "position": "TOP",
+      "games": 440
+    },
+    {
+      "position": "UTILITY",
+      "games": 204
+    },
+    {
+      "position": "BOTTOM",
+      "games": 79
+    }
+  ],
+  "available": true,
+  "totalGames": 40,
+  "window": {
+    "patches": [
+      "16.21"
+    ],
+    "games": 40,
+    "from_ms": 1792549350017,
+    "to_ms": 1792916636005
+  },
+  "slots": [
+    {
+      "slot": 1,
+      "totalGames": 39,
+      "items": [
+        {
+          "itemId": 6657,
+          "name": "Rod of Ages",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/6657.png",
+          "games": 35,
+          "pct": 89.7
+        }
+      ]
+    },
+    {
+      "slot": 2,
+      "totalGames": 37,
+      "items": [
+        {
+          "itemId": 3118,
+          "name": "Malignance",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3118.png",
+          "games": 14,
+          "pct": 37.8
+        },
+        {
+          "itemId": 3003,
+          "name": "Archangel's Staff",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3003.png",
+          "games": 8,
+          "pct": 21.6
+        },
+        {
+          "itemId": 3119,
+          "name": "Winter's Approach",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3119.png",
+          "games": 6,
+          "pct": 16.2
+        },
+        {
+          "itemId": 6653,
+          "name": "Liandry's Torment",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/6653.png",
+          "games": 5,
+          "pct": 13.5
+        }
+      ]
+    },
+    {
+      "slot": 3,
+      "totalGames": 21,
+      "items": [
+        {
+          "itemId": 3157,
+          "name": "Zhonya's Hourglass",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3157.png",
+          "games": 9,
+          "pct": 42.9
+        },
+        {
+          "itemId": 6653,
+          "name": "Liandry's Torment",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/6653.png",
+          "games": 3,
+          "pct": 14.3
+        },
+        {
+          "itemId": 3742,
+          "name": "Dead Man's Plate",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3742.png",
+          "games": 3,
+          "pct": 14.3
+        }
+      ]
+    },
+    {
+      "slot": 4,
+      "totalGames": 6,
+      "items": [
+        {
+          "itemId": 6653,
+          "name": "Liandry's Torment",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/6653.png",
+          "games": 2,
+          "pct": 33.3
+        },
+        {
+          "itemId": 3119,
+          "name": "Winter's Approach",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3119.png",
+          "games": 2,
+          "pct": 33.3
+        },
+        {
+          "itemId": 3003,
+          "name": "Archangel's Staff",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3003.png",
+          "games": 1,
+          "pct": 16.7
+        },
+        {
+          "itemId": 3157,
+          "name": "Zhonya's Hourglass",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3157.png",
+          "games": 1,
+          "pct": 16.7
+        }
+      ]
+    },
+    {
+      "slot": 5,
+      "totalGames": 0,
+      "items": []
+    }
+  ],
+  "boots": {
+    "totalGames": 39,
+    "items": [
+      {
+        "itemId": 3009,
+        "name": "Boots of Swiftness",
+        "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3009.png",
+        "games": 33,
+        "pct": 84.6
+      }
+    ]
+  },
+  "trinket": {
+    "totalGames": 36,
+    "items": [
+      {
+        "itemId": 3363,
+        "name": "Farsight Alteration",
+        "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3363.png",
+        "games": 26,
+        "pct": 72.2
+      },
+      {
+        "itemId": 3364,
+        "name": "Oracle Lens",
+        "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3364.png",
+        "games": 8,
+        "pct": 22.2
+      }
+    ]
+  },
+  "starting": {
+    "totalGames": 40,
+    "items": [
+      {
+        "itemId": 1056,
+        "name": "Doran's Ring",
+        "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1056.png",
+        "games": 39,
+        "pct": 97.5
+      }
+    ]
+  },
+  "earlyItems": {
+    "totalGames": 40,
+    "items": [
+      {
+        "itemId": 3070,
+        "name": "Tear of the Goddess",
+        "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3070.png",
+        "games": 24,
+        "pct": 60.0
+      },
+      {
+        "itemId": 1082,
+        "name": "Dark Seal",
+        "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1082.png",
+        "games": 10,
+        "pct": 25.0
+      }
+    ]
+  },
+  "supportItem": {
+    "totalGames": 0,
+    "items": []
+  },
+  "summonerSpells": {
+    "totalGames": 40,
+    "items": [
+      {
+        "spellId": 4,
+        "name": "Flash",
+        "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/spell/SummonerFlash.png",
+        "games": 40,
+        "pct": 100.0
+      },
+      {
+        "spellId": 12,
+        "name": "Teleport",
+        "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/spell/SummonerTeleport.png",
+        "games": 36,
+        "pct": 90.0
+      }
+    ]
+  },
+  "keystones": {
+    "totalGames": 40,
+    "items": [
+      {
+        "runeId": 8112,
+        "name": "Electrocute",
+        "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Domination/Electrocute/Electrocute.png",
+        "games": 19,
+        "pct": 47.5
+      },
+      {
+        "runeId": 8992,
+        "name": "Deathfire Touch",
+        "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/DeathfireTouch/DEATHFIRE_TOUCH_KEYSTONE.png",
+        "games": 18,
+        "pct": 45.0
+      }
+    ]
+  },
+  "primaryStyles": {
+    "totalGames": 40,
+    "items": [
+      {
+        "runeId": 8200,
+        "name": "Sorcery",
+        "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/7202_Sorcery.png",
+        "games": 21,
+        "pct": 52.5
+      },
+      {
+        "runeId": 8100,
+        "name": "Domination",
+        "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/7200_Domination.png",
+        "games": 19,
+        "pct": 47.5
+      }
+    ]
+  },
+  "secondaryStyles": {
+    "totalGames": 40,
+    "items": [
+      {
+        "runeId": 8200,
+        "name": "Sorcery",
+        "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/7202_Sorcery.png",
+        "games": 12,
+        "pct": 30.0
+      },
+      {
+        "runeId": 8400,
+        "name": "Resolve",
+        "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/7204_Resolve.png",
+        "games": 12,
+        "pct": 30.0
+      },
+      {
+        "runeId": 8000,
+        "name": "Precision",
+        "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/7201_Precision.png",
+        "games": 12,
+        "pct": 30.0
+      }
+    ]
+  },
+  "primaryRunes": {
+    "totalGames": 40,
+    "slots": [
+      {
+        "slot": 1,
+        "items": [
+          {
+            "runeId": 8226,
+            "name": "Manaflow Band",
+            "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/ManaflowBand/ManaflowBand.png",
+            "games": 21,
+            "pct": 52.5
+          },
+          {
+            "runeId": 8126,
+            "name": "Cheap Shot",
+            "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Domination/CheapShot/CheapShot.png",
+            "games": 16,
+            "pct": 40.0
+          }
+        ]
+      },
+      {
+        "slot": 2,
+        "items": [
+          {
+            "runeId": 8234,
+            "name": "Celerity",
+            "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/Celerity/CelerityTemp.png",
+            "games": 14,
+            "pct": 35.0
+          },
+          {
+            "runeId": 8140,
+            "name": "Grisly Mementos",
+            "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Domination/GrislyMementos/GrislyMementos.png",
+            "games": 12,
+            "pct": 30.0
+          },
+          {
+            "runeId": 8137,
+            "name": "Sixth Sense",
+            "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Domination/SixthSense/SixthSense.png",
+            "games": 7,
+            "pct": 17.5
+          },
+          {
+            "runeId": 8210,
+            "name": "Transcendence",
+            "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/Transcendence/Transcendence.png",
+            "games": 6,
+            "pct": 15.0
+          }
+        ]
+      },
+      {
+        "slot": 3,
+        "items": [
+          {
+            "runeId": 8237,
+            "name": "Scorch",
+            "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/Scorch/Scorch.png",
+            "games": 19,
+            "pct": 47.5
+          },
+          {
+            "runeId": 8105,
+            "name": "Relentless Hunter",
+            "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Domination/RelentlessHunter/RelentlessHunter.png",
+            "games": 18,
+            "pct": 45.0
+          }
+        ]
+      }
+    ]
+  },
+  "secondaryRunes": {
+    "totalGames": 40,
+    "items": [
+      {
+        "runeId": 8226,
+        "name": "Manaflow Band",
+        "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/ManaflowBand/ManaflowBand.png",
+        "games": 12,
+        "pct": 30.0
+      },
+      {
+        "runeId": 8473,
+        "name": "Bone Plating",
+        "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Resolve/BonePlating/BonePlating.png",
+        "games": 12,
+        "pct": 30.0
+      },
+      {
+        "runeId": 8009,
+        "name": "Presence of Mind",
+        "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Precision/PresenceOfMind/PresenceOfMind.png",
+        "games": 11,
+        "pct": 27.5
+      },
+      {
+        "runeId": 8237,
+        "name": "Scorch",
+        "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/Scorch/Scorch.png",
+        "games": 10,
+        "pct": 25.0
+      },
+      {
+        "runeId": 8017,
+        "name": "Cut Down",
+        "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Precision/CutDown/CutDown.png",
+        "games": 9,
+        "pct": 22.5
+      },
+      {
+        "runeId": 8451,
+        "name": "Overgrowth",
+        "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Resolve/Overgrowth/Overgrowth.png",
+        "games": 7,
+        "pct": 17.5
+      },
+      {
+        "runeId": 8242,
+        "name": "Unflinching",
+        "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/Unflinching/Unflinching.png",
+        "games": 5,
+        "pct": 12.5
+      }
+    ]
+  },
+  "statShards": {
+    "totalGames": 40,
+    "slots": [
+      {
+        "slot": 0,
+        "label": "Offense",
+        "items": [
+          {
+            "runeId": 5005,
+            "name": "Attack Speed",
+            "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/StatModsAttackSpeedIcon.png",
+            "games": 39,
+            "pct": 97.5
+          }
+        ]
+      },
+      {
+        "slot": 1,
+        "label": "Flex",
+        "items": [
+          {
+            "runeId": 5008,
+            "name": "Adaptive Force",
+            "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/StatModsAdaptiveForceIcon.png",
+            "games": 22,
+            "pct": 55.0
+          },
+          {
+            "runeId": 5010,
+            "name": "Move Speed",
+            "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/StatModsMovementSpeedIcon.png",
+            "games": 17,
+            "pct": 42.5
+          }
+        ]
+      },
+      {
+        "slot": 2,
+        "label": "Defense",
+        "items": [
+          {
+            "runeId": 5011,
+            "name": "Health",
+            "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/StatModsHealthScalingIcon.png",
+            "games": 32,
+            "pct": 80.0
+          },
+          {
+            "runeId": 5001,
+            "name": "Health Scaling",
+            "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/StatModsHealthPlusIcon.png",
+            "games": 7,
+            "pct": 17.5
+          }
+        ]
+      }
+    ]
+  },
+  "runePages": [
+    {
+      "keystoneId": 8112,
+      "keystone": {
+        "runeId": 8112,
+        "name": "Electrocute",
+        "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Domination/Electrocute/Electrocute.png",
+        "games": 19,
+        "pct": 47.5
+      },
+      "games": 19,
+      "pct": 47.5,
+      "secondaryStyleId": 8200,
+      "primaryRows": [
+        {
+          "slot": 1,
+          "items": [
+            {
+              "runeId": 8126,
+              "name": "Cheap Shot",
+              "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Domination/CheapShot/CheapShot.png",
+              "games": 16,
+              "pct": 84.2
+            },
+            {
+              "runeId": 8139,
+              "name": "Taste of Blood",
+              "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Domination/TasteOfBlood/GreenTerror_TasteOfBlood.png",
+              "games": 3,
+              "pct": 15.8
+            }
+          ]
+        },
+        {
+          "slot": 2,
+          "items": [
+            {
+              "runeId": 8140,
+              "name": "Grisly Mementos",
+              "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Domination/GrislyMementos/GrislyMementos.png",
+              "games": 12,
+              "pct": 63.2
+            },
+            {
+              "runeId": 8137,
+              "name": "Sixth Sense",
+              "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Domination/SixthSense/SixthSense.png",
+              "games": 7,
+              "pct": 36.8
+            }
+          ]
+        },
+        {
+          "slot": 3,
+          "items": [
+            {
+              "runeId": 8105,
+              "name": "Relentless Hunter",
+              "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Domination/RelentlessHunter/RelentlessHunter.png",
+              "games": 18,
+              "pct": 94.7
+            }
+          ]
+        }
+      ],
+      "secondary": [
+        {
+          "runeId": 8226,
+          "name": "Manaflow Band",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/ManaflowBand/ManaflowBand.png",
+          "games": 12,
+          "pct": 63.2
+        },
+        {
+          "runeId": 8237,
+          "name": "Scorch",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/Scorch/Scorch.png",
+          "games": 10,
+          "pct": 52.6
+        },
+        {
+          "runeId": 8009,
+          "name": "Presence of Mind",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Precision/PresenceOfMind/PresenceOfMind.png",
+          "games": 6,
+          "pct": 31.6
+        },
+        {
+          "runeId": 8017,
+          "name": "Cut Down",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Precision/CutDown/CutDown.png",
+          "games": 4,
+          "pct": 21.1
+        },
+        {
+          "runeId": 8234,
+          "name": "Celerity",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/Celerity/CelerityTemp.png",
+          "games": 2,
+          "pct": 10.5
+        },
+        {
+          "runeId": 8299,
+          "name": "Last Stand",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/LastStand/LastStand.png",
+          "games": 2,
+          "pct": 10.5
+        }
+      ],
+      "shards": [
+        {
+          "slot": 0,
+          "label": "Offense",
+          "items": [
+            {
+              "runeId": 5005,
+              "name": "Attack Speed",
+              "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/StatModsAttackSpeedIcon.png",
+              "games": 19,
+              "pct": 100.0
+            }
+          ]
+        },
+        {
+          "slot": 1,
+          "label": "Flex",
+          "items": [
+            {
+              "runeId": 5008,
+              "name": "Adaptive Force",
+              "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/StatModsAdaptiveForceIcon.png",
+              "games": 14,
+              "pct": 73.7
+            },
+            {
+              "runeId": 5010,
+              "name": "Move Speed",
+              "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/StatModsMovementSpeedIcon.png",
+              "games": 4,
+              "pct": 21.1
+            }
+          ]
+        },
+        {
+          "slot": 2,
+          "label": "Defense",
+          "items": [
+            {
+              "runeId": 5011,
+              "name": "Health",
+              "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/StatModsHealthScalingIcon.png",
+              "games": 13,
+              "pct": 68.4
+            },
+            {
+              "runeId": 5001,
+              "name": "Health Scaling",
+              "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/StatModsHealthPlusIcon.png",
+              "games": 6,
+              "pct": 31.6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "keystoneId": 8992,
+      "keystone": {
+        "runeId": 8992,
+        "name": "Deathfire Touch",
+        "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/DeathfireTouch/DEATHFIRE_TOUCH_KEYSTONE.png",
+        "games": 18,
+        "pct": 45.0
+      },
+      "games": 18,
+      "pct": 45.0,
+      "secondaryStyleId": 8400,
+      "primaryRows": [
+        {
+          "slot": 1,
+          "items": [
+            {
+              "runeId": 8226,
+              "name": "Manaflow Band",
+              "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/ManaflowBand/ManaflowBand.png",
+              "games": 18,
+              "pct": 100.0
+            }
+          ]
+        },
+        {
+          "slot": 2,
+          "items": [
+            {
+              "runeId": 8234,
+              "name": "Celerity",
+              "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/Celerity/CelerityTemp.png",
+              "games": 14,
+              "pct": 77.8
+            },
+            {
+              "runeId": 8210,
+              "name": "Transcendence",
+              "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/Transcendence/Transcendence.png",
+              "games": 3,
+              "pct": 16.7
+            }
+          ]
+        },
+        {
+          "slot": 3,
+          "items": [
+            {
+              "runeId": 8237,
+              "name": "Scorch",
+              "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/Scorch/Scorch.png",
+              "games": 17,
+              "pct": 94.4
+            }
+          ]
+        }
+      ],
+      "secondary": [
+        {
+          "runeId": 8473,
+          "name": "Bone Plating",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Resolve/BonePlating/BonePlating.png",
+          "games": 9,
+          "pct": 50.0
+        },
+        {
+          "runeId": 8451,
+          "name": "Overgrowth",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Resolve/Overgrowth/Overgrowth.png",
+          "games": 6,
+          "pct": 33.3
+        },
+        {
+          "runeId": 8017,
+          "name": "Cut Down",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Precision/CutDown/CutDown.png",
+          "games": 5,
+          "pct": 27.8
+        },
+        {
+          "runeId": 8009,
+          "name": "Presence of Mind",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Precision/PresenceOfMind/PresenceOfMind.png",
+          "games": 4,
+          "pct": 22.2
+        },
+        {
+          "runeId": 8105,
+          "name": "Relentless Hunter",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Domination/RelentlessHunter/RelentlessHunter.png",
+          "games": 3,
+          "pct": 16.7
+        },
+        {
+          "runeId": 8126,
+          "name": "Cheap Shot",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Domination/CheapShot/CheapShot.png",
+          "games": 3,
+          "pct": 16.7
+        },
+        {
+          "runeId": 8242,
+          "name": "Unflinching",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/Unflinching/Unflinching.png",
+          "games": 3,
+          "pct": 16.7
+        }
+      ],
+      "shards": [
+        {
+          "slot": 0,
+          "label": "Offense",
+          "items": [
+            {
+              "runeId": 5005,
+              "name": "Attack Speed",
+              "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/StatModsAttackSpeedIcon.png",
+              "games": 18,
+              "pct": 100.0
+            }
+          ]
+        },
+        {
+          "slot": 1,
+          "label": "Flex",
+          "items": [
+            {
+              "runeId": 5010,
+              "name": "Move Speed",
+              "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/StatModsMovementSpeedIcon.png",
+              "games": 11,
+              "pct": 61.1
+            },
+            {
+              "runeId": 5008,
+              "name": "Adaptive Force",
+              "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/StatModsAdaptiveForceIcon.png",
+              "games": 7,
+              "pct": 38.9
+            }
+          ]
+        },
+        {
+          "slot": 2,
+          "label": "Defense",
+          "items": [
+            {
+              "runeId": 5011,
+              "name": "Health",
+              "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/StatModsHealthScalingIcon.png",
+              "games": 17,
+              "pct": 94.4
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "skillOrder": {
+    "available": true,
+    "games": 40,
+    "maxOrder": [
+      "E",
+      "Q",
+      "W"
+    ],
+    "maxOrderPct": 65.0,
+    "perLevel": [
+      "Q",
+      "E",
+      "E",
+      "W",
+      "E",
+      "R",
+      "E",
+      "Q",
+      "E",
+      "Q",
+      "R",
+      "Q",
+      "Q",
+      "W",
+      "W",
+      "R",
+      "W",
+      "W"
+    ],
+    "openings": [
+      {
+        "sequence": [
+          "Q",
+          "E",
+          "E",
+          "W"
+        ],
+        "pct": 35.0
+      },
+      {
+        "sequence": [
+          "E",
+          "Q",
+          "E",
+          "W"
+        ],
+        "pct": 35.0
+      },
+      {
+        "sequence": [
+          "W",
+          "E",
+          "Q",
+          "E"
+        ],
+        "pct": 10.0
+      }
+    ]
+  },
+  "_cached_at": "2026-10-26T02:53:19.515544+00:00"
+}

@@ -1,0 +1,570 @@
+{
+  "champion": "Nunu",
+  "opponent": "",
+  "position": "MIDDLE",
+  "availablePositions": [
+    {
+      "position": "JUNGLE",
+      "games": 328
+    },
+    {
+      "position": "MIDDLE",
+      "games": 138
+    },
+    {
+      "position": "UTILITY",
+      "games": 13
+    },
+    {
+      "position": "TOP",
+      "games": 3
+    }
+  ],
+  "available": true,
+  "totalGames": 48,
+  "window": {
+    "patches": [
+      "16.21",
+      "16.20"
+    ],
+    "games": 48,
+    "from_ms": 1791375640189,
+    "to_ms": 1792951349656
+  },
+  "slots": [
+    {
+      "slot": 1,
+      "totalGames": 47,
+      "items": [
+        {
+          "itemId": 4646,
+          "name": "Stormsurge",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/4646.png",
+          "games": 43,
+          "pct": 91.5
+        }
+      ]
+    },
+    {
+      "slot": 2,
+      "totalGames": 39,
+      "items": [
+        {
+          "itemId": 3152,
+          "name": "Hextech Rocketbelt",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3152.png",
+          "games": 31,
+          "pct": 79.5
+        }
+      ]
+    },
+    {
+      "slot": 3,
+      "totalGames": 18,
+      "items": [
+        {
+          "itemId": 3157,
+          "name": "Zhonya's Hourglass",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3157.png",
+          "games": 10,
+          "pct": 55.6
+        },
+        {
+          "itemId": 4645,
+          "name": "Shadowflame",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/4645.png",
+          "games": 4,
+          "pct": 22.2
+        },
+        {
+          "itemId": 3089,
+          "name": "Rabadon's Deathcap",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3089.png",
+          "games": 3,
+          "pct": 16.7
+        }
+      ]
+    },
+    {
+      "slot": 4,
+      "totalGames": 3,
+      "items": [
+        {
+          "itemId": 4645,
+          "name": "Shadowflame",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/4645.png",
+          "games": 1,
+          "pct": 33.3
+        },
+        {
+          "itemId": 3157,
+          "name": "Zhonya's Hourglass",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3157.png",
+          "games": 1,
+          "pct": 33.3
+        },
+        {
+          "itemId": 3102,
+          "name": "Banshee's Veil",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3102.png",
+          "games": 1,
+          "pct": 33.3
+        }
+      ]
+    },
+    {
+      "slot": 5,
+      "totalGames": 0,
+      "items": []
+    }
+  ],
+  "boots": {
+    "totalGames": 47,
+    "items": [
+      {
+        "itemId": 3009,
+        "name": "Boots of Swiftness",
+        "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3009.png",
+        "games": 39,
+        "pct": 83.0
+      },
+      {
+        "itemId": 3020,
+        "name": "Sorcerer's Shoes",
+        "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3020.png",
+        "games": 8,
+        "pct": 17.0
+      }
+    ]
+  },
+  "trinket": {
+    "totalGames": 47,
+    "items": [
+      {
+        "itemId": 3364,
+        "name": "Oracle Lens",
+        "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3364.png",
+        "games": 44,
+        "pct": 93.6
+      }
+    ]
+  },
+  "starting": {
+    "totalGames": 50,
+    "items": [
+      {
+        "itemId": 1056,
+        "name": "Doran's Ring",
+        "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1056.png",
+        "games": 48,
+        "pct": 96.0
+      }
+    ]
+  },
+  "earlyItems": {
+    "totalGames": 48,
+    "items": [
+      {
+        "itemId": 1082,
+        "name": "Dark Seal",
+        "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/1082.png",
+        "games": 46,
+        "pct": 95.8
+      }
+    ]
+  },
+  "supportItem": {
+    "totalGames": 0,
+    "items": []
+  },
+  "summonerSpells": {
+    "totalGames": 48,
+    "items": [
+      {
+        "spellId": 4,
+        "name": "Flash",
+        "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/spell/SummonerFlash.png",
+        "games": 43,
+        "pct": 89.6
+      },
+      {
+        "spellId": 14,
+        "name": "Ignite",
+        "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/spell/SummonerDot.png",
+        "games": 42,
+        "pct": 87.5
+      },
+      {
+        "spellId": 1,
+        "name": "Cleanse",
+        "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/spell/SummonerBoost.png",
+        "games": 5,
+        "pct": 10.4
+      },
+      {
+        "spellId": 6,
+        "name": "Ghost",
+        "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/spell/SummonerHaste.png",
+        "games": 5,
+        "pct": 10.4
+      }
+    ]
+  },
+  "keystones": {
+    "totalGames": 48,
+    "items": [
+      {
+        "runeId": 8112,
+        "name": "Electrocute",
+        "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Domination/Electrocute/Electrocute.png",
+        "games": 43,
+        "pct": 89.6
+      }
+    ]
+  },
+  "primaryStyles": {
+    "totalGames": 48,
+    "items": [
+      {
+        "runeId": 8100,
+        "name": "Domination",
+        "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/7200_Domination.png",
+        "games": 43,
+        "pct": 89.6
+      }
+    ]
+  },
+  "secondaryStyles": {
+    "totalGames": 48,
+    "items": [
+      {
+        "runeId": 8300,
+        "name": "Inspiration",
+        "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/7203_Whimsy.png",
+        "games": 34,
+        "pct": 70.8
+      },
+      {
+        "runeId": 8200,
+        "name": "Sorcery",
+        "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/7202_Sorcery.png",
+        "games": 9,
+        "pct": 18.8
+      },
+      {
+        "runeId": 8100,
+        "name": "Domination",
+        "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/7200_Domination.png",
+        "games": 5,
+        "pct": 10.4
+      }
+    ]
+  },
+  "primaryRunes": {
+    "totalGames": 48,
+    "slots": [
+      {
+        "slot": 1,
+        "items": [
+          {
+            "runeId": 8126,
+            "name": "Cheap Shot",
+            "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Domination/CheapShot/CheapShot.png",
+            "games": 43,
+            "pct": 89.6
+          }
+        ]
+      },
+      {
+        "slot": 2,
+        "items": [
+          {
+            "runeId": 8137,
+            "name": "Sixth Sense",
+            "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Domination/SixthSense/SixthSense.png",
+            "games": 40,
+            "pct": 83.3
+          }
+        ]
+      },
+      {
+        "slot": 3,
+        "items": [
+          {
+            "runeId": 8105,
+            "name": "Relentless Hunter",
+            "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Domination/RelentlessHunter/RelentlessHunter.png",
+            "games": 41,
+            "pct": 85.4
+          }
+        ]
+      }
+    ]
+  },
+  "secondaryRunes": {
+    "totalGames": 48,
+    "items": [
+      {
+        "runeId": 8306,
+        "name": "Hextech Flashtraption",
+        "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Inspiration/HextechFlashtraption/HextechFlashtraption.png",
+        "games": 34,
+        "pct": 70.8
+      },
+      {
+        "runeId": 8313,
+        "name": "Triple Tonic",
+        "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Inspiration/PerfectTiming/AlchemistCabinet.png",
+        "games": 34,
+        "pct": 70.8
+      },
+      {
+        "runeId": 8234,
+        "name": "Celerity",
+        "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/Celerity/CelerityTemp.png",
+        "games": 6,
+        "pct": 12.5
+      },
+      {
+        "runeId": 8275,
+        "name": "Nimbus Cloak",
+        "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/NimbusCloak/6361.png",
+        "games": 6,
+        "pct": 12.5
+      },
+      {
+        "runeId": 8126,
+        "name": "Cheap Shot",
+        "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Domination/CheapShot/CheapShot.png",
+        "games": 5,
+        "pct": 10.4
+      }
+    ]
+  },
+  "statShards": {
+    "totalGames": 48,
+    "slots": [
+      {
+        "slot": 0,
+        "label": "Offense",
+        "items": [
+          {
+            "runeId": 5008,
+            "name": "Adaptive Force",
+            "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/StatModsAdaptiveForceIcon.png",
+            "games": 48,
+            "pct": 100.0
+          }
+        ]
+      },
+      {
+        "slot": 1,
+        "label": "Flex",
+        "items": [
+          {
+            "runeId": 5008,
+            "name": "Adaptive Force",
+            "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/StatModsAdaptiveForceIcon.png",
+            "games": 48,
+            "pct": 100.0
+          }
+        ]
+      },
+      {
+        "slot": 2,
+        "label": "Defense",
+        "items": [
+          {
+            "runeId": 5011,
+            "name": "Health",
+            "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/StatModsHealthScalingIcon.png",
+            "games": 43,
+            "pct": 89.6
+          },
+          {
+            "runeId": 5001,
+            "name": "Health Scaling",
+            "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/StatModsHealthPlusIcon.png",
+            "games": 5,
+            "pct": 10.4
+          }
+        ]
+      }
+    ]
+  },
+  "runePages": [
+    {
+      "keystoneId": 8112,
+      "keystone": {
+        "runeId": 8112,
+        "name": "Electrocute",
+        "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Domination/Electrocute/Electrocute.png",
+        "games": 43,
+        "pct": 89.6
+      },
+      "games": 43,
+      "pct": 89.6,
+      "secondaryStyleId": 8300,
+      "primaryRows": [
+        {
+          "slot": 1,
+          "items": [
+            {
+              "runeId": 8126,
+              "name": "Cheap Shot",
+              "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Domination/CheapShot/CheapShot.png",
+              "games": 43,
+              "pct": 100.0
+            }
+          ]
+        },
+        {
+          "slot": 2,
+          "items": [
+            {
+              "runeId": 8137,
+              "name": "Sixth Sense",
+              "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Domination/SixthSense/SixthSense.png",
+              "games": 40,
+              "pct": 93.0
+            }
+          ]
+        },
+        {
+          "slot": 3,
+          "items": [
+            {
+              "runeId": 8105,
+              "name": "Relentless Hunter",
+              "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Domination/RelentlessHunter/RelentlessHunter.png",
+              "games": 41,
+              "pct": 95.3
+            }
+          ]
+        }
+      ],
+      "secondary": [
+        {
+          "runeId": 8313,
+          "name": "Triple Tonic",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Inspiration/PerfectTiming/AlchemistCabinet.png",
+          "games": 34,
+          "pct": 79.1
+        },
+        {
+          "runeId": 8306,
+          "name": "Hextech Flashtraption",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Inspiration/HextechFlashtraption/HextechFlashtraption.png",
+          "games": 34,
+          "pct": 79.1
+        },
+        {
+          "runeId": 8234,
+          "name": "Celerity",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/Celerity/CelerityTemp.png",
+          "games": 6,
+          "pct": 14.0
+        },
+        {
+          "runeId": 8275,
+          "name": "Nimbus Cloak",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/NimbusCloak/6361.png",
+          "games": 6,
+          "pct": 14.0
+        }
+      ],
+      "shards": [
+        {
+          "slot": 0,
+          "label": "Offense",
+          "items": [
+            {
+              "runeId": 5008,
+              "name": "Adaptive Force",
+              "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/StatModsAdaptiveForceIcon.png",
+              "games": 43,
+              "pct": 100.0
+            }
+          ]
+        },
+        {
+          "slot": 1,
+          "label": "Flex",
+          "items": [
+            {
+              "runeId": 5008,
+              "name": "Adaptive Force",
+              "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/StatModsAdaptiveForceIcon.png",
+              "games": 43,
+              "pct": 100.0
+            }
+          ]
+        },
+        {
+          "slot": 2,
+          "label": "Defense",
+          "items": [
+            {
+              "runeId": 5011,
+              "name": "Health",
+              "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/StatModsHealthScalingIcon.png",
+              "games": 42,
+              "pct": 97.7
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "skillOrder": {
+    "available": true,
+    "games": 48,
+    "maxOrder": [
+      "Q",
+      "E",
+      "W"
+    ],
+    "maxOrderPct": 97.9,
+    "perLevel": [
+      "W",
+      "Q",
+      "E",
+      "Q",
+      "Q",
+      "R",
+      "Q",
+      "E",
+      "Q",
+      "E",
+      "R",
+      "E",
+      "E",
+      "W",
+      "W",
+      "R",
+      "W",
+      "W"
+    ],
+    "openings": [
+      {
+        "sequence": [
+          "W",
+          "Q",
+          "E",
+          "Q"
+        ],
+        "pct": 52.1
+      },
+      {
+        "sequence": [
+          "W",
+          "E",
+          "Q",
+          "Q"
+        ],
+        "pct": 41.7
+      }
+    ]
+  },
+  "_cached_at": "2026-10-26T02:53:19.515544+00:00"
+}
