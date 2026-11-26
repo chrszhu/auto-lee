@@ -229,9 +229,10 @@ async function tick() {
   }
 }
 
+let pollTimer = null;
 function startLoop() {
   tick();
-  setInterval(tick, POLL_MS);
+  pollTimer = setInterval(tick, POLL_MS);
 }
 
 // ---- IPC ----
@@ -331,6 +332,13 @@ app.whenReady().then(async () => {
   });
 });
 
+// Make sure nothing keeps the process alive after the window closes, so the app
+// fully exits and never locks its own files during an update/uninstall.
+app.on('before-quit', () => {
+  if (pollTimer) clearInterval(pollTimer);
+});
+
 app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') app.quit();
+  if (pollTimer) clearInterval(pollTimer);
+  app.quit(); // quit on all platforms when the window is closed
 });
