@@ -104,6 +104,16 @@ main { flex: 1; padding: 14px 16px; display: flex; flex-direction: column; gap: 
   font-size: 13px;
 }
 .field input:focus { outline: none; border-color: var(--accent); }
+.field select {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 10px;
+  color: var(--text);
+  font-size: 13px;
+  cursor: pointer;
+}
+.field select:focus { outline: none; border-color: var(--accent); }
 
 .toggle { display: flex; align-items: center; gap: 8px; font-size: 13px; cursor: pointer; }
 

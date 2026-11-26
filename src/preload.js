@@ -13,6 +13,7 @@ contextBridge.exposeInMainWorld('companion', {
   setOpponent: (name) => ipcRenderer.invoke('set-opponent', name),
   setAutoImport: (on) => ipcRenderer.invoke('set-auto-import', on),
   setFlashSide: (flashOnRight) => ipcRenderer.invoke('set-flash-side', flashOnRight),
+  setRole: (role) => ipcRenderer.invoke('set-role', role),
   testConnection: () => ipcRenderer.invoke('test-connection'),
   getDataInfo: () => ipcRenderer.invoke('get-data-info'),
   getChampions: () => ipcRenderer.invoke('get-champions'),

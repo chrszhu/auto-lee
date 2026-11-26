@@ -22,8 +22,9 @@ const state = {
   opponentIcon: null,
   manualOpponent: null, // user override
   recommendation: null, // { runeDisplay, spellDisplay, itemDisplay, runeOpponent }
-  autoImport: false,
+  autoImport: true, // default ON: import automatically on champ select
   flashOnRight: true, // default: Flash on F (right slot / spell2)
+  role: null, // null = auto-detect position; or TOP/JUNGLE/MIDDLE/BOTTOM/UTILITY
   lastImport: null, // { ok, runes, items, error, at }
   dataInfo: null, // { source, patch, updatedAt, live, remote }
   updating: null, // { done, total, champion } while an update runs
@@ -41,7 +42,7 @@ function createWindow() {
     width: 420,
     height: 640,
     resizable: true,
-    title: 'LoL Companion',
+    title: 'ZhuLoL',
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       contextIsolation: true,
@@ -101,12 +102,13 @@ async function refreshRecommendation() {
   state.error = null;
   if (!state.champion || !state.champion.name) return;
   const opp = state.manualOpponent || state.opponent || '';
+  const pos = state.role || '';
   try {
-    const runes = await importer.buildRunePage(state.champion.name, opp);
-    const items = await importer.buildItemSet(state.champion.name, state.champion.id, opp);
+    const runes = await importer.buildRunePage(state.champion.name, opp, pos);
+    const items = await importer.buildItemSet(state.champion.name, state.champion.id, opp, pos);
     let spellDisplay = [];
     try {
-      spellDisplay = (await importer.buildSummonerSpells(state.champion.name, opp, { flashOnRight: state.flashOnRight })).display;
+      spellDisplay = (await importer.buildSummonerSpells(state.champion.name, opp, { flashOnRight: state.flashOnRight, position: pos })).display;
     } catch {
       /* spells optional for preview */
     }
@@ -126,18 +128,19 @@ async function doImport(what) {
   if (!state.champion || !state.champion.name) return { ok: false, error: 'No champion selected' };
   if (!state.summoner) return { ok: false, error: 'Summoner not loaded' };
   const opp = state.manualOpponent || state.opponent || '';
+  const pos = state.role || '';
   const all = what === 'all' || what === 'both';
   const result = { ok: true, runes: false, spells: false, items: false, error: null, at: Date.now() };
   try {
     if (what === 'runes' || all) {
-      const { page } = await importer.buildRunePage(state.champion.name, opp);
+      const { page } = await importer.buildRunePage(state.champion.name, opp, pos);
       await importer.applyRunePage(lcu, page);
       result.runes = true;
     }
     if (what === 'spells' || all) {
       // Summoner spells can only be set during champ select.
       if (state.phase === 'ChampSelect') {
-        const { selection } = await importer.buildSummonerSpells(state.champion.name, opp, { flashOnRight: state.flashOnRight });
+        const { selection } = await importer.buildSummonerSpells(state.champion.name, opp, { flashOnRight: state.flashOnRight, position: pos });
         await importer.applySummonerSpells(lcu, selection);
         result.spells = true;
       } else if (what === 'spells') {
@@ -145,7 +148,7 @@ async function doImport(what) {
       }
     }
     if (what === 'items' || all) {
-      const { itemSet } = await importer.buildItemSet(state.champion.name, state.champion.id, opp);
+      const { itemSet } = await importer.buildItemSet(state.champion.name, state.champion.id, opp, pos);
       await importer.applyItemSet(lcu, state.summoner.summonerId, itemSet);
       result.items = true;
     }
@@ -191,7 +194,7 @@ async function tick() {
       state.opponent = opponent;
       state.opponentIcon = opponentIcon;
 
-      const key = champion ? `${champion.id}:${state.manualOpponent || opponent || ''}` : null;
+      const key = champion ? `${champion.id}:${state.manualOpponent || opponent || ''}:${state.role || ''}` : null;
       if (key && key !== lastChampKey) {
         lastChampKey = key;
         await refreshRecommendation();
@@ -242,6 +245,14 @@ ipcMain.handle('set-flash-side', async (_e, flashOnRight) => {
   await refreshRecommendation();
   push();
   return state.flashOnRight;
+});
+ipcMain.handle('set-role', async (_e, role) => {
+  const valid = ['TOP', 'JUNGLE', 'MIDDLE', 'BOTTOM', 'UTILITY'];
+  state.role = valid.includes(role) ? role : null; // null = auto-detect
+  lastChampKey = null; // force refresh (+ auto-import on next tick) with new role
+  await refreshRecommendation();
+  push();
+  return state.role;
 });
 ipcMain.handle('import', (_e, what) => doImport(what || 'both'));
 

@@ -9,20 +9,20 @@
 const ddragon = require('./ddragon');
 const dataClient = require('./dataClient');
 
-const PAGE_PREFIX = '[Companion]';
+const PAGE_PREFIX = '[Zhu]';
 
 // Resolve the rune/spell source:
 //   - a specific lane opponent -> that matchup's data (if we have it)
 //   - otherwise -> the champion's OVERALL aggregate (the general build-order,
 //     which carries the same rune/spell fields across all of its games).
 // Returns { src, scope: 'matchup'|'overall', opponent }.
-async function resolveRuneSource(champion, opponent) {
+async function resolveRuneSource(champion, opponent, position) {
   if (opponent) {
     const matchup = await dataClient.getMatchupRunes(champion);
     const entry = matchup && matchup.opponents ? matchup.opponents[opponent] : null;
     if (entry && entry.runes) return { src: entry.runes, scope: 'matchup', opponent };
   }
-  const build = await dataClient.getBuildOrder(champion, '');
+  const build = await dataClient.getBuildOrder(champion, '', position);
   if (!build || build.available === false) throw new Error(`No data for ${champion}`);
   return { src: build, scope: 'overall', opponent: null };
 }
@@ -65,8 +65,8 @@ async function pickSecondary(secondaryRunes, primaryStyleId, preferredStyleId) {
 }
 
 // Assemble a complete, client-valid rune page (overall, or matchup-specific).
-async function buildRunePage(champion, opponent) {
-  const { src: r, scope, opponent: oppName } = await resolveRuneSource(champion, opponent);
+async function buildRunePage(champion, opponent, position) {
+  const { src: r, scope, opponent: oppName } = await resolveRuneSource(champion, opponent, position);
 
   const keystone = topId(r.keystones);
   const primaryStyleId = topId(r.primaryStyles);
@@ -148,7 +148,7 @@ const FLASH_ID = 4;
 // swaps the two.
 async function buildSummonerSpells(champion, opponent, opts = {}) {
   const flashOnRight = opts.flashOnRight !== false; // default true
-  const { src } = await resolveRuneSource(champion, opponent);
+  const { src } = await resolveRuneSource(champion, opponent, opts.position);
   const items = (src.summonerSpells && src.summonerSpells.items) || [];
   const seen = new Set();
   const top = items.filter((s) => s.spellId && !seen.has(s.spellId) && seen.add(s.spellId)).slice(0, 2);
@@ -178,8 +178,8 @@ function block(title, group, limit) {
   return items.length ? { type: title, items } : null;
 }
 
-async function buildItemSet(champion, championId, opponent) {
-  const build = await dataClient.getBuildOrder(champion, opponent);
+async function buildItemSet(champion, championId, opponent, position) {
+  const build = await dataClient.getBuildOrder(champion, opponent, position);
   if (!build || build.available === false) throw new Error(`No build data for ${champion}`);
 
   // One item per core slot, in order — but the same item can be the top pick in

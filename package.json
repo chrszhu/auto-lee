@@ -1,8 +1,8 @@
 {
-  "name": "lol-companion",
-  "version": "0.4.2",
+  "name": "zhulol",
+  "version": "0.5.0",
   "private": true,
-  "description": "Ad-free League of Legends companion: auto-imports runes and item builds into the client via the LCU API.",
+  "description": "ZhuLoL - ad-free League of Legends champ-select companion: auto-imports runes, summoner spells, and item builds via the LCU API.",
   "main": "src/main.js",
   "scripts": {
     "start": "electron .",
@@ -19,9 +19,9 @@
     "electron-builder": "^24.13.3"
   },
   "build": {
-    "appId": "com.lolcompanion.app",
-    "productName": "LoL Companion",
-    "copyright": "LoL Companion. Not affiliated with Riot Games.",
+    "appId": "com.zhulol.app",
+    "productName": "ZhuLoL",
+    "copyright": "ZhuLoL. Not affiliated with Riot Games.",
     "directories": {
       "output": "dist-installers",
       "buildResources": "build"
@@ -36,7 +36,7 @@
         "nsis"
       ],
       "icon": "build/icon.ico",
-      "artifactName": "LoLCompanion-Setup-${version}.${ext}"
+      "artifactName": "ZhuLoL-Setup-${version}.${ext}"
     },
     "nsis": {
       "oneClick": false,
@@ -53,7 +53,7 @@
       "category": "public.app-category.utilities"
     },
     "dmg": {
-      "artifactName": "LoLCompanion-${version}.${ext}"
+      "artifactName": "ZhuLoL-${version}.${ext}"
     }
   }
 }

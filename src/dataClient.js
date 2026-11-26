@@ -74,15 +74,23 @@ async function getMatchupRunes(champion) {
   return readLocal('matchup-runes', champion) || { champion, available: false, opponents: {} };
 }
 
-async function getBuildOrder(champion, opponent) {
+async function getBuildOrder(champion, opponent, position) {
   if (remoteEnabled()) {
     try {
-      const q = opponent ? `?opponent=${encodeURIComponent(opponent)}` : '';
+      const params = [];
+      if (opponent) params.push(`opponent=${encodeURIComponent(opponent)}`);
+      if (position) params.push(`position=${encodeURIComponent(position)}`);
+      const q = params.length ? `?${params.join('&')}` : '';
       const data = await fetchRemote(`/api/champion-build-order/${encodeURIComponent(champion)}${q}`);
       if (data && data.available !== false) return data;
     } catch {
       /* fall through to local */
     }
+  }
+  // Offline: a per-position snapshot file if a role was requested, else default.
+  if (position) {
+    const byPos = readLocal('build-orders', `${champion}_${position}`);
+    if (byPos && byPos.available !== false) return byPos;
   }
   return readLocal('build-orders', champion) || { champion, available: false, slots: [] };
 }

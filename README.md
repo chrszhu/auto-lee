@@ -1,4 +1,4 @@
-# LoL Companion (ad-free)
+# ZhuLoL (ad-free)
 
 A small, ad-free desktop companion for League of Legends. When you enter champ
 select it detects your champion (and lane opponent when revealed), looks up the
@@ -12,7 +12,7 @@ Not affiliated with or endorsed by Riot Games or Blitz.
 ## How it fits together
 
 ```
-League Client ──(LCU API, localhost)── LoL Companion ──(HTTPS)── your site (zhu-lol.vercel.app)
+League Client ──(LCU API, localhost)── ZhuLoL ──(HTTPS)── your site (zhu-lol.vercel.app)
    runes/items  <────── import ──────                  ──────>   fresh builds/runes/matchups
                                          fallback ── bundled snapshot (offline)
 ```
@@ -32,10 +32,10 @@ League Client ──(LCU API, localhost)── LoL Companion ──(HTTPS)──
 ## Install (Windows) — easiest
 
 1. Go to the [**Releases**](https://github.com/chrszhu/auto-lee/releases) page and
-   download the latest `LoLCompanion-Setup-<version>.exe`.
+   download the latest `ZhuLoL-Setup-<version>.exe`.
 2. Run it. Windows SmartScreen may warn (the installer is unsigned): click
    **More info → Run anyway**.
-3. Launch **LoL Companion**, open League, and click **Test connection** to confirm
+3. Launch **ZhuLoL**, open League, and click **Test connection** to confirm
    it sees your client.
 
 That's it — the build/rune data is bundled, so there's nothing else to install or
@@ -44,16 +44,20 @@ run.
 ## Quick start (once installed)
 
 1. Open League of Legends and log in.
-2. Open **LoL Companion** → click **Test connection (read-only)**. You should see
+2. Open **ZhuLoL** → click **Test connection (read-only)**. You should see
    `Connected ✓ <your name> · <phase> · N rune pages`.
 3. Enter champ select. The panel shows your champion with recommended **runes**,
    **summoner spells**, and **build**.
-4. Click **Import all (runes + spells + build)** at the top — or flip on
-   **Auto-import on champ select** to have it happen automatically every game.
-   - Summoner spells can only be set *during* champ select (the Spells button is
-     disabled otherwise — that's a Riot API rule, not a bug).
-   - **Flash side:** by default Flash is placed on the **right (F)**. Uncheck
-     **Flash on right (F)** to put it on the **left (D)** instead.
+4. **Auto-import is ON by default** — runes + spells + build are imported for you
+   automatically on champ select. (Turn off **Auto-import on champ select** if you
+   prefer to click **Import all** yourself.)
+   - **Role / lane:** defaults to auto-detect; override it with the **Role** dropdown
+     (Top/Jungle/Mid/Bot/Support) to get a position-specific build.
+   - Summoner spells can only be set *during* champ select (that's a Riot API rule).
+   - **Flash side:** Flash is on the **right (F)** by default; uncheck **Flash on
+     right (F)** to put it on the **left (D)**.
+   - Leave the **lane opponent** blank for the overall build, or pick one for a
+     matchup-specific build.
 
 ## Prerequisites
 
@@ -70,7 +74,7 @@ npm start
 ## Build an installer
 
 ```bash
-npm run dist:win    # -> dist-installers/LoLCompanion-Setup-<version>.exe  (NSIS)
+npm run dist:win    # -> dist-installers/ZhuLoL-Setup-<version>.exe  (NSIS)
 npm run dist:mac    # -> dist-installers/*.dmg
 ```
 
@@ -137,7 +141,7 @@ npm test   # maps bundled data -> client-valid rune pages + item sets,
   bundled snapshot are per-champion (not per-matchup).
 - Rune pages are assembled to be client-valid (keystone + 3 primary + 2
   secondary from different rows + 3 shards). Imported pages/sets are prefixed
-  `[Companion]` and are safe to delete; your own pages/sets are never touched.
+  `[Zhu]` and are safe to delete; your own pages/sets are never touched.
 - Client discovery: Windows uses PowerShell/lockfile; macOS uses `ps`/lockfile.
 - Only touches the **client** (never the game) — no memory reading, no injection,
   no gameplay automation.

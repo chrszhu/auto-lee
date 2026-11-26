@@ -3,12 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>LoL Companion</title>
+    <title>ZhuLoL</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <header>
-      <div class="brand">LoL Companion <span class="tag">ad-free</span></div>
+      <div class="brand">ZhuLoL <span class="tag">ad-free</span></div>
       <div id="status" class="status">
         <span class="dot" id="dot"></span><span id="status-text">Starting…</span>
       </div>
@@ -62,6 +62,18 @@
             <input id="opponent-input" type="text" autocomplete="off" spellcheck="false" placeholder="auto-detected — type a champion" />
             <div id="opponent-list" class="ac-list hidden"></div>
           </div>
+        </label>
+
+        <label class="field">
+          <span>Role / lane</span>
+          <select id="role-select">
+            <option value="">Auto-detect</option>
+            <option value="TOP">Top</option>
+            <option value="JUNGLE">Jungle</option>
+            <option value="MIDDLE">Mid</option>
+            <option value="BOTTOM">Bot</option>
+            <option value="UTILITY">Support</option>
+          </select>
         </label>
 
         <label class="toggle">

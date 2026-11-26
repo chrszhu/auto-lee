@@ -34,11 +34,11 @@ async function run() {
       shards.forEach((s) => assert(s >= 5000 && s < 5900, `${champ} shard id out of range: ${s}`));
       assert(page.primaryStyleId && page.subStyleId, `${champ} must have both styles`);
       assert(page.primaryStyleId !== page.subStyleId, `${champ} primary/secondary styles must differ`);
-      // No opponent -> overall build; title is just "[Companion] <champ>" (no "vs").
+      // No opponent -> overall build; title is just "[Zhu] <champ>" (no "vs").
       assert(meta.scope === 'overall', `${champ} should be overall when no opponent, got ${meta.scope}`);
       assert(meta.opponent === null, `${champ} overall should have null opponent`);
       assert(!/ vs /i.test(page.name), `${champ} page name should not contain "vs": ${page.name}`);
-      assert(page.name === `[Companion] ${champ}`, `${champ} page name should be "[Companion] ${champ}", got ${page.name}`);
+      assert(page.name === `[Zhu] ${champ}`, `${champ} page name should be "[Zhu] ${champ}", got ${page.name}`);
 
       const { selection, display: spells } = await importer.buildSummonerSpells(champ, '');
       assert(selection.spell1Id && selection.spell2Id, `${champ} must have two summoner spells`);
@@ -79,12 +79,25 @@ async function run() {
     const { page, meta } = await importer.buildRunePage('Blitzcrank', 'Thresh');
     assert(meta.scope === 'matchup', `expected matchup scope, got ${meta.scope}`);
     assert(meta.opponent === 'Thresh', `expected opponent Thresh, got ${meta.opponent}`);
-    assert(page.name === '[Companion] Blitzcrank', `matchup page name should still omit opponent, got ${page.name}`);
+    assert(page.name === '[Zhu] Blitzcrank', `matchup page name should still omit opponent, got ${page.name}`);
     assert(page.selectedPerkIds.length === 9, 'matchup page should have 9 perks');
     console.log('\n✓ matchup path: Blitzcrank vs Thresh -> scope=matchup, title omits opponent');
   } catch (e) {
     failures++;
     console.error(`\n✗ matchup path: ${e.message}`);
+  }
+
+  // Role override: a specific position uses that role's data (offline per-role file).
+  try {
+    const { itemSet, display } = await importer.buildItemSet('Lux', 99, '', 'MIDDLE');
+    assert(display.position === 'MIDDLE', `expected MIDDLE build, got ${display.position}`);
+    assert(itemSet.blocks.some((b) => b.type.startsWith('Core')), 'role build should have a core block');
+    const { page } = await importer.buildRunePage('Lux', '', 'MIDDLE');
+    assert(page.selectedPerkIds.length === 9, 'role rune page should have 9 perks');
+    console.log('\n✓ role override: Lux MIDDLE -> position-specific build + valid runes');
+  } catch (e) {
+    failures++;
+    console.error(`\n✗ role override: ${e.message}`);
   }
 
   console.log(`\n${failures ? '❌' : '✅'} ${CHAMPS.length - failures}/${CHAMPS.length} champions + matchup check mapped cleanly from bundled data`);

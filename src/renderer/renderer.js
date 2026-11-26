@@ -170,6 +170,7 @@ function render(s) {
   }
   $('auto-import').checked = !!s.autoImport;
   $('flash-right').checked = s.flashOnRight !== false;
+  if (document.activeElement !== $('role-select')) $('role-select').value = s.role || '';
 
   if (s.lastImport) {
     const r = s.lastImport;
@@ -261,6 +262,7 @@ window.addEventListener('DOMContentLoaded', async () => {
 
   $('auto-import').addEventListener('change', (e) => window.companion.setAutoImport(e.target.checked));
   $('flash-right').addEventListener('change', (e) => window.companion.setFlashSide(e.target.checked));
+  $('role-select').addEventListener('change', (e) => window.companion.setRole(e.target.value));
   $('btn-runes').addEventListener('click', () => importNow('runes'));
   $('btn-spells').addEventListener('click', () => importNow('spells'));
   $('btn-items').addEventListener('click', () => importNow('items'));

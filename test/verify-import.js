@@ -61,14 +61,14 @@ function makeFakeLcu(initial) {
 async function run() {
   let failures = 0;
 
-  // --- Rune import: client already has a user page + a stale [Companion] page,
+  // --- Rune import: client already has a user page + a stale [Zhu] page,
   //     and is AT the page limit, so a page must be freed before POST. ---
   try {
     const lcu = makeFakeLcu({
       ownedPageCount: 2,
       pages: [
         { id: 1, name: 'My Page', isDeletable: true },
-        { id: 2, name: '[Companion] Old', isDeletable: true },
+        { id: 2, name: '[Zhu] Old', isDeletable: true },
       ],
       itemSets: [],
     });
@@ -80,11 +80,11 @@ async function run() {
     assert(posted[2].current === true, 'posted page is set current');
     assert(posted[2].selectedPerkIds.length === 9, 'posted page has 9 perks');
     const deletedOld = lcu.calls.some((c) => c[0] === 'DELETE' && c[1] === '/lol-perks/v1/pages/2');
-    assert(deletedOld, 'stale [Companion] page was deleted');
+    assert(deletedOld, 'stale [Zhu] page was deleted');
     // After: user page kept, our new page present, still within the limit.
     const names = lcu._state.pages.map((p) => p.name);
     assert(names.includes('My Page'), "user's own page was NOT touched");
-    assert(names.some((n) => n.startsWith('[Companion]')), 'new [Companion] page is present');
+    assert(names.some((n) => n.startsWith('[Zhu]')), 'new [Zhu] page is present');
     assert(lcu._state.pages.filter((p) => p.isDeletable).length <= 2, 'did not exceed page limit');
     console.log('✓ rune import: freed a slot, kept user page, set new page current');
   } catch (e) { failures++; console.error('✗ rune import:', e.message); }
@@ -96,7 +96,7 @@ async function run() {
       pages: [],
       itemSets: [
         { title: 'My Custom AP', blocks: [] },
-        { title: '[Companion] Lux', blocks: [{ type: 'old', items: [] }] },
+        { title: '[Zhu] Lux', blocks: [{ type: 'old', items: [] }] },
       ],
     });
     const { itemSet } = await importer.buildItemSet('Lux', 99, '');
@@ -107,8 +107,8 @@ async function run() {
     assert(put[1] === '/lol-item-sets/v1/item-sets/777/sets', 'PUT targets the right summoner id');
     const titles = put[2].itemSets.map((s) => s.title);
     assert(titles.includes('My Custom AP'), "user's own item set was kept");
-    assert(titles.filter((t) => t === '[Companion] Lux').length === 1, 'our old set was replaced, not duplicated');
-    const ours = put[2].itemSets.find((s) => s.title === '[Companion] Lux');
+    assert(titles.filter((t) => t === '[Zhu] Lux').length === 1, 'our old set was replaced, not duplicated');
+    const ours = put[2].itemSets.find((s) => s.title === '[Zhu] Lux');
     assert(ours.blocks.some((b) => b.type.startsWith('Core')), 'new set has a core block');
     assert(ours.associatedChampions.includes(99), 'new set is bound to the champion');
     console.log('✓ item import: replaced our old set, kept user set, bound to champ');
