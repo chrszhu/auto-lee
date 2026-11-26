@@ -1,6 +1,6 @@
 {
   "name": "lol-companion",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "private": true,
   "description": "Ad-free League of Legends companion: auto-imports runes and item builds into the client via the LCU API.",
   "main": "src/main.js",
@@ -23,7 +23,8 @@
     "productName": "LoL Companion",
     "copyright": "LoL Companion. Not affiliated with Riot Games.",
     "directories": {
-      "output": "dist-installers"
+      "output": "dist-installers",
+      "buildResources": "build"
     },
     "files": [
       "src/**/*",
@@ -34,18 +35,25 @@
       "target": [
         "nsis"
       ],
+      "icon": "build/icon.ico",
       "artifactName": "LoLCompanion-Setup-${version}.${ext}"
     },
     "nsis": {
       "oneClick": false,
       "perMachine": false,
-      "allowToChangeInstallationDirectory": true
+      "allowToChangeInstallationDirectory": true,
+      "installerIcon": "build/icon.ico",
+      "uninstallerIcon": "build/icon.ico"
     },
     "mac": {
       "target": [
         "dmg"
       ],
+      "icon": "build/icon.icns",
       "category": "public.app-category.utilities"
+    },
+    "dmg": {
+      "artifactName": "LoLCompanion-${version}.${ext}"
     }
   }
 }
