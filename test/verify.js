@@ -37,6 +37,13 @@ async function run() {
       const { selection, display: spells } = await importer.buildSummonerSpells(champ, '');
       assert(selection.spell1Id && selection.spell2Id, `${champ} must have two summoner spells`);
       assert(selection.spell1Id !== selection.spell2Id, `${champ} summoner spells must be distinct`);
+      // Default: Flash (id 4) on the RIGHT (spell2). Toggle swaps it to the left.
+      const hasFlash = selection.spell1Id === 4 || selection.spell2Id === 4;
+      if (hasFlash) {
+        assert(selection.spell2Id === 4, `${champ} default should put Flash on the right (spell2)`);
+        const swapped = (await importer.buildSummonerSpells(champ, '', { flashOnRight: false })).selection;
+        assert(swapped.spell1Id === 4, `${champ} with flashOnRight:false should put Flash on the left (spell1)`);
+      }
 
       const { itemSet, display: idisp } = await importer.buildItemSet(champ, id, '');
       assert(itemSet.blocks.length > 0, `${champ} item set should have blocks`);

@@ -106,6 +106,7 @@ function render(s) {
     oppInput.placeholder = s.opponent ? `auto: ${s.opponent}` : 'auto-detected — e.g. Thresh';
   }
   $('auto-import').checked = !!s.autoImport;
+  $('flash-right').checked = s.flashOnRight !== false;
 
   if (s.lastImport) {
     const r = s.lastImport;
@@ -145,6 +146,7 @@ window.addEventListener('DOMContentLoaded', async () => {
   });
 
   $('auto-import').addEventListener('change', (e) => window.companion.setAutoImport(e.target.checked));
+  $('flash-right').addEventListener('change', (e) => window.companion.setFlashSide(e.target.checked));
   $('btn-runes').addEventListener('click', () => importNow('runes'));
   $('btn-spells').addEventListener('click', () => importNow('spells'));
   $('btn-items').addEventListener('click', () => importNow('items'));

@@ -117,8 +117,15 @@ async function applyRunePage(lcu, page) {
 
 // ---- Summoner spells ----
 
+const FLASH_ID = 4;
+
 // Top two distinct summoner spells for the matchup, as client spell ids.
-async function buildSummonerSpells(champion, opponent) {
+// Slot order: spell1Id = left (bound to D by default), spell2Id = right (F).
+// By default we put Flash on the RIGHT (F); `flashOnRight: false` swaps it to the
+// left. If neither spell is Flash, frequency order is kept and the toggle just
+// swaps the two.
+async function buildSummonerSpells(champion, opponent, opts = {}) {
+  const flashOnRight = opts.flashOnRight !== false; // default true
   const matchup = await dataClient.getMatchupRunes(champion);
   const picked = pickOpponentEntry(matchup, opponent);
   if (!picked) throw new Error(`No summoner-spell data for ${champion}`);
@@ -126,9 +133,16 @@ async function buildSummonerSpells(champion, opponent) {
   const seen = new Set();
   const top = items.filter((s) => s.spellId && !seen.has(s.spellId) && seen.add(s.spellId)).slice(0, 2);
   if (top.length !== 2) throw new Error(`Incomplete summoner-spell data for ${champion}`);
+
+  let ordered = top;
+  const flash = top.find((s) => s.spellId === FLASH_ID);
+  const other = top.find((s) => s.spellId !== FLASH_ID);
+  if (flash && other) ordered = flashOnRight ? [other, flash] : [flash, other];
+  else if (!flashOnRight) ordered = [top[1], top[0]]; // no flash: toggle still swaps
+
   return {
-    selection: { spell1Id: top[0].spellId, spell2Id: top[1].spellId },
-    display: top.map((s) => s.name),
+    selection: { spell1Id: ordered[0].spellId, spell2Id: ordered[1].spellId },
+    display: ordered.map((s) => s.name),
   };
 }
 

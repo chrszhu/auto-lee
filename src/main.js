@@ -20,6 +20,7 @@ const state = {
   manualOpponent: null, // user override
   recommendation: null, // { runeDisplay, itemDisplay, runeOpponent }
   autoImport: false,
+  flashOnRight: true, // default: Flash on F (right slot / spell2)
   lastImport: null, // { ok, runes, items, error, at }
   error: null,
 };
@@ -76,7 +77,7 @@ async function refreshRecommendation() {
     const items = await importer.buildItemSet(state.champion.name, state.champion.id, opp);
     let spellDisplay = [];
     try {
-      spellDisplay = (await importer.buildSummonerSpells(state.champion.name, opp)).display;
+      spellDisplay = (await importer.buildSummonerSpells(state.champion.name, opp, { flashOnRight: state.flashOnRight })).display;
     } catch {
       /* spells optional for preview */
     }
@@ -106,7 +107,7 @@ async function doImport(what) {
     if (what === 'spells' || all) {
       // Summoner spells can only be set during champ select.
       if (state.phase === 'ChampSelect') {
-        const { selection } = await importer.buildSummonerSpells(state.champion.name, opp);
+        const { selection } = await importer.buildSummonerSpells(state.champion.name, opp, { flashOnRight: state.flashOnRight });
         await importer.applySummonerSpells(lcu, selection);
         result.spells = true;
       } else if (what === 'spells') {
@@ -201,6 +202,13 @@ ipcMain.handle('set-auto-import', (_e, on) => {
   state.autoImport = !!on;
   push();
   return state.autoImport;
+});
+ipcMain.handle('set-flash-side', async (_e, flashOnRight) => {
+  state.flashOnRight = !!flashOnRight;
+  lastChampKey = null; // force preview refresh with new ordering
+  await refreshRecommendation();
+  push();
+  return state.flashOnRight;
 });
 ipcMain.handle('import', (_e, what) => doImport(what || 'both'));
 

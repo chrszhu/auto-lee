@@ -15,6 +15,11 @@
     </header>
 
     <main>
+      <section class="actions">
+        <button id="btn-all" class="btn primary">Import all (runes + spells + build)</button>
+      </section>
+      <div id="import-result" class="import-result"></div>
+
       <section class="card" id="champ-card">
         <div class="champ-empty" id="champ-empty">
           <p>Waiting for champ select…</p>
@@ -58,6 +63,11 @@
           <span>Auto-import on champ select</span>
         </label>
 
+        <label class="toggle">
+          <input id="flash-right" type="checkbox" checked />
+          <span>Flash on right (F) — uncheck to put Flash on left (D)</span>
+        </label>
+
         <button id="btn-test" class="btn" style="margin-top:12px;width:100%">Test connection (read-only)</button>
         <div id="test-result" class="import-result"></div>
       </section>
@@ -67,11 +77,6 @@
         <button id="btn-spells" class="btn">Spells</button>
         <button id="btn-items" class="btn">Build</button>
       </section>
-      <section class="actions">
-        <button id="btn-all" class="btn primary">Import all (runes + spells + build)</button>
-      </section>
-
-      <div id="import-result" class="import-result"></div>
     </main>
 
     <footer class="muted">

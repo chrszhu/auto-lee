@@ -43,10 +43,12 @@ run.
    `Connected ✓ <your name> · <phase> · N rune pages`.
 3. Enter champ select. The panel shows your champion with recommended **runes**,
    **summoner spells**, and **build**.
-4. Click **Import all (runes + spells + build)** — or flip on **Auto-import on
-   champ select** to have it happen automatically every game.
+4. Click **Import all (runes + spells + build)** at the top — or flip on
+   **Auto-import on champ select** to have it happen automatically every game.
    - Summoner spells can only be set *during* champ select (the Spells button is
      disabled otherwise — that's a Riot API rule, not a bug).
+   - **Flash side:** by default Flash is placed on the **right (F)**. Uncheck
+     **Flash on right (F)** to put it on the **left (D)** instead.
 
 ## Prerequisites
 
@@ -89,16 +91,29 @@ Notes:
    **Auto-import on champ select** to have it happen automatically every game.
 4. Wrong matchup? Type the enemy laner into the **Lane opponent** box.
 
-## Refreshing the bundled data
+## How current is the data? (data freshness)
 
-The bundled data is a snapshot. To update it to a newer patch, re-export from the
-analytics project and recopy:
+The build/rune data is a **snapshot bundled into the installer at build time** — it
+does **not** auto-update. Whatever patch the data was exported on is what you get
+until a new installer is released. Practically:
+
+- It stays accurate within a patch (builds/runes don't change mid-patch), but after
+  a new League patch it can drift until the snapshot is refreshed and re-released.
+- There is no live call for build data — the only thing fetched at runtime is
+  Riot's Data Dragon (just to map the client's numeric IDs to names/icons).
+
+**To update the data**, re-export from the analytics project, recopy, and ship a
+new release:
 
 ```bash
 cp -R ../match-analytics-fastapi/static-data/matchup-runes data/
 cp -R ../match-analytics-fastapi/static-data/build-orders data/
-npm run dist:win   # rebuild the installer
+npm run dist:win   # rebuild the installer, then publish a new GitHub release
 ```
+
+If you want it to **always be fresh automatically**, the app can instead fetch on
+launch from your deployed analytics API and fall back to the bundled snapshot when
+offline — ask and I'll wire up that hybrid mode.
 
 ## Verify
 
