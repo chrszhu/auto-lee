@@ -7,6 +7,7 @@
 const path = require('path');
 
 process.env.LOL_COMPANION_DATA_DIR = path.resolve(__dirname, '../data');
+process.env.LOL_COMPANION_API = ''; // offline: use bundled data only
 const importer = require('../src/importer');
 
 const CHAMPS = [
@@ -45,15 +46,22 @@ async function run() {
         assert(swapped.spell1Id === 4, `${champ} with flashOnRight:false should put Flash on the left (spell1)`);
       }
 
+      // Display objects now carry icon URLs for the UI.
+      assert(display.keystone && display.keystone.name, `${champ} keystone display should have a name`);
+      assert(display.keystone.icon && /^https?:\/\//.test(display.keystone.icon), `${champ} keystone should have an icon URL`);
+      assert(spells.every((s) => s.name && s.icon), `${champ} spell display should have name+icon`);
+
       const { itemSet, display: idisp } = await importer.buildItemSet(champ, id, '');
       assert(itemSet.blocks.length > 0, `${champ} item set should have blocks`);
       assert(itemSet.blocks.some((b) => b.type.startsWith('Core')), `${champ} should have a core block`);
       itemSet.blocks.forEach((b) => b.items.forEach((it) => assert(/^\d+$/.test(it.id), `${champ} item id must be numeric: ${it.id}`)));
+      assert(idisp.core.every((c) => c.name && c.icon), `${champ} core item display should have name+icon`);
 
+      const nm = (x) => (x && x.name) || '?';
       console.log(`\n✓ ${champ}`);
-      console.log(`   runes: ${display.keystone} | ${display.primaryStyle} + ${display.secondaryStyle}`);
-      console.log(`   spells: ${spells.join(', ')} (ids ${selection.spell1Id}/${selection.spell2Id})`);
-      console.log(`   build : start=${idisp.starting.join('/')} boots=${idisp.boots.join('/')} core=${idisp.core.join(' > ')}`);
+      console.log(`   runes: ${nm(display.keystone)} | ${nm(display.primaryStyle)} + ${nm(display.secondaryStyle)}`);
+      console.log(`   spells: ${spells.map((s) => s.name).join(', ')} (ids ${selection.spell1Id}/${selection.spell2Id})`);
+      console.log(`   build : start=${idisp.starting.map(nm).join('/')} boots=${idisp.boots.map(nm).join('/')} core=${idisp.core.map(nm).join(' > ')}`);
       console.log(`   blocks: ${itemSet.blocks.map((b) => `${b.type}(${b.items.length})`).join(', ')}`);
     } catch (e) {
       failures++;

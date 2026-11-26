@@ -8,6 +8,7 @@
 const path = require('path');
 
 process.env.LOL_COMPANION_DATA_DIR = path.resolve(__dirname, '../data');
+process.env.LOL_COMPANION_API = ''; // offline: use bundled data only
 const importer = require('../src/importer');
 
 function assert(cond, msg) { if (!cond) throw new Error('ASSERT FAILED: ' + msg); }

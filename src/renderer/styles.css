@@ -63,8 +63,14 @@ main { flex: 1; padding: 14px 16px; display: flex; flex-direction: column; gap: 
 .hidden { display: none !important; }
 
 .champ-empty { text-align: center; padding: 18px 0; }
-.champ-head { display: flex; align-items: center; justify-content: space-between; }
-.champ-head h2 { margin: 0; font-size: 20px; }
+.champ-head { display: flex; align-items: center; gap: 10px; }
+.champ-head h2 { margin: 0; font-size: 20px; flex: 1; }
+.champ-icon { width: 40px; height: 40px; border-radius: 8px; border: 1px solid var(--border); background: var(--card-2); }
+.enemy-icon { width: 18px; height: 18px; border-radius: 4px; vertical-align: middle; margin: 0 4px; }
+
+.data-line { font-size: 11px; color: var(--muted); text-align: center; margin: -4px 0 2px; }
+.data-line .live { color: var(--good); }
+.data-line .stale { color: #d0882f; }
 .pill {
   font-size: 11px; color: var(--accent);
   border: 1px solid var(--accent); border-radius: 10px; padding: 1px 8px;
@@ -75,12 +81,16 @@ main { flex: 1; padding: 14px 16px; display: flex; flex-direction: column; gap: 
 .rec-block h3 { margin: 0 0 6px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); }
 .rec { display: flex; flex-wrap: wrap; gap: 6px; }
 .chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
   background: var(--card-2);
   border: 1px solid var(--border);
   border-radius: 8px;
-  padding: 4px 9px;
+  padding: 3px 8px;
   font-size: 12px;
 }
+.chip img { width: 18px; height: 18px; border-radius: 4px; }
 .chip.key { border-color: var(--accent-2); color: #cfe3ff; }
 
 .field { display: flex; flex-direction: column; gap: 5px; margin-bottom: 12px; }

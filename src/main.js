@@ -5,6 +5,8 @@ const path = require('path');
 const { LcuClient } = require('./lcu');
 const ddragon = require('./ddragon');
 const importer = require('./importer');
+const dataClient = require('./dataClient');
+const config = require('./config');
 
 const POLL_MS = 2000;
 
@@ -15,13 +17,16 @@ const state = {
   connected: false,
   phase: 'None',
   summoner: null, // { displayName, summonerId }
-  champion: null, // { id, name }
+  champion: null, // { id, name, icon }
   opponent: null, // name string (auto-detected or user-set)
+  opponentIcon: null,
   manualOpponent: null, // user override
-  recommendation: null, // { runeDisplay, itemDisplay, runeOpponent }
+  recommendation: null, // { runeDisplay, spellDisplay, itemDisplay, runeOpponent }
   autoImport: false,
   flashOnRight: true, // default: Flash on F (right slot / spell2)
   lastImport: null, // { ok, runes, items, error, at }
+  dataInfo: null, // { source, patch, updatedAt, live, remote }
+  updating: null, // { done, total, champion } while an update runs
   error: null,
 };
 
@@ -56,15 +61,33 @@ async function readChampSelect(session) {
   if (!me) return { champion: null, opponent: null };
 
   const champId = me.championId || me.championPickIntent || 0;
-  const champion = champId ? { id: champId, name: await ddragon.championName(champId) } : null;
+  const name = champId ? await ddragon.championName(champId) : null;
+  const champion = name ? { id: champId, name, icon: await ddragon.championIconUrl(name) } : null;
 
   // Lane opponent: enemy in the same assigned position (only if revealed).
   let opponent = null;
+  let opponentIcon = null;
   if (me.assignedPosition) {
     const foe = theirTeam.find((c) => c.assignedPosition === me.assignedPosition && c.championId);
-    if (foe) opponent = await ddragon.championName(foe.championId);
+    if (foe) {
+      opponent = await ddragon.championName(foe.championId);
+      opponentIcon = opponent ? await ddragon.championIconUrl(opponent) : null;
+    }
   }
-  return { champion, opponent };
+  return { champion, opponent, opponentIcon };
+}
+
+// Compute the data freshness/source line shown in the UI.
+async function refreshDataInfo() {
+  const manifest = dataClient.readManifest();
+  const live = dataClient.lastRemoteStatus();
+  state.dataInfo = {
+    remote: config.REMOTE_BASE || null,
+    live, // null unknown, true/false after an attempt
+    source: manifest ? manifest.source : null,
+    patch: manifest ? manifest.patch : null,
+    updatedAt: manifest ? manifest.updatedAt : null,
+  };
 }
 
 async function refreshRecommendation() {
@@ -156,19 +179,22 @@ async function tick() {
 
     if (state.phase === 'ChampSelect') {
       const session = await lcu.champSelectSession();
-      const { champion, opponent } = await readChampSelect(session);
+      const { champion, opponent, opponentIcon } = await readChampSelect(session);
       state.champion = champion;
       state.opponent = opponent;
+      state.opponentIcon = opponentIcon;
 
       const key = champion ? `${champion.id}:${state.manualOpponent || opponent || ''}` : null;
       if (key && key !== lastChampKey) {
         lastChampKey = key;
         await refreshRecommendation();
+        await refreshDataInfo(); // reflect whether the live fetch succeeded
         if (state.autoImport && state.recommendation) await doImport('both');
       }
     } else {
       state.champion = null;
       state.opponent = null;
+      state.opponentIcon = null;
       state.recommendation = null;
       lastChampKey = null;
     }
@@ -231,7 +257,37 @@ ipcMain.handle('test-connection', async () => {
   }
 });
 
-app.whenReady().then(() => {
+ipcMain.handle('get-data-info', async () => {
+  await refreshDataInfo();
+  return state.dataInfo;
+});
+
+// Bulk-refresh the local cache from the deployed site, streaming progress.
+ipcMain.handle('update-data', async () => {
+  if (state.updating) return { ok: false, error: 'An update is already running' };
+  try {
+    state.updating = { done: 0, total: 0, champion: null };
+    push();
+    const manifest = await dataClient.updateLocalData((p) => {
+      state.updating = p;
+      push();
+    });
+    state.updating = null;
+    lastChampKey = null; // next champ select will use the refreshed data
+    await refreshDataInfo();
+    if (state.champion) await refreshRecommendation();
+    push();
+    return { ok: true, manifest };
+  } catch (e) {
+    state.updating = null;
+    push();
+    return { ok: false, error: String((e && e.message) || e) };
+  }
+});
+
+app.whenReady().then(async () => {
+  dataClient.configure({ userDir: path.join(app.getPath('userData'), 'data') });
+  await refreshDataInfo();
   createWindow();
   startLoop();
   app.on('activate', () => {

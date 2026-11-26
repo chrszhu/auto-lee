@@ -63,4 +63,15 @@ async function perkSlot(perkId) {
   return perkSlotById[perkId] || null;
 }
 
-module.exports = { load, latestVersion, championName, perkSlot };
+async function version() {
+  return (await load()).version;
+}
+
+// Square portrait for a champion (by its Data Dragon id/name, e.g. "Blitzcrank").
+async function championIconUrl(name) {
+  if (!name) return null;
+  const { version } = await load();
+  return `${BASE}/cdn/${version}/img/champion/${name}.png`;
+}
+
+module.exports = { load, latestVersion, version, championName, championIconUrl, perkSlot, BASE };

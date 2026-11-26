@@ -74,7 +74,9 @@ async function buildRunePage(champion, opponent) {
     throw new Error(`Incomplete rune data (got ${selectedPerkIds.length}/9 perks)`);
   }
 
-  const nameOf = (group) => (group && group.items && group.items[0] ? group.items[0].name : null);
+  const topOf = (group) => (group && group.items && group.items[0]
+    ? { name: group.items[0].name, icon: group.items[0].icon || null }
+    : null);
   return {
     page: {
       name: `${PAGE_PREFIX} ${champion} vs ${picked.name}`.slice(0, 50),
@@ -85,10 +87,9 @@ async function buildRunePage(champion, opponent) {
     },
     meta: { opponent: picked.name, summonerSpells: (r.summonerSpells && r.summonerSpells.items) || [] },
     display: {
-      keystone: nameOf(r.keystones),
-      primaryStyle: nameOf(r.primaryStyles),
-      secondaryStyle: nameOf(r.secondaryStyles),
-      summonerSpells: ((r.summonerSpells && r.summonerSpells.items) || []).slice(0, 2).map((s) => s.name),
+      keystone: topOf(r.keystones),
+      primaryStyle: topOf(r.primaryStyles),
+      secondaryStyle: topOf(r.secondaryStyles),
     },
   };
 }
@@ -142,7 +143,7 @@ async function buildSummonerSpells(champion, opponent, opts = {}) {
 
   return {
     selection: { spell1Id: ordered[0].spellId, spell2Id: ordered[1].spellId },
-    display: ordered.map((s) => s.name),
+    display: ordered.map((s) => ({ name: s.name, icon: s.icon || null })),
   };
 }
 
@@ -192,13 +193,13 @@ async function buildItemSet(champion, championId, opponent) {
     preferredItemSlots: [],
     blocks,
   };
-  const names = (group, limit) => ((group && group.items) || []).slice(0, limit).map((it) => it.name);
+  const icons = (group, limit) => ((group && group.items) || []).slice(0, limit).map((it) => ({ name: it.name, icon: it.icon || null }));
   return {
     itemSet,
     display: {
-      starting: names(build.starting, 3),
-      core: coreRanked.map((it) => it.name),
-      boots: names(build.boots, 1),
+      starting: icons(build.starting, 3),
+      core: coreRanked.map((it) => ({ name: it.name, icon: it.icon || null })),
+      boots: icons(build.boots, 1),
       position: build.position || null,
     },
   };

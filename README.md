@@ -12,17 +12,22 @@ Not affiliated with or endorsed by Riot Games or Blitz.
 ## How it fits together
 
 ```
-League Client ──(LCU API, localhost)── LoL Companion
-   runes/items  <────── import ──────   (build/rune data bundled inside the app)
+League Client ──(LCU API, localhost)── LoL Companion ──(HTTPS)── your site (zhu-lol.vercel.app)
+   runes/items  <────── import ──────                  ──────>   fresh builds/runes/matchups
+                                         fallback ── bundled snapshot (offline)
 ```
 
-- **Data** is bundled inside the app (`data/matchup-runes`, `data/build-orders`),
-  exported from `match-analytics-fastapi` — itself built from public Riot
-  Match-V5 data + Data Dragon. No backend/server required; works fully offline.
-- **Client glue** (champ-select detection, rune/item import) is done through the
-  LCU API, discovered from the client's process args or its `lockfile`.
-- **Champion/rune IDs** are resolved via Riot's free Data Dragon CDN (the one
-  thing that needs internet, and only to map the client's numeric IDs to names).
+- **Data is live-first:** it fetches fresh build/rune data from your deployed
+  site on every champ select, and falls back to the **bundled snapshot**
+  (`data/`) when offline. The snapshot is exported from `match-analytics-fastapi`
+  (public Riot Match-V5 data + Data Dragon), so it always works even with no net.
+- An **Update data from site** button re-downloads the whole dataset into a local
+  cache, so your offline fallback is fresh too. The current data source + patch +
+  snapshot date are shown in the app.
+- **Client glue** (champ-select detection, rune/spell/item import) is done through
+  the LCU API, discovered from the client's process args or its `lockfile`.
+- **IDs + icons** (champions, runes, spells, items) come from Riot's free Data
+  Dragon CDN.
 
 ## Install (Windows) — easiest
 
@@ -78,9 +83,10 @@ Notes:
 
 ### Config
 
-| Env var                  | Default            | Purpose                                  |
-| ------------------------ | ------------------ | ---------------------------------------- |
-| `LOL_COMPANION_DATA_DIR` | `<app>/data`       | Point at a different build/rune snapshot.|
+| Env var                  | Default                      | Purpose                                                 |
+| ------------------------ | ---------------------------- | ------------------------------------------------------- |
+| `LOL_COMPANION_API`      | `https://zhu-lol.vercel.app` | Live data site. Set to `""` to force offline (bundled). |
+| `LOL_COMPANION_DATA_DIR` | `<app>/data`                 | Point at a different bundled build/rune snapshot.       |
 
 ## Using it
 
@@ -93,27 +99,29 @@ Notes:
 
 ## How current is the data? (data freshness)
 
-The build/rune data is a **snapshot bundled into the installer at build time** — it
-does **not** auto-update. Whatever patch the data was exported on is what you get
-until a new installer is released. Practically:
+**Live-first.** When online, the app pulls build/rune data straight from your site
+(`LOL_COMPANION_API`, default `https://zhu-lol.vercel.app`) on each champ select —
+so it reflects whatever your site currently serves (latest patch, newest sample
+sizes). The data line in the app shows the live/offline status, patch, and the
+local snapshot date.
 
-- It stays accurate within a patch (builds/runes don't change mid-patch), but after
-  a new League patch it can drift until the snapshot is refreshed and re-released.
-- There is no live call for build data — the only thing fetched at runtime is
-  Riot's Data Dragon (just to map the client's numeric IDs to names/icons).
+**Offline fallback.** If the site is unreachable, it uses a local cache, then the
+snapshot bundled in the installer — so it still works with no internet.
 
-**To update the data**, re-export from the analytics project, recopy, and ship a
-new release:
+**Update button.** *Update data from site* re-downloads the entire dataset from
+your site into a writable local cache (`<userData>/data`) and stamps it with the
+date/patch, keeping your offline fallback fresh too. It never needs a new
+installer for data — only app code changes do.
+
+To refresh the **bundled** snapshot shipped in the installer (optional, for a
+better offline baseline):
 
 ```bash
 cp -R ../match-analytics-fastapi/static-data/matchup-runes data/
 cp -R ../match-analytics-fastapi/static-data/build-orders data/
-npm run dist:win   # rebuild the installer, then publish a new GitHub release
+node -e "require('fs').writeFileSync('data/manifest.json', JSON.stringify({updatedAt:new Date().toISOString(),source:'bundled snapshot'},null,2))"
+npm run dist:win
 ```
-
-If you want it to **always be fresh automatically**, the app can instead fetch on
-launch from your deployed analytics API and fall back to the bundled snapshot when
-offline — ask and I'll wire up that hybrid mode.
 
 ## Verify
 

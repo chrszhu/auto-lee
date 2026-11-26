@@ -13,10 +13,19 @@ const PHASE_LABEL = {
   EndOfGame: 'Post game',
 };
 
-function chip(text, key) {
+// obj can be a string, or { name, icon }. prefix is optional leading text.
+function chip(obj, key, prefix) {
   const el = document.createElement('span');
   el.className = 'chip' + (key ? ' key' : '');
-  el.textContent = text;
+  const o = typeof obj === 'string' ? { name: obj } : obj || {};
+  if (o.icon) {
+    const img = document.createElement('img');
+    img.src = o.icon;
+    img.alt = '';
+    img.onerror = () => img.remove();
+    el.appendChild(img);
+  }
+  el.appendChild(document.createTextNode((prefix || '') + (o.name || '')));
   return el;
 }
 
@@ -49,9 +58,31 @@ function renderChampion(s) {
   active.classList.remove('hidden');
 
   $('champ-name').textContent = s.champion.name;
+  const champIcon = $('champ-icon');
+  if (s.champion.icon) {
+    champIcon.src = s.champion.icon;
+    champIcon.style.display = '';
+  } else {
+    champIcon.style.display = 'none';
+  }
+
   const rec = s.recommendation;
   $('position-pill').textContent = rec && rec.itemDisplay && rec.itemDisplay.position ? rec.itemDisplay.position : '';
-  $('matchup-line').textContent = rec && rec.runeOpponent ? `Build shown vs ${rec.runeOpponent}` : '';
+
+  const matchup = $('matchup-line');
+  matchup.innerHTML = '';
+  if (rec && rec.runeOpponent) {
+    matchup.appendChild(document.createTextNode('Build shown vs '));
+    if (s.opponentIcon) {
+      const img = document.createElement('img');
+      img.src = s.opponentIcon;
+      img.className = 'enemy-icon';
+      img.alt = '';
+      img.onerror = () => img.remove();
+      matchup.appendChild(img);
+    }
+    matchup.appendChild(document.createTextNode(rec.runeOpponent));
+  }
 
   const runeEl = $('rune-rec');
   const spellEl = $('spell-rec');
@@ -72,7 +103,7 @@ function renderChampion(s) {
     const r = rec.runeDisplay;
     if (r.keystone) runeEl.appendChild(chip(r.keystone, true));
     if (r.primaryStyle) runeEl.appendChild(chip(r.primaryStyle));
-    if (r.secondaryStyle) runeEl.appendChild(chip('+ ' + r.secondaryStyle));
+    if (r.secondaryStyle) runeEl.appendChild(chip(r.secondaryStyle, false, '+ '));
   }
   if (rec && rec.spellDisplay) {
     rec.spellDisplay.forEach((sp) => spellEl.appendChild(chip(sp, true)));
@@ -83,6 +114,19 @@ function renderChampion(s) {
     (it.boots || []).forEach((n) => itemEl.appendChild(chip(n)));
     (it.core || []).forEach((n) => itemEl.appendChild(chip(n, true)));
   }
+}
+
+function renderDataLine(s) {
+  const el = $('data-line');
+  const d = s.dataInfo;
+  if (!d) { el.textContent = ''; return; }
+  const when = d.updatedAt ? new Date(d.updatedAt).toLocaleDateString() : 'unknown';
+  const patch = d.patch ? `patch ${d.patch}` : 'patch n/a';
+  let liveHtml;
+  if (d.live === true) liveHtml = '<span class="live">● Live from site</span>';
+  else if (d.live === false) liveHtml = '<span class="stale">● Offline — using local snapshot</span>';
+  else liveHtml = d.remote ? 'Live site configured' : 'Local data';
+  el.innerHTML = `${liveHtml} · ${patch} · local snapshot ${when}`;
 }
 
 function setButtonsEnabled(s) {
@@ -98,7 +142,20 @@ let opponentFocused = false;
 function render(s) {
   renderStatus(s);
   renderChampion(s);
+  renderDataLine(s);
   setButtonsEnabled(s);
+
+  // Reflect an in-progress data update.
+  const upBtn = $('btn-update');
+  const upBox = $('update-result');
+  if (s.updating) {
+    upBtn.disabled = true;
+    const { done, total, champion } = s.updating;
+    upBox.textContent = total ? `Updating ${done}/${total}${champion ? ` (${champion})` : ''}…` : 'Starting update…';
+    upBox.className = 'import-result';
+  } else {
+    upBtn.disabled = false;
+  }
 
   const oppInput = $('opponent-input');
   if (!opponentFocused) {
@@ -162,6 +219,21 @@ window.addEventListener('DOMContentLoaded', async () => {
       box.className = 'import-result ok';
     } else {
       box.textContent = r.error;
+      box.className = 'import-result bad';
+    }
+  });
+
+  $('btn-update').addEventListener('click', async () => {
+    const box = $('update-result');
+    box.textContent = 'Starting update…';
+    box.className = 'import-result';
+    const r = await window.companion.updateData();
+    if (r.ok) {
+      const m = r.manifest || {};
+      box.textContent = `Updated ✓  ${m.champions || ''} champions · patch ${m.patch || 'n/a'}`;
+      box.className = 'import-result ok';
+    } else {
+      box.textContent = `Update failed: ${r.error}`;
       box.className = 'import-result bad';
     }
   });
