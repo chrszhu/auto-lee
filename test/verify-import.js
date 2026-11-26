@@ -29,6 +29,9 @@ function makeFakeLcu(initial) {
       if (p === '/lol-perks/v1/pages') return state.pages;
       if (p === '/lol-perks/v1/inventory') return state.inventory;
       if (p.startsWith('/lol-item-sets/')) return state.itemSets;
+      if (p === '/lol-champ-select/v1/session') {
+        return { localPlayerCellId: 0, myTeam: [{ cellId: 0, ...(state.mySelection || {}) }] };
+      }
       return null;
     },
     async request(method, p, body) {

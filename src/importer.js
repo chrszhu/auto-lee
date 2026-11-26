@@ -166,9 +166,30 @@ async function buildSummonerSpells(champion, opponent, opts = {}) {
   };
 }
 
-// Only valid while in champ select — PATCHes the local player's picks.
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+// Set summoner spells (only valid during champ select). The client sometimes
+// ignores or resets a spell change (notably right around lock-in), which makes
+// auto-set look flaky — so we PATCH, then read the session back and retry until
+// the slots actually match (or we run out of attempts).
 async function applySummonerSpells(lcu, selection) {
-  return (await lcu.request('PATCH', '/lol-champ-select/v1/session/my-selection', selection)).body;
+  const patch = () => lcu.request('PATCH', '/lol-champ-select/v1/session/my-selection', selection);
+  await patch();
+  for (let attempt = 0; attempt < 4; attempt++) {
+    await sleep(250);
+    let me = null;
+    try {
+      const session = await lcu.get('/lol-champ-select/v1/session');
+      me = session && (session.myTeam || []).find((c) => c.cellId === session.localPlayerCellId);
+    } catch {
+      /* session read failed — try again */
+    }
+    if (me && me.spell1Id === selection.spell1Id && me.spell2Id === selection.spell2Id) {
+      return true; // confirmed applied
+    }
+    await patch();
+  }
+  return false;
 }
 
 // ---- Item set ----

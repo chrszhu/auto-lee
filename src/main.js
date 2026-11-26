@@ -59,8 +59,10 @@ async function readChampSelect(session) {
   const myTeam = session.myTeam || [];
   const theirTeam = session.theirTeam || [];
   const me = myTeam.find((c) => c.cellId === session.localPlayerCellId);
-  if (!me) return { champion: null, opponent: null };
+  if (!me) return { champion: null, opponent: null, locked: false };
 
+  // championId is set once the pick is LOCKED; championPickIntent is the hover.
+  const locked = !!(me.championId && me.championId !== 0);
   const champId = me.championId || me.championPickIntent || 0;
   const name = champId ? await ddragon.championName(champId) : null;
   const champion = name ? { id: champId, name, icon: await ddragon.championIconUrl(name) } : null;
@@ -75,7 +77,7 @@ async function readChampSelect(session) {
       opponentIcon = opponent ? await ddragon.championIconUrl(opponent) : null;
     }
   }
-  return { champion, opponent, opponentIcon };
+  return { champion, opponent, opponentIcon, locked };
 }
 
 // Compute the data freshness/source line shown in the UI.
@@ -189,16 +191,23 @@ async function tick() {
 
     if (state.phase === 'ChampSelect') {
       const session = await lcu.champSelectSession();
-      const { champion, opponent, opponentIcon } = await readChampSelect(session);
+      const { champion, opponent, opponentIcon, locked } = await readChampSelect(session);
       state.champion = champion;
       state.opponent = opponent;
       state.opponentIcon = opponentIcon;
 
-      const key = champion ? `${champion.id}:${state.manualOpponent || opponent || ''}:${state.role || ''}` : null;
-      if (key && key !== lastChampKey) {
-        lastChampKey = key;
-        await refreshRecommendation();
-        await refreshDataInfo(); // reflect whether the live fetch succeeded
+      // dataKey = what the recommendation depends on; lock state is separate.
+      // Locking a champ can reset summoner spells, so we re-import on the
+      // hover -> lock transition to re-apply them (without refetching data).
+      const dataKey = champion ? `${champion.id}:${state.manualOpponent || opponent || ''}:${state.role || ''}` : null;
+      const fullKey = dataKey ? `${dataKey}:${locked ? 'L' : 'H'}` : null;
+      if (fullKey && fullKey !== lastChampKey) {
+        const dataChanged = !lastChampKey || !lastChampKey.startsWith(`${dataKey}:`);
+        lastChampKey = fullKey;
+        if (dataChanged) {
+          await refreshRecommendation();
+          await refreshDataInfo();
+        }
         if (state.autoImport && state.recommendation) await doImport('both');
       }
     } else {
