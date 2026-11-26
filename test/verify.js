@@ -26,7 +26,7 @@ async function run() {
   let failures = 0;
   for (const [champ, id] of CHAMPS) {
     try {
-      const { page, display } = await importer.buildRunePage(champ, '');
+      const { page, display, meta } = await importer.buildRunePage(champ, '');
       assert(page.selectedPerkIds.length === 9, `${champ} rune page should have 9 perks, got ${page.selectedPerkIds.length}`);
       const runes6 = page.selectedPerkIds.slice(0, 6);
       assert(new Set(runes6).size === 6, `${champ} 6 runes should be unique, got [${runes6.join(',')}]`);
@@ -34,6 +34,11 @@ async function run() {
       shards.forEach((s) => assert(s >= 5000 && s < 5900, `${champ} shard id out of range: ${s}`));
       assert(page.primaryStyleId && page.subStyleId, `${champ} must have both styles`);
       assert(page.primaryStyleId !== page.subStyleId, `${champ} primary/secondary styles must differ`);
+      // No opponent -> overall build; title is just "[Companion] <champ>" (no "vs").
+      assert(meta.scope === 'overall', `${champ} should be overall when no opponent, got ${meta.scope}`);
+      assert(meta.opponent === null, `${champ} overall should have null opponent`);
+      assert(!/ vs /i.test(page.name), `${champ} page name should not contain "vs": ${page.name}`);
+      assert(page.name === `[Companion] ${champ}`, `${champ} page name should be "[Companion] ${champ}", got ${page.name}`);
 
       const { selection, display: spells } = await importer.buildSummonerSpells(champ, '');
       assert(selection.spell1Id && selection.spell2Id, `${champ} must have two summoner spells`);
@@ -68,7 +73,21 @@ async function run() {
       console.error(`\n✗ ${champ}: ${e.message}`);
     }
   }
-  console.log(`\n${failures ? '❌' : '✅'} ${CHAMPS.length - failures}/${CHAMPS.length} champions mapped cleanly from bundled data`);
+
+  // Matchup path: an explicit opponent uses that matchup's data.
+  try {
+    const { page, meta } = await importer.buildRunePage('Blitzcrank', 'Thresh');
+    assert(meta.scope === 'matchup', `expected matchup scope, got ${meta.scope}`);
+    assert(meta.opponent === 'Thresh', `expected opponent Thresh, got ${meta.opponent}`);
+    assert(page.name === '[Companion] Blitzcrank', `matchup page name should still omit opponent, got ${page.name}`);
+    assert(page.selectedPerkIds.length === 9, 'matchup page should have 9 perks');
+    console.log('\n✓ matchup path: Blitzcrank vs Thresh -> scope=matchup, title omits opponent');
+  } catch (e) {
+    failures++;
+    console.error(`\n✗ matchup path: ${e.message}`);
+  }
+
+  console.log(`\n${failures ? '❌' : '✅'} ${CHAMPS.length - failures}/${CHAMPS.length} champions + matchup check mapped cleanly from bundled data`);
   process.exit(failures ? 1 : 0);
 }
 

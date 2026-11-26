@@ -81,12 +81,18 @@ async function readChampSelect(session) {
 async function refreshDataInfo() {
   const manifest = dataClient.readManifest();
   const live = dataClient.lastRemoteStatus();
+  let patch = null;
+  try {
+    patch = await ddragon.patch(); // current public patch, e.g. "16.23"
+  } catch {
+    /* offline — fall back to snapshot patch below */
+  }
   state.dataInfo = {
     remote: config.REMOTE_BASE || null,
     live, // null unknown, true/false after an attempt
-    source: manifest ? manifest.source : null,
-    patch: manifest ? manifest.patch : null,
-    updatedAt: manifest ? manifest.updatedAt : null,
+    patch, // current live/public patch
+    snapshotPatch: manifest ? manifest.patch : null,
+    snapshotDate: manifest ? manifest.updatedAt : null,
   };
 }
 
@@ -105,7 +111,8 @@ async function refreshRecommendation() {
       /* spells optional for preview */
     }
     state.recommendation = {
-      runeOpponent: runes.meta.opponent,
+      scope: runes.meta.scope, // 'overall' | 'matchup'
+      runeOpponent: runes.meta.opponent, // null when overall
       runeDisplay: runes.display,
       itemDisplay: items.display,
       spellDisplay,
@@ -260,6 +267,15 @@ ipcMain.handle('test-connection', async () => {
 ipcMain.handle('get-data-info', async () => {
   await refreshDataInfo();
   return state.dataInfo;
+});
+
+// Champion list (name + icon) for the lane-opponent autocomplete.
+ipcMain.handle('get-champions', async () => {
+  try {
+    return await ddragon.championList();
+  } catch {
+    return [];
+  }
 });
 
 // Bulk-refresh the local cache from the deployed site, streaming progress.

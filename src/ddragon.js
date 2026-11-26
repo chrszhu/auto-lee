@@ -67,6 +67,21 @@ async function version() {
   return (await load()).version;
 }
 
+// Major.minor patch string (e.g. "16.23") from the current Data Dragon version.
+async function patch() {
+  const v = await version();
+  const parts = String(v).split('.');
+  return parts.length >= 2 ? `${parts[0]}.${parts[1]}` : v;
+}
+
+// All champions as [{ name, icon }], sorted by name — for the opponent picker.
+async function championList() {
+  const { version, championById } = await load();
+  return Object.values(championById)
+    .sort((a, b) => a.localeCompare(b))
+    .map((name) => ({ name, icon: `${BASE}/cdn/${version}/img/champion/${name}.png` }));
+}
+
 // Square portrait for a champion (by its Data Dragon id/name, e.g. "Blitzcrank").
 async function championIconUrl(name) {
   if (!name) return null;
@@ -74,4 +89,4 @@ async function championIconUrl(name) {
   return `${BASE}/cdn/${version}/img/champion/${name}.png`;
 }
 
-module.exports = { load, latestVersion, version, championName, championIconUrl, perkSlot, BASE };
+module.exports = { load, latestVersion, version, patch, championName, championIconUrl, championList, perkSlot, BASE };

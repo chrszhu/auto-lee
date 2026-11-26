@@ -11,57 +11,74 @@ const dataClient = require('./dataClient');
 
 const PAGE_PREFIX = '[Companion]';
 
-// Pick the opponent entry to base runes on: the requested lane opponent if we
-// have data for them, otherwise the highest-sample matchup (most representative).
-function pickOpponentEntry(matchup, opponent) {
-  const opponents = matchup && matchup.opponents ? matchup.opponents : {};
-  if (opponent && opponents[opponent]) return { name: opponent, entry: opponents[opponent] };
-  let best = null;
-  for (const [name, entry] of Object.entries(opponents)) {
-    const games = entry.runeGames || entry.games || 0;
-    if (!best || games > best.games) best = { name, entry, games };
+// Resolve the rune/spell source:
+//   - a specific lane opponent -> that matchup's data (if we have it)
+//   - otherwise -> the champion's OVERALL aggregate (the general build-order,
+//     which carries the same rune/spell fields across all of its games).
+// Returns { src, scope: 'matchup'|'overall', opponent }.
+async function resolveRuneSource(champion, opponent) {
+  if (opponent) {
+    const matchup = await dataClient.getMatchupRunes(champion);
+    const entry = matchup && matchup.opponents ? matchup.opponents[opponent] : null;
+    if (entry && entry.runes) return { src: entry.runes, scope: 'matchup', opponent };
   }
-  return best ? { name: best.name, entry: best.entry } : null;
+  const build = await dataClient.getBuildOrder(champion, '');
+  if (!build || build.available === false) throw new Error(`No data for ${champion}`);
+  return { src: build, scope: 'overall', opponent: null };
 }
 
 function topId(group) {
   return group && group.items && group.items[0] ? group.items[0].runeId : null;
 }
 
-// Choose two secondary runes from two *different* rows of the secondary tree.
-async function pickSecondaryRunes(secondaryRunes, secondaryStyleId) {
+// Pick the secondary tree + two runes from it (two different rows).
+//
+// The secondary tree MUST differ from the primary (the client rejects same-tree
+// secondaries). Aggregate "overall" data can report a secondary style equal to
+// the primary, so we don't trust that field: we look at the actual secondary
+// runes, drop any that belong to the primary tree, prefer the suggested style
+// when it's valid, otherwise use the style of the most common remaining rune.
+async function pickSecondary(secondaryRunes, primaryStyleId, preferredStyleId) {
   const items = (secondaryRunes && secondaryRunes.items) || [];
-  const chosen = [];
-  const usedSlots = new Set();
+  const annotated = [];
   for (const it of items) {
     const info = await ddragon.perkSlot(it.runeId);
-    if (!info || info.styleId !== secondaryStyleId) continue;
-    if (usedSlots.has(info.slot)) continue;
-    usedSlots.add(info.slot);
-    chosen.push(it.runeId);
+    if (info && info.styleId !== primaryStyleId) {
+      annotated.push({ runeId: it.runeId, styleId: info.styleId, slot: info.slot });
+    }
+  }
+  if (!annotated.length) return null;
+
+  const styleId = preferredStyleId && preferredStyleId !== primaryStyleId && annotated.some((a) => a.styleId === preferredStyleId)
+    ? preferredStyleId
+    : annotated[0].styleId;
+
+  const chosen = [];
+  const usedSlots = new Set();
+  for (const a of annotated) {
+    if (a.styleId !== styleId || usedSlots.has(a.slot)) continue;
+    usedSlots.add(a.slot);
+    chosen.push(a.runeId);
     if (chosen.length === 2) break;
   }
-  return chosen;
+  return { styleId, runes: chosen };
 }
 
-// Assemble a complete, client-valid rune page from the matchup data.
+// Assemble a complete, client-valid rune page (overall, or matchup-specific).
 async function buildRunePage(champion, opponent) {
-  const matchup = await dataClient.getMatchupRunes(champion);
-  if (!matchup || matchup.available === false) throw new Error(`No rune data for ${champion}`);
-  const picked = pickOpponentEntry(matchup, opponent);
-  if (!picked) throw new Error(`No matchup rune data for ${champion}`);
-  const r = picked.entry.runes;
+  const { src: r, scope, opponent: oppName } = await resolveRuneSource(champion, opponent);
 
   const keystone = topId(r.keystones);
   const primaryStyleId = topId(r.primaryStyles);
-  const subStyleId = topId(r.secondaryStyles);
 
   const primaryRunes = (r.primaryRunes && r.primaryRunes.slots ? [...r.primaryRunes.slots] : [])
     .sort((a, b) => a.slot - b.slot)
     .map((s) => (s.items && s.items[0] ? s.items[0].runeId : null))
     .filter(Boolean);
 
-  const secondaryRunes = await pickSecondaryRunes(r.secondaryRunes, subStyleId);
+  const sec = await pickSecondary(r.secondaryRunes, primaryStyleId, topId(r.secondaryStyles));
+  const subStyleId = sec ? sec.styleId : null;
+  const secondaryRunes = sec ? sec.runes : [];
 
   const shards = (r.statShards && r.statShards.slots ? [...r.statShards.slots] : [])
     .sort((a, b) => a.slot - b.slot)
@@ -70,26 +87,30 @@ async function buildRunePage(champion, opponent) {
 
   const selectedPerkIds = [keystone, ...primaryRunes, ...secondaryRunes, ...shards].filter(Boolean);
 
-  if (!keystone || !primaryStyleId || !subStyleId || selectedPerkIds.length !== 9) {
-    throw new Error(`Incomplete rune data (got ${selectedPerkIds.length}/9 perks)`);
+  if (!keystone || !primaryStyleId || !subStyleId || subStyleId === primaryStyleId || selectedPerkIds.length !== 9) {
+    throw new Error(`Incomplete rune data for ${champion} (got ${selectedPerkIds.length}/9 perks)`);
   }
 
   const topOf = (group) => (group && group.items && group.items[0]
     ? { name: group.items[0].name, icon: group.items[0].icon || null }
     : null);
+  // Reflect the actually-chosen secondary style (may differ from the raw top).
+  const subItem = (r.secondaryStyles && r.secondaryStyles.items
+    ? r.secondaryStyles.items.find((s) => s.runeId === subStyleId)
+    : null);
   return {
     page: {
-      name: `${PAGE_PREFIX} ${champion} vs ${picked.name}`.slice(0, 50),
+      name: `${PAGE_PREFIX} ${champion}`.slice(0, 50),
       primaryStyleId,
       subStyleId,
       selectedPerkIds,
       current: true,
     },
-    meta: { opponent: picked.name, summonerSpells: (r.summonerSpells && r.summonerSpells.items) || [] },
+    meta: { scope, opponent: oppName, summonerSpells: (r.summonerSpells && r.summonerSpells.items) || [] },
     display: {
       keystone: topOf(r.keystones),
       primaryStyle: topOf(r.primaryStyles),
-      secondaryStyle: topOf(r.secondaryStyles),
+      secondaryStyle: subItem ? { name: subItem.name, icon: subItem.icon || null } : topOf(r.secondaryStyles),
     },
   };
 }
@@ -127,10 +148,8 @@ const FLASH_ID = 4;
 // swaps the two.
 async function buildSummonerSpells(champion, opponent, opts = {}) {
   const flashOnRight = opts.flashOnRight !== false; // default true
-  const matchup = await dataClient.getMatchupRunes(champion);
-  const picked = pickOpponentEntry(matchup, opponent);
-  if (!picked) throw new Error(`No summoner-spell data for ${champion}`);
-  const items = (picked.entry.runes && picked.entry.runes.summonerSpells && picked.entry.runes.summonerSpells.items) || [];
+  const { src } = await resolveRuneSource(champion, opponent);
+  const items = (src.summonerSpells && src.summonerSpells.items) || [];
   const seen = new Set();
   const top = items.filter((s) => s.spellId && !seen.has(s.spellId) && seen.add(s.spellId)).slice(0, 2);
   if (top.length !== 2) throw new Error(`Incomplete summoner-spell data for ${champion}`);
@@ -184,7 +203,7 @@ async function buildItemSet(champion, championId, opponent) {
   const itemSet = {
     associatedChampions: [Number(championId)],
     associatedMaps: [11, 12],
-    title: `${PAGE_PREFIX} ${champion}${opponent ? ` vs ${opponent}` : ''}`,
+    title: `${PAGE_PREFIX} ${champion}`,
     type: 'custom',
     map: 'any',
     mode: 'any',

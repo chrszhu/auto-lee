@@ -57,8 +57,11 @@
 
       <section class="card">
         <label class="field">
-          <span>Lane opponent (override)</span>
-          <input id="opponent-input" type="text" placeholder="auto-detected — e.g. Thresh" />
+          <span>Lane opponent (override) — leave blank for overall build</span>
+          <div class="autocomplete">
+            <input id="opponent-input" type="text" autocomplete="off" spellcheck="false" placeholder="auto-detected — type a champion" />
+            <div id="opponent-list" class="ac-list hidden"></div>
+          </div>
         </label>
 
         <label class="toggle">

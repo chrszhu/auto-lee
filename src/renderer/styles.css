@@ -107,6 +107,30 @@ main { flex: 1; padding: 14px 16px; display: flex; flex-direction: column; gap: 
 
 .toggle { display: flex; align-items: center; gap: 8px; font-size: 13px; cursor: pointer; }
 
+.autocomplete { position: relative; }
+.ac-list {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0; right: 0;
+  max-height: 240px;
+  overflow-y: auto;
+  background: var(--card-2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  z-index: 20;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+}
+.ac-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  cursor: pointer;
+  font-size: 13px;
+}
+.ac-item:hover, .ac-item.active { background: var(--accent-2); color: #fff; }
+.ac-item img { width: 22px; height: 22px; border-radius: 4px; }
+
 .actions { display: flex; gap: 8px; }
 .btn {
   flex: 1;

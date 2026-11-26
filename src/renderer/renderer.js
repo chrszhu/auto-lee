@@ -71,8 +71,8 @@ function renderChampion(s) {
 
   const matchup = $('matchup-line');
   matchup.innerHTML = '';
-  if (rec && rec.runeOpponent) {
-    matchup.appendChild(document.createTextNode('Build shown vs '));
+  if (rec && rec.scope === 'matchup' && rec.runeOpponent) {
+    matchup.appendChild(document.createTextNode('Matchup vs '));
     if (s.opponentIcon) {
       const img = document.createElement('img');
       img.src = s.opponentIcon;
@@ -82,6 +82,8 @@ function renderChampion(s) {
       matchup.appendChild(img);
     }
     matchup.appendChild(document.createTextNode(rec.runeOpponent));
+  } else if (rec) {
+    matchup.appendChild(document.createTextNode('Overall build (all matchups)'));
   }
 
   const runeEl = $('rune-rec');
@@ -120,13 +122,17 @@ function renderDataLine(s) {
   const el = $('data-line');
   const d = s.dataInfo;
   if (!d) { el.textContent = ''; return; }
-  const when = d.updatedAt ? new Date(d.updatedAt).toLocaleDateString() : 'unknown';
-  const patch = d.patch ? `patch ${d.patch}` : 'patch n/a';
-  let liveHtml;
-  if (d.live === true) liveHtml = '<span class="live">● Live from site</span>';
-  else if (d.live === false) liveHtml = '<span class="stale">● Offline — using local snapshot</span>';
-  else liveHtml = d.remote ? 'Live site configured' : 'Local data';
-  el.innerHTML = `${liveHtml} · ${patch} · local snapshot ${when}`;
+  if (d.live === false) {
+    // Offline: data comes from the local snapshot, so show its patch + date.
+    const when = d.snapshotDate ? new Date(d.snapshotDate).toLocaleDateString() : 'unknown';
+    const p = d.snapshotPatch ? `patch ${d.snapshotPatch}` : '';
+    el.innerHTML = `<span class="stale">● Offline</span> · using local snapshot ${p} · ${when}`.replace(/ ·  ·/g, ' ·');
+  } else {
+    // Live (or configured): show the current public patch from the site.
+    const p = d.patch ? `patch ${d.patch}` : '';
+    const label = d.live === true ? '<span class="live">● Live from site</span>' : 'Live from site';
+    el.innerHTML = `${label}${p ? ' · ' + p : ''}`;
+  }
 }
 
 function setButtonsEnabled(s) {
@@ -189,18 +195,69 @@ async function importNow(what) {
   await window.companion.importNow(what);
 }
 
+let champions = []; // [{ name, icon }]
+
+function setupOpponentAutocomplete() {
+  const input = $('opponent-input');
+  const list = $('opponent-list');
+  let t = null;
+  let activeIdx = -1;
+
+  window.companion.getChampions().then((c) => (champions = c || []));
+
+  const commit = (val) => {
+    clearTimeout(t);
+    t = setTimeout(() => window.companion.setOpponent(val), 300);
+  };
+
+  const hide = () => { list.classList.add('hidden'); list.innerHTML = ''; activeIdx = -1; };
+
+  const renderList = () => {
+    const q = input.value.trim().toLowerCase();
+    const matches = (q
+      ? champions.filter((c) => c.name.toLowerCase().includes(q))
+      : champions
+    ).slice(0, 8);
+    list.innerHTML = '';
+    if (!matches.length) { hide(); return; }
+    matches.forEach((c, i) => {
+      const row = document.createElement('div');
+      row.className = 'ac-item' + (i === activeIdx ? ' active' : '');
+      const img = document.createElement('img');
+      img.src = c.icon; img.alt = ''; img.onerror = () => img.remove();
+      row.appendChild(img);
+      row.appendChild(document.createTextNode(c.name));
+      row.addEventListener('mousedown', (e) => {
+        e.preventDefault(); // keep focus/selection before blur
+        input.value = c.name;
+        commit(c.name);
+        hide();
+      });
+      list.appendChild(row);
+    });
+    list.classList.remove('hidden');
+  };
+
+  input.addEventListener('focus', () => { opponentFocused = true; renderList(); });
+  input.addEventListener('blur', () => { opponentFocused = false; setTimeout(hide, 150); });
+  input.addEventListener('input', () => { activeIdx = -1; renderList(); commit(input.value); });
+  input.addEventListener('keydown', (e) => {
+    const items = Array.from(list.querySelectorAll('.ac-item'));
+    if (e.key === 'ArrowDown') { e.preventDefault(); activeIdx = Math.min(activeIdx + 1, items.length - 1); renderList(); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); activeIdx = Math.max(activeIdx - 1, 0); renderList(); }
+    else if (e.key === 'Enter' && activeIdx >= 0 && items[activeIdx]) {
+      e.preventDefault();
+      const name = items[activeIdx].textContent;
+      input.value = name; commit(name); hide();
+    } else if (e.key === 'Escape') { hide(); }
+  });
+}
+
 window.addEventListener('DOMContentLoaded', async () => {
   window.companion.onState(render);
   render(await window.companion.getState());
 
-  const oppInput = $('opponent-input');
-  oppInput.addEventListener('focus', () => (opponentFocused = true));
-  oppInput.addEventListener('blur', () => (opponentFocused = false));
-  let t = null;
-  oppInput.addEventListener('input', () => {
-    clearTimeout(t);
-    t = setTimeout(() => window.companion.setOpponent(oppInput.value), 400);
-  });
+  setupOpponentAutocomplete();
 
   $('auto-import').addEventListener('change', (e) => window.companion.setAutoImport(e.target.checked));
   $('flash-right').addEventListener('change', (e) => window.companion.setFlashSide(e.target.checked));

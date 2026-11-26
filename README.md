@@ -117,8 +117,8 @@ To refresh the **bundled** snapshot shipped in the installer (optional, for a
 better offline baseline):
 
 ```bash
-cp -R ../match-analytics-fastapi/static-data/matchup-runes data/
-cp -R ../match-analytics-fastapi/static-data/build-orders data/
+cp -R ../riot/lol/match-analytics-fastapi/static-data/matchup-runes data/
+cp -R ../riot/lol/match-analytics-fastapi/static-data/build-orders data/
 node -e "require('fs').writeFileSync('data/manifest.json', JSON.stringify({updatedAt:new Date().toISOString(),source:'bundled snapshot'},null,2))"
 npm run dist:win
 ```

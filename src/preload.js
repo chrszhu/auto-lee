@@ -15,6 +15,7 @@ contextBridge.exposeInMainWorld('companion', {
   setFlashSide: (flashOnRight) => ipcRenderer.invoke('set-flash-side', flashOnRight),
   testConnection: () => ipcRenderer.invoke('test-connection'),
   getDataInfo: () => ipcRenderer.invoke('get-data-info'),
+  getChampions: () => ipcRenderer.invoke('get-champions'),
   updateData: () => ipcRenderer.invoke('update-data'),
   importNow: (what) => ipcRenderer.invoke('import', what), // 'runes' | 'spells' | 'items' | 'all'
 });
