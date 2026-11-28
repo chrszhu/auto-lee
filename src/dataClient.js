@@ -97,6 +97,17 @@ async function getBuildOrder(champion, opponent, position) {
 
 // ---- champion list (for bulk update) ----
 
+const roleCache = new Map();
+
+// {position, games}[] for a champion from the local build snapshot (no network).
+function getRoleGames(champion) {
+  if (!roleCache.has(champion)) {
+    const d = readLocal('build-orders', champion);
+    roleCache.set(champion, (d && d.availablePositions) || null);
+  }
+  return roleCache.get(champion);
+}
+
 async function getChampionList() {
   if (remoteEnabled()) {
     try {
@@ -195,6 +206,7 @@ module.exports = {
   remoteEnabled,
   getMatchupRunes,
   getBuildOrder,
+  getRoleGames,
   getChampionList,
   readManifest,
   lastRemoteStatus,

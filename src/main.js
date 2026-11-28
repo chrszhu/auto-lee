@@ -6,6 +6,7 @@ const { LcuClient } = require('./lcu');
 const ddragon = require('./ddragon');
 const importer = require('./importer');
 const dataClient = require('./dataClient');
+const positions = require('./positions');
 const config = require('./config');
 const { autoUpdater } = require('electron-updater');
 
@@ -26,6 +27,8 @@ const state = {
   autoImport: true, // default ON: import automatically on champ select
   flashOnRight: true, // default: Flash on F (right slot / spell2)
   role: null, // null = auto-detect position; or TOP/JUNGLE/MIDDLE/BOTTOM/UTILITY
+  detectedPosition: null, // what auto-detect resolved to this champ select
+  positionSource: null, // 'assigned' | 'lobby' | 'smite' | 'team' | 'default' | 'mode'
   lastImport: null, // { ok, runes, items, error, at }
   dataInfo: null, // { source, patch, updatedAt, live, remote }
   updating: null, // { done, total, champion } while a data update runs
@@ -39,6 +42,33 @@ let buildPathChoice = { champion: null, id: null };
 
 function selectedPathId() {
   return state.champion && buildPathChoice.champion === state.champion.name ? buildPathChoice.id : null;
+}
+
+function effectivePosition() {
+  return state.role || state.detectedPosition || '';
+}
+
+// Per-game lookups that don't change during one champ select.
+let gameCtx = { gameId: null, classic: true, lobbyPreference: null };
+
+async function loadGameContext(gameId) {
+  if (gameCtx.gameId === gameId) return gameCtx;
+  gameCtx = { gameId, classic: true, lobbyPreference: null };
+  try {
+    const gf = await lcu.gameflowSession();
+    const mode = gf && gf.gameData && gf.gameData.queue && gf.gameData.queue.gameMode;
+    if (mode && mode !== 'CLASSIC') gameCtx.classic = false; // ARAM, Arena, etc.: no lanes
+  } catch {
+    /* keep defaults */
+  }
+  try {
+    const lobby = await lcu.lobby();
+    const m = lobby && lobby.localMember;
+    gameCtx.lobbyPreference = m ? m.firstPositionPreference || null : null;
+  } catch {
+    /* no lobby (custom game etc.) */
+  }
+  return gameCtx;
 }
 
 function push() {
@@ -61,13 +91,13 @@ function createWindow() {
   win.once('ready-to-show', push);
 }
 
-// Pull the local player's champion + best-guess lane opponent out of a champ
-// select session.
+// Pull the local player's champion, position and best-guess lane opponent out
+// of a champ select session.
 async function readChampSelect(session) {
   const myTeam = session.myTeam || [];
   const theirTeam = session.theirTeam || [];
   const me = myTeam.find((c) => c.cellId === session.localPlayerCellId);
-  if (!me) return { champion: null, opponent: null, locked: false };
+  if (!me) return { champion: null, opponent: null, locked: false, position: null, positionSource: null };
 
   // championId is set once the pick is LOCKED; championPickIntent is the hover.
   const locked = !!(me.championId && me.championId !== 0);
@@ -75,17 +105,48 @@ async function readChampSelect(session) {
   const name = champId ? await ddragon.championName(champId) : null;
   const champion = name ? { id: champId, name, icon: await ddragon.championIconUrl(name) } : null;
 
-  // Lane opponent: enemy in the same assigned position (only if revealed).
+  const describe = async (c, key) => {
+    const id = c.championId || c.championPickIntent || 0;
+    const champName = id ? await ddragon.championName(id) : null;
+    const games = champName ? dataClient.getRoleGames(champName) : null;
+    return {
+      key,
+      champName,
+      assigned: c.assignedPosition,
+      spells: [c.spell1Id, c.spell2Id].filter(Boolean),
+      probs: games && games.length ? positions.roleProbs(games) : null,
+    };
+  };
+
+  const ctx = await loadGameContext(session.gameId);
+  let position = null;
+  let positionSource = 'mode';
+  if (ctx.classic) {
+    const meInfo = await describe(me, 'me');
+    const allies = await Promise.all(myTeam.filter((c) => c !== me).map((c) => describe(c, `a${c.cellId}`)));
+    ({ position, source: positionSource } = positions.resolveMyPosition({
+      me: meInfo,
+      allies,
+      lobbyPreference: ctx.lobbyPreference,
+    }));
+  }
+
+  // Lane opponent: enemy assigned to our lane, else inferred from revealed picks.
   let opponent = null;
   let opponentIcon = null;
-  if (me.assignedPosition) {
-    const foe = theirTeam.find((c) => c.assignedPosition === me.assignedPosition && c.championId);
-    if (foe) {
-      opponent = await ddragon.championName(foe.championId);
-      opponentIcon = opponent ? await ddragon.championIconUrl(opponent) : null;
+  const lane = state.role || position;
+  if (lane) {
+    const enemies = await Promise.all(
+      theirTeam.filter((c) => c.championId).map((c) => describe(c, `e${c.cellId}`))
+    );
+    const key = positions.inferLaneOpponent(enemies, lane);
+    const foe = enemies.find((e) => e.key === key);
+    if (foe && foe.champName) {
+      opponent = foe.champName;
+      opponentIcon = await ddragon.championIconUrl(opponent);
     }
   }
-  return { champion, opponent, opponentIcon, locked };
+  return { champion, opponent, opponentIcon, locked, position, positionSource };
 }
 
 // Compute the data freshness/source line shown in the UI.
@@ -112,7 +173,7 @@ async function refreshRecommendation() {
   state.error = null;
   if (!state.champion || !state.champion.name) return;
   const opp = state.manualOpponent || state.opponent || '';
-  const pos = state.role || '';
+  const pos = effectivePosition();
   try {
     const runes = await importer.buildRunePage(state.champion.name, opp, pos, selectedPathId());
     const items = await importer.buildItemSet(state.champion.name, state.champion.id, opp, pos, selectedPathId());
@@ -138,7 +199,7 @@ async function doImport(what) {
   if (!state.champion || !state.champion.name) return { ok: false, error: 'No champion selected' };
   if (!state.summoner) return { ok: false, error: 'Summoner not loaded' };
   const opp = state.manualOpponent || state.opponent || '';
-  const pos = state.role || '';
+  const pos = effectivePosition();
   const all = what === 'all' || what === 'both';
   const result = { ok: true, runes: false, spells: false, items: false, error: null, at: Date.now() };
   try {
@@ -199,15 +260,17 @@ async function tick() {
 
     if (state.phase === 'ChampSelect') {
       const session = await lcu.champSelectSession();
-      const { champion, opponent, opponentIcon, locked } = await readChampSelect(session);
+      const { champion, opponent, opponentIcon, locked, position, positionSource } = await readChampSelect(session);
       state.champion = champion;
       state.opponent = opponent;
       state.opponentIcon = opponentIcon;
+      state.detectedPosition = position;
+      state.positionSource = positionSource;
 
       // dataKey = what the recommendation depends on; lock state is separate.
       // Locking a champ can reset summoner spells, so we re-import on the
       // hover -> lock transition to re-apply them (without refetching data).
-      const dataKey = champion ? `${champion.id}:${state.manualOpponent || opponent || ''}:${state.role || ''}` : null;
+      const dataKey = champion ? `${champion.id}:${state.manualOpponent || opponent || ''}:${effectivePosition()}` : null;
       const fullKey = dataKey ? `${dataKey}:${locked ? 'L' : 'H'}` : null;
       if (fullKey && fullKey !== lastChampKey) {
         const dataChanged = !lastChampKey || !lastChampKey.startsWith(`${dataKey}:`);
@@ -223,6 +286,8 @@ async function tick() {
       state.opponent = null;
       state.opponentIcon = null;
       state.recommendation = null;
+      state.detectedPosition = null;
+      state.positionSource = null;
       lastChampKey = null;
     }
     state.error = state.error || null;

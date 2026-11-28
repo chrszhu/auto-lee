@@ -7,7 +7,7 @@
   "scripts": {
     "start": "electron .",
     "dev": "electron . --dev",
-    "test": "node test/verify.js && node test/verify-import.js",
+    "test": "node test/verify.js && node test/verify-import.js && node test/verify-positions.js",
     "dist": "electron-builder",
     "dist:win": "electron-builder --win --x64",
     "dist:mac": "electron-builder --mac"

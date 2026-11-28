@@ -224,6 +224,19 @@ function render(s) {
   $('auto-import').checked = !!s.autoImport;
   $('flash-right').checked = s.flashOnRight !== false;
   if (document.activeElement !== $('role-select')) $('role-select').value = s.role || '';
+  const ROLE_LABEL = { TOP: 'Top', JUNGLE: 'Jungle', MIDDLE: 'Mid', BOTTOM: 'Bot', UTILITY: 'Support' };
+  const SOURCE_LABEL = {
+    assigned: 'assigned',
+    lobby: 'lobby pick',
+    smite: 'has Smite',
+    team: 'guessed from team',
+  };
+  const autoOpt = $('role-select').querySelector('option[value=""]');
+  autoOpt.textContent = s.detectedPosition
+    ? `Auto-detect (${ROLE_LABEL[s.detectedPosition]} · ${SOURCE_LABEL[s.positionSource] || 'detected'})`
+    : s.positionSource === 'mode'
+      ? 'Auto-detect (no lanes in this mode)'
+      : 'Auto-detect';
 
   if (s.lastImport) {
     const r = s.lastImport;

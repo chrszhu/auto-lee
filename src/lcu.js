@@ -160,6 +160,15 @@ class LcuClient {
   currentSummoner() {
     return this.get('/lol-summoner/v1/current-summoner');
   }
+
+  // Lobby role preferences (firstPositionPreference) survive into champ select.
+  lobby() {
+    return this.get('/lol-lobby/v2/lobby');
+  }
+
+  gameflowSession() {
+    return this.get('/lol-gameflow/v1/session');
+  }
 }
 
 module.exports = { LcuClient };
