@@ -71,13 +71,15 @@ function assignRoles(entries) {
 }
 
 // me: { key, assigned, spells:[ids], probs }, allies: [{ key, assigned, spells, probs }]
-// lobbyPreference: first lobby role pick (may be null).
+// slotPosition: Quickplay lobby slot position for the champion being played (may be null).
 // Returns { position, source } where source explains how it was decided.
-function resolveMyPosition({ me, allies = [], lobbyPreference = null }) {
+// Same priority as Blitz: assigned role, else the champion's usual role. The
+// lobby's firstPositionPreference is ignored — it lingers from earlier queues.
+function resolveMyPosition({ me, allies = [], slotPosition = null }) {
   const assigned = normalizePosition(me.assigned);
   if (assigned) return { position: assigned, source: 'assigned' };
-  const pref = normalizePosition(lobbyPreference);
-  if (pref) return { position: pref, source: 'lobby' };
+  const slot = normalizePosition(slotPosition);
+  if (slot) return { position: slot, source: 'quickplay' };
   if ((me.spells || []).some((s) => SMITE_IDS.has(s))) return { position: 'JUNGLE', source: 'smite' };
   if (!me.probs) return { position: null, source: 'default' };
 

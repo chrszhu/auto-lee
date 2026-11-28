@@ -45,13 +45,22 @@ function renderStatus(s) {
   }
 }
 
+const ROLE_NAME = { TOP: 'Top', JUNGLE: 'Jungle', MIDDLE: 'Mid', BOTTOM: 'Bot', UTILITY: 'Support' };
+
 function renderChampion(s) {
   const empty = $('champ-empty');
   const active = $('champ-active');
   if (!s.champion || !s.champion.name) {
     empty.classList.remove('hidden');
     active.classList.add('hidden');
-    $('phase-line').textContent = s.connected ? '' : 'Start League of Legends to connect.';
+    const qp = (s.quickplay || [])
+      .map((q) => `${q.champion}${q.position ? ` (${ROLE_NAME[q.position]})` : ''} ${q.ok ? '✓' : '✗'}`)
+      .join(', ');
+    $('phase-line').textContent = !s.connected
+      ? 'Start League of Legends to connect.'
+      : qp
+        ? `Quickplay slots set: ${qp}`
+        : '';
     return;
   }
   empty.classList.add('hidden');
@@ -67,7 +76,8 @@ function renderChampion(s) {
   }
 
   const rec = s.recommendation;
-  $('position-pill').textContent = rec && rec.itemDisplay && rec.itemDisplay.position ? rec.itemDisplay.position : '';
+  const pos = s.role || s.detectedPosition;
+  $('position-pill').textContent = pos ? ROLE_NAME[pos] : '';
 
   const matchup = $('matchup-line');
   matchup.innerHTML = '';
@@ -229,6 +239,7 @@ function renderUpdateBanner(s) {
 }
 
 function render(s) {
+  $('app-version').textContent = s.appVersion ? `v${s.appVersion}` : '';
   renderStatus(s);
   renderChampion(s);
   renderDataLine(s);
@@ -258,7 +269,7 @@ function render(s) {
   const ROLE_LABEL = { TOP: 'Top', JUNGLE: 'Jungle', MIDDLE: 'Mid', BOTTOM: 'Bot', UTILITY: 'Support' };
   const SOURCE_LABEL = {
     assigned: 'assigned',
-    lobby: 'lobby pick',
+    quickplay: 'Quickplay slot',
     smite: 'has Smite',
     team: 'guessed from team',
   };
@@ -366,20 +377,6 @@ window.addEventListener('DOMContentLoaded', async () => {
   $('btn-spells').addEventListener('click', () => importNow('spells'));
   $('btn-items').addEventListener('click', () => importNow('items'));
   $('btn-all').addEventListener('click', () => importNow('all'));
-
-  $('btn-test').addEventListener('click', async () => {
-    const box = $('test-result');
-    box.textContent = 'Testing…';
-    box.className = 'import-result';
-    const r = await window.companion.testConnection();
-    if (r.ok) {
-      box.textContent = `Connected ✓  ${r.summoner} · ${r.phase} · ${r.pageCount} rune pages`;
-      box.className = 'import-result ok';
-    } else {
-      box.textContent = r.error;
-      box.className = 'import-result bad';
-    }
-  });
 
   $('btn-update').addEventListener('click', async () => {
     const box = $('update-result');

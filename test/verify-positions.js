@@ -36,15 +36,20 @@ check('client strings normalize', () => {
 });
 
 check('ranked/draft: assigned position wins', () => {
-  const r = resolveMyPosition({ me: player('me', 'Jinx', { assigned: 'middle' }), lobbyPreference: 'BOTTOM' });
+  const r = resolveMyPosition({ me: player('me', 'Jinx', { assigned: 'middle' }), slotPosition: 'BOTTOM' });
   eq(r.position, 'MIDDLE', 'position');
   eq(r.source, 'assigned', 'source');
 });
 
-check('no assignment: lobby preference', () => {
-  const r = resolveMyPosition({ me: player('me', 'Jinx'), lobbyPreference: 'TOP' });
+check('quickplay: slot position for the played champion', () => {
+  const r = resolveMyPosition({ me: player('me', 'Jinx'), slotPosition: 'TOP' });
   eq(r.position, 'TOP', 'position');
-  eq(r.source, 'lobby', 'source');
+  eq(r.source, 'quickplay', 'source');
+});
+
+check('no assignment: champion role, not a stale lobby preference', () => {
+  const r = resolveMyPosition({ me: player('me', 'Jinx'), lobbyPreference: 'TOP' });
+  eq(r.position, 'BOTTOM', 'position');
 });
 
 check('blind pick with Smite -> jungle', () => {

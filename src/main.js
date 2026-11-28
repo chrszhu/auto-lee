@@ -17,6 +17,7 @@ const lcu = new LcuClient();
 let win = null;
 
 const state = {
+  appVersion: app.getVersion(),
   connected: false,
   phase: 'None',
   summoner: null, // { displayName, summonerId }
@@ -29,7 +30,8 @@ const state = {
   flashOnRight: true, // default: Flash on F (right slot / spell2)
   role: null, // null = auto-detect position; or TOP/JUNGLE/MIDDLE/BOTTOM/UTILITY
   detectedPosition: null, // what auto-detect resolved to this champ select
-  positionSource: null, // 'assigned' | 'lobby' | 'smite' | 'team' | 'default' | 'mode'
+  positionSource: null, // 'assigned' | 'quickplay' | 'smite' | 'team' | 'default' | 'mode'
+  quickplay: null, // [{ champion, position, ok, error }] after filling Quickplay lobby slots
   lastImport: null, // { ok, runes, items, error, at }
   dataInfo: null, // { source, patch, updatedAt, live, remote }
   updating: null, // { done, total, champion } while a data update runs
@@ -50,26 +52,77 @@ function effectivePosition() {
 }
 
 // Per-game lookups that don't change during one champ select.
-let gameCtx = { gameId: null, classic: true, lobbyPreference: null };
+let gameCtx = { gameId: null, classic: true, slots: [] };
 
 async function loadGameContext(gameId) {
-  if (gameCtx.gameId === gameId) return gameCtx;
-  gameCtx = { gameId, classic: true, lobbyPreference: null };
+  if (gameId && gameCtx.gameId === gameId) return gameCtx;
+  gameCtx = { gameId, classic: true, slots: [] };
   try {
     const gf = await lcu.gameflowSession();
+    const mapId = gf && gf.map && gf.map.id;
     const mode = gf && gf.gameData && gf.gameData.queue && gf.gameData.queue.gameMode;
-    if (mode && mode !== 'CLASSIC') gameCtx.classic = false; // ARAM, Arena, etc.: no lanes
+    // Lanes only exist on Summoner's Rift (map 11); ARAM, Arena, Swarm etc. have none.
+    if (mapId ? mapId !== 11 : mode && mode !== 'CLASSIC') gameCtx.classic = false;
   } catch {
     /* keep defaults */
   }
   try {
     const lobby = await lcu.lobby();
-    const m = lobby && lobby.localMember;
-    gameCtx.lobbyPreference = m ? m.firstPositionPreference || null : null;
+    const slots = lobby && lobby.localMember && lobby.localMember.playerSlots;
+    gameCtx.slots = Array.isArray(slots) ? slots : [];
   } catch {
     /* no lobby (custom game etc.) */
   }
   return gameCtx;
+}
+
+// Quickplay/Swiftplay pick champions + roles in the lobby (no champ select), so
+// write runes and spells straight into the lobby's player slots, as Blitz does.
+let lastSlotsKey = null;
+async function syncQuickplaySlots() {
+  const lobby = await lcu.lobby();
+  const slots = lobby && lobby.localMember && lobby.localMember.playerSlots;
+  if (!Array.isArray(slots) || !slots.some((s) => s.championId > 0)) {
+    state.quickplay = null;
+    lastSlotsKey = null;
+    return;
+  }
+  const key = JSON.stringify([state.flashOnRight, ...slots.map((s) => [s.championId, s.positionPreference])]);
+  if (key === lastSlotsKey) return;
+  lastSlotsKey = key;
+  const updated = [];
+  const shown = [];
+  for (const s of slots) {
+    const name = s.championId > 0 ? await ddragon.championName(s.championId) : null;
+    const pos = positions.normalizePosition(s.positionPreference) || '';
+    if (!name) {
+      updated.push(s);
+      continue;
+    }
+    try {
+      const { page } = await importer.buildRunePage(name, '', pos, null);
+      const next = {
+        ...s,
+        perks: JSON.stringify({ perkIds: page.selectedPerkIds, perkStyle: page.primaryStyleId, perkSubStyle: page.subStyleId }),
+      };
+      if ('spell1' in s && 'spell2' in s) {
+        const { selection } = await importer.buildSummonerSpells(name, '', { flashOnRight: state.flashOnRight, position: pos });
+        next.spell1 = selection.spell1Id;
+        next.spell2 = selection.spell2Id;
+      }
+      if (state.summoner) {
+        const { itemSet } = await importer.buildItemSet(name, s.championId, '', pos, null);
+        await importer.applyItemSet(lcu, state.summoner.summonerId, itemSet);
+      }
+      updated.push(next);
+      shown.push({ champion: name, position: pos || null, ok: true });
+    } catch (e) {
+      updated.push(s);
+      shown.push({ champion: name, position: pos || null, ok: false, error: String((e && e.message) || e) });
+    }
+  }
+  await lcu.request('PUT', '/lol-lobby/v1/lobby/members/localMember/player-slots', updated);
+  state.quickplay = shown;
 }
 
 function push() {
@@ -128,7 +181,7 @@ async function readChampSelect(session) {
     ({ position, source: positionSource } = positions.resolveMyPosition({
       me: meInfo,
       allies,
-      lobbyPreference: ctx.lobbyPreference,
+      slotPosition: (ctx.slots.find((s) => s.championId === champId) || {}).positionPreference,
     }));
   }
 
@@ -290,6 +343,16 @@ async function tick() {
       state.detectedPosition = null;
       state.positionSource = null;
       lastChampKey = null;
+      if (state.phase === 'Lobby' && state.autoImport) {
+        try {
+          await syncQuickplaySlots();
+        } catch {
+          state.quickplay = null; // not a Quickplay lobby, or slots not editable right now
+        }
+      } else if (state.phase !== 'Matchmaking' && state.phase !== 'ReadyCheck') {
+        state.quickplay = null;
+        lastSlotsKey = null;
+      }
     }
     state.error = state.error || null;
     push();
@@ -406,25 +469,6 @@ ipcMain.handle('set-build-path', async (_e, id) => {
   if (state.autoImport && state.phase === 'ChampSelect' && state.recommendation) await doImport('all');
   push();
   return state.recommendation;
-});
-
-// Read-only health check: proves the live client link works without changing
-// anything — connects, reads the summoner name, phase, and current page count.
-ipcMain.handle('test-connection', async () => {
-  try {
-    if (!lcu.isConnected()) await lcu.connect();
-    if (!lcu.isConnected()) {
-      return { ok: false, error: 'League client not found. Make sure League is running and you are logged in.' };
-    }
-    const summoner = await lcu.currentSummoner();
-    const phase = (await lcu.gameflowPhase()) || 'None';
-    const pages = (await lcu.get('/lol-perks/v1/pages')) || [];
-    const name = summoner && (summoner.displayName || summoner.gameName);
-    if (!name) return { ok: false, error: 'Client found but no summoner logged in yet.' };
-    return { ok: true, summoner: name, phase: String(phase).replace(/"/g, ''), pageCount: pages.length };
-  } catch (e) {
-    return { ok: false, error: String((e && e.message) || e) };
-  }
 });
 
 ipcMain.handle('get-data-info', async () => {
