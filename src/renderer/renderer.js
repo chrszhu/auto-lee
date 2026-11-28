@@ -112,10 +112,43 @@ function renderChampion(s) {
   }
   if (rec && rec.itemDisplay) {
     const it = rec.itemDisplay;
-    (it.starting || []).slice(0, 2).forEach((n) => itemEl.appendChild(chip(n)));
-    (it.boots || []).forEach((n) => itemEl.appendChild(chip(n)));
+    (it.starting || []).slice(0, 4).forEach((n) => itemEl.appendChild(chip(n)));
+    (it.early || []).forEach((n) => itemEl.appendChild(chip(n)));
     (it.core || []).forEach((n) => itemEl.appendChild(chip(n, true)));
+    (it.boots || []).forEach((n) => itemEl.appendChild(chip(n)));
   }
+  renderPaths(rec && rec.itemDisplay);
+}
+
+// Build paths: each is a coherent build keyed by the first item; picking one
+// changes the previewed/imported build.
+function renderPaths(it) {
+  const el = $('path-rec');
+  el.innerHTML = '';
+  if (!it || !it.paths || it.paths.length < 2) return;
+  it.paths.forEach((p) => {
+    const btn = document.createElement('button');
+    btn.className = 'path' + (p.id === it.selectedPathId ? ' on' : '');
+    btn.title = p.description || '';
+    if (p.icon) {
+      const img = document.createElement('img');
+      img.src = p.icon;
+      img.alt = '';
+      img.onerror = () => img.remove();
+      btn.appendChild(img);
+    }
+    const text = document.createElement('span');
+    const wr = p.winRate != null ? ` · ${Math.round(p.winRate)}% WR` : '';
+    text.textContent = `${p.label} — ${Math.round(p.pct)}%${wr}${p.lowSample ? ' (small sample)' : ''}`;
+    btn.appendChild(text);
+    if (p.badge) {
+      const b = document.createElement('em');
+      b.textContent = p.badge;
+      btn.appendChild(b);
+    }
+    btn.addEventListener('click', () => window.companion.setBuildPath(p.id));
+    el.appendChild(btn);
+  });
 }
 
 function renderDataLine(s) {

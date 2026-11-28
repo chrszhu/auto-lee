@@ -100,6 +100,33 @@ async function run() {
     console.error(`\n✗ role override: ${e.message}`);
   }
 
+  // Build paths: each path is a coherent build; Tear only shows on paths that buy it.
+  try {
+    const def = await importer.buildItemSet('Veigar', 45, '', 'MIDDLE');
+    const paths = def.display.paths;
+    assert(paths.length >= 2, `expected multiple Veigar paths, got ${paths.length}`);
+    for (const p of paths) {
+      const { itemSet, display } = await importer.buildItemSet('Veigar', 45, '', 'MIDDLE', p.id);
+      assert(display.selectedPathId === p.id, `path ${p.id} should be selected`);
+      const core = itemSet.blocks.find((b) => b.type.startsWith('Core'));
+      assert(core && core.type.includes(p.label), `core block should be ${p.label}`);
+      const hasTear = core.items.some((it) => it.id === '3070');
+      assert(hasTear === display.early.some((e) => e.name === 'Tear of the Goddess'), `Tear in ${p.label} must match that path's early items`);
+      const start = itemSet.blocks.find((b) => b.type === 'Starting');
+      const pot = start && start.items.find((it) => it.id === '2003');
+      assert(pot && pot.count >= 1, `${p.label} starting block should include Health Potion(s)`);
+      const { page } = await importer.buildRunePage('Veigar', '', 'MIDDLE', p.id);
+      const raw = (await require('../src/dataClient').getBuildOrder('Veigar', '', 'MIDDLE')).buildPaths.find((x) => x.id === p.id);
+      if (raw.runes) {
+        assert(JSON.stringify(page.selectedPerkIds) === JSON.stringify(raw.runes.perkIds), `${p.label} rune page should follow the path`);
+      }
+    }
+    console.log(`\n✓ build paths: Veigar MIDDLE -> ${paths.map((p) => p.label).join(' | ')}`);
+  } catch (e) {
+    failures++;
+    console.error(`\n✗ build paths: ${e.message}`);
+  }
+
   console.log(`\n${failures ? '❌' : '✅'} ${CHAMPS.length - failures}/${CHAMPS.length} champions + matchup check mapped cleanly from bundled data`);
   process.exit(failures ? 1 : 0);
 }

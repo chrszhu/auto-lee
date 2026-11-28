@@ -34,6 +34,12 @@ const state = {
 };
 
 let lastChampKey = null; // de-dupe recommendation fetches / auto-imports
+// User-picked build path; path ids are per champion, so it only applies to that champion.
+let buildPathChoice = { champion: null, id: null };
+
+function selectedPathId() {
+  return state.champion && buildPathChoice.champion === state.champion.name ? buildPathChoice.id : null;
+}
 
 function push() {
   if (win && !win.isDestroyed()) win.webContents.send('state', state);
@@ -108,8 +114,8 @@ async function refreshRecommendation() {
   const opp = state.manualOpponent || state.opponent || '';
   const pos = state.role || '';
   try {
-    const runes = await importer.buildRunePage(state.champion.name, opp, pos);
-    const items = await importer.buildItemSet(state.champion.name, state.champion.id, opp, pos);
+    const runes = await importer.buildRunePage(state.champion.name, opp, pos, selectedPathId());
+    const items = await importer.buildItemSet(state.champion.name, state.champion.id, opp, pos, selectedPathId());
     let spellDisplay = [];
     try {
       spellDisplay = (await importer.buildSummonerSpells(state.champion.name, opp, { flashOnRight: state.flashOnRight, position: pos })).display;
@@ -137,7 +143,7 @@ async function doImport(what) {
   const result = { ok: true, runes: false, spells: false, items: false, error: null, at: Date.now() };
   try {
     if (what === 'runes' || all) {
-      const { page } = await importer.buildRunePage(state.champion.name, opp, pos);
+      const { page } = await importer.buildRunePage(state.champion.name, opp, pos, selectedPathId());
       await importer.applyRunePage(lcu, page);
       result.runes = true;
     }
@@ -152,7 +158,7 @@ async function doImport(what) {
       }
     }
     if (what === 'items' || all) {
-      const { itemSet } = await importer.buildItemSet(state.champion.name, state.champion.id, opp, pos);
+      const { itemSet } = await importer.buildItemSet(state.champion.name, state.champion.id, opp, pos, selectedPathId());
       await importer.applyItemSet(lcu, state.summoner.summonerId, itemSet);
       result.items = true;
     }
@@ -294,6 +300,14 @@ ipcMain.handle('set-role', async (_e, role) => {
   return state.role;
 });
 ipcMain.handle('import', (_e, what) => doImport(what || 'both'));
+ipcMain.handle('set-build-path', async (_e, id) => {
+  if (!state.champion || !state.champion.name) return null;
+  buildPathChoice = { champion: state.champion.name, id: typeof id === 'string' ? id : null };
+  await refreshRecommendation();
+  if (state.autoImport && state.phase === 'ChampSelect' && state.recommendation) await doImport('all');
+  push();
+  return state.recommendation;
+});
 
 // Read-only health check: proves the live client link works without changing
 // anything — connects, reads the summoner name, phase, and current page count.

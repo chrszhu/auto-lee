@@ -106,6 +106,25 @@ main { flex: 1; padding: 14px 16px; display: flex; flex-direction: column; gap: 
 .chip img { width: 18px; height: 18px; border-radius: 4px; }
 .chip.key { border-color: var(--accent-2); color: #cfe3ff; }
 
+.paths { display: flex; flex-direction: column; gap: 4px; margin-top: 8px; }
+.path {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  text-align: left;
+  background: var(--card-2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 4px 8px;
+  color: var(--muted);
+  font-size: 12px;
+  cursor: pointer;
+}
+.path img { width: 18px; height: 18px; border-radius: 4px; }
+.path span { flex: 1; }
+.path em { font-style: normal; font-size: 10px; color: var(--good); }
+.path.on { border-color: var(--accent); color: var(--text); }
+
 .field { display: flex; flex-direction: column; gap: 5px; margin-bottom: 12px; }
 .field span { font-size: 12px; color: var(--muted); }
 .field input {

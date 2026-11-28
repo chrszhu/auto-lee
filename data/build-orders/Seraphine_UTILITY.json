@@ -5,110 +5,103 @@
   "availablePositions": [
     {
       "position": "UTILITY",
-      "games": 871
+      "games": 2026
     },
     {
       "position": "BOTTOM",
-      "games": 349
+      "games": 696
     },
     {
       "position": "MIDDLE",
-      "games": 25
+      "games": 65
     },
     {
       "position": "TOP",
-      "games": 3
+      "games": 11
     }
   ],
   "available": true,
-  "totalGames": 78,
+  "totalGames": 301,
   "window": {
     "patches": [
-      "16.21"
+      "16.23"
     ],
-    "games": 78,
-    "from_ms": 1792556437810,
-    "to_ms": 1792948444857
+    "games": 301,
+    "from_ms": 1794965404511,
+    "to_ms": 1795803987536
   },
   "slots": [
     {
       "slot": 1,
-      "totalGames": 78,
+      "totalGames": 294,
       "items": [
         {
           "itemId": 6620,
           "name": "Echoes of Helia",
-          "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/6620.png",
-          "games": 48,
-          "pct": 61.5
+          "icon": "https://ddragon.leagueoflegends.com/cdn/16.23.1/img/item/6620.png",
+          "games": 190,
+          "pct": 64.6
         },
         {
           "itemId": 3116,
           "name": "Rylai's Crystal Scepter",
-          "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3116.png",
-          "games": 17,
-          "pct": 21.8
+          "icon": "https://ddragon.leagueoflegends.com/cdn/16.23.1/img/item/3116.png",
+          "games": 57,
+          "pct": 19.4
         }
       ]
     },
     {
       "slot": 2,
-      "totalGames": 38,
+      "totalGames": 178,
       "items": [
+        {
+          "itemId": 6617,
+          "name": "Moonstone Renewer",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/16.23.1/img/item/6617.png",
+          "games": 45,
+          "pct": 25.3
+        },
         {
           "itemId": 3116,
           "name": "Rylai's Crystal Scepter",
-          "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3116.png",
-          "games": 15,
-          "pct": 39.5
+          "icon": "https://ddragon.leagueoflegends.com/cdn/16.23.1/img/item/3116.png",
+          "games": 34,
+          "pct": 19.1
         },
         {
           "itemId": 4005,
           "name": "Imperial Mandate",
-          "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/4005.png",
-          "games": 6,
-          "pct": 15.8
-        },
-        {
-          "itemId": 6617,
-          "name": "Moonstone Renewer",
-          "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/6617.png",
-          "games": 6,
-          "pct": 15.8
+          "icon": "https://ddragon.leagueoflegends.com/cdn/16.23.1/img/item/4005.png",
+          "games": 25,
+          "pct": 14.0
         }
       ]
     },
     {
       "slot": 3,
-      "totalGames": 11,
+      "totalGames": 51,
       "items": [
         {
           "itemId": 6617,
           "name": "Moonstone Renewer",
-          "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/6617.png",
-          "games": 3,
-          "pct": 27.3
+          "icon": "https://ddragon.leagueoflegends.com/cdn/16.23.1/img/item/6617.png",
+          "games": 9,
+          "pct": 17.6
         },
         {
-          "itemId": 6621,
-          "name": "Dawncore",
-          "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/6621.png",
-          "games": 2,
-          "pct": 18.2
+          "itemId": 3222,
+          "name": "Mikael's Blessing",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/16.23.1/img/item/3222.png",
+          "games": 8,
+          "pct": 15.7
         },
         {
-          "itemId": 2065,
-          "name": "Shurelya's Battlesong",
-          "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/2065.png",
-          "games": 2,
-          "pct": 18.2
-        },
-        {
-          "itemId": 3109,
-          "name": "Knight's Vow",
-          "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3109.png",
-          "games": 2,
-          "pct": 18.2
+          "itemId": 3107,
+          "name": "Redemption",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/16.23.1/img/item/3107.png",
+          "games": 6,
+          "pct": 11.8
         }
       ]
     },
@@ -117,16 +110,16 @@
       "totalGames": 3,
       "items": [
         {
-          "itemId": 6621,
-          "name": "Dawncore",
-          "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/6621.png",
+          "itemId": 2065,
+          "name": "Shurelya's Battlesong",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/16.23.1/img/item/2065.png",
           "games": 2,
           "pct": 66.7
         },
         {
-          "itemId": 6617,
-          "name": "Moonstone Renewer",
-          "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/6617.png",
+          "itemId": 6620,
+          "name": "Echoes of Helia",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/16.23.1/img/item/6620.png",
           "games": 1,
           "pct": 33.3
         }
@@ -134,176 +127,550 @@
     },
     {
       "slot": 5,
-      "totalGames": 0,
-      "items": []
+      "totalGames": 1,
+      "items": [
+        {
+          "itemId": 3504,
+          "name": "Ardent Censer",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/16.23.1/img/item/3504.png",
+          "games": 1,
+          "pct": 100.0
+        }
+      ]
     }
   ],
   "boots": {
-    "totalGames": 73,
+    "totalGames": 279,
     "items": [
       {
         "itemId": 3158,
         "name": "Ionian Boots of Lucidity",
-        "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3158.png",
-        "games": 69,
-        "pct": 94.5
+        "icon": "https://ddragon.leagueoflegends.com/cdn/16.23.1/img/item/3158.png",
+        "games": 266,
+        "pct": 95.3
       }
     ]
   },
   "trinket": {
-    "totalGames": 78,
+    "totalGames": 300,
     "items": [
       {
         "itemId": 3364,
         "name": "Oracle Lens",
-        "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3364.png",
-        "games": 78,
-        "pct": 100.0
+        "icon": "https://ddragon.leagueoflegends.com/cdn/16.23.1/img/item/3364.png",
+        "games": 296,
+        "pct": 98.7
       }
     ]
   },
   "starting": {
-    "totalGames": 78,
+    "totalGames": 299,
     "items": [
       {
         "itemId": 3865,
         "name": "World Atlas",
-        "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3865.png",
-        "games": 78,
-        "pct": 100.0
+        "icon": "https://ddragon.leagueoflegends.com/cdn/16.23.1/img/item/3865.png",
+        "games": 297,
+        "pct": 99.3
+      },
+      {
+        "itemId": 2003,
+        "name": "Health Potion",
+        "icon": "https://ddragon.leagueoflegends.com/cdn/16.23.1/img/item/2003.png",
+        "games": 299,
+        "pct": 99.3,
+        "count": 2
       }
     ]
   },
   "earlyItems": {
-    "totalGames": 78,
+    "totalGames": 301,
     "items": [
       {
         "itemId": 3070,
         "name": "Tear of the Goddess",
-        "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3070.png",
-        "games": 55,
-        "pct": 70.5
+        "icon": "https://ddragon.leagueoflegends.com/cdn/16.23.1/img/item/3070.png",
+        "games": 158,
+        "pct": 52.5
       }
     ]
   },
   "supportItem": {
-    "totalGames": 78,
+    "totalGames": 297,
     "items": [
       {
         "itemId": 3870,
         "name": "Dream Maker",
-        "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3870.png",
-        "games": 33,
-        "pct": 42.3
+        "icon": "https://ddragon.leagueoflegends.com/cdn/16.23.1/img/item/3870.png",
+        "games": 185,
+        "pct": 62.3
       },
       {
         "itemId": 3869,
         "name": "Celestial Opposition",
-        "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3869.png",
-        "games": 21,
-        "pct": 26.9
-      },
-      {
-        "itemId": 3877,
-        "name": "Bloodsong",
-        "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3877.png",
-        "games": 13,
-        "pct": 16.7
-      },
-      {
-        "itemId": 3876,
-        "name": "Solstice Sleigh",
-        "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/item/3876.png",
-        "games": 10,
-        "pct": 12.8
+        "icon": "https://ddragon.leagueoflegends.com/cdn/16.23.1/img/item/3869.png",
+        "games": 62,
+        "pct": 20.9
       }
     ]
   },
+  "buildPaths": [
+    {
+      "id": "p1",
+      "label": "Echoes of Helia \u00b7 Enchanter + Tear",
+      "style": "Enchanter + Tear",
+      "description": "Rush Echoes of Helia after Tear \u2192 Moonstone Renewer \u2192 Mikael's Blessing. Heals, shields and buffs your allies.",
+      "games": 190,
+      "pct": 64.6,
+      "winRate": 50.0,
+      "lowSample": false,
+      "core": [
+        {
+          "itemId": 6620,
+          "name": "Echoes of Helia",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/16.23.1/img/item/6620.png"
+        },
+        {
+          "itemId": 6617,
+          "name": "Moonstone Renewer",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/16.23.1/img/item/6617.png"
+        },
+        {
+          "itemId": 3222,
+          "name": "Mikael's Blessing",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/16.23.1/img/item/3222.png"
+        }
+      ],
+      "tree": [
+        {
+          "itemId": 6617,
+          "name": "Moonstone Renewer",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/16.23.1/img/item/6617.png",
+          "games": 36,
+          "pct": 33.0,
+          "winRate": 44.4,
+          "next": [
+            {
+              "itemId": 3222,
+              "name": "Mikael's Blessing",
+              "icon": "https://ddragon.leagueoflegends.com/cdn/16.23.1/img/item/3222.png",
+              "games": 2,
+              "pct": 22.2,
+              "winRate": 50.0
+            },
+            {
+              "itemId": 6621,
+              "name": "Dawncore",
+              "icon": "https://ddragon.leagueoflegends.com/cdn/16.23.1/img/item/6621.png",
+              "games": 2,
+              "pct": 22.2,
+              "winRate": 100.0
+            }
+          ]
+        },
+        {
+          "itemId": 3116,
+          "name": "Rylai's Crystal Scepter",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/16.23.1/img/item/3116.png",
+          "games": 25,
+          "pct": 22.9,
+          "winRate": 52.0,
+          "next": [
+            {
+              "itemId": 4005,
+              "name": "Imperial Mandate",
+              "icon": "https://ddragon.leagueoflegends.com/cdn/16.23.1/img/item/4005.png",
+              "games": 4,
+              "pct": 57.1,
+              "winRate": 25.0
+            }
+          ]
+        }
+      ],
+      "late": [],
+      "starting": [
+        {
+          "itemId": 3865,
+          "name": "World Atlas",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/16.23.1/img/item/3865.png",
+          "games": 190,
+          "pct": 100.0
+        }
+      ],
+      "startingSet": {
+        "items": [
+          {
+            "itemId": 3865,
+            "name": "World Atlas",
+            "icon": "https://ddragon.leagueoflegends.com/cdn/16.23.1/img/item/3865.png",
+            "count": 1
+          },
+          {
+            "itemId": 2003,
+            "name": "Health Potion",
+            "icon": "https://ddragon.leagueoflegends.com/cdn/16.23.1/img/item/2003.png",
+            "count": 2
+          }
+        ],
+        "games": 189,
+        "pct": 99.5
+      },
+      "runes": {
+        "games": 153,
+        "pct": 80.5,
+        "keystone": {
+          "runeId": 8214,
+          "name": "Summon Aery",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/SummonAery/SummonAery.png"
+        },
+        "primaryStyle": {
+          "runeId": 8200,
+          "name": "Sorcery",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/7202_Sorcery.png"
+        },
+        "subStyle": {
+          "runeId": 8400,
+          "name": "Resolve",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/7204_Resolve.png"
+        },
+        "primary": [
+          {
+            "runeId": 8226,
+            "name": "Manaflow Band",
+            "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/ManaflowBand/ManaflowBand.png"
+          },
+          {
+            "runeId": 8210,
+            "name": "Transcendence",
+            "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/Transcendence/Transcendence.png"
+          },
+          {
+            "runeId": 8237,
+            "name": "Scorch",
+            "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/Scorch/Scorch.png"
+          }
+        ],
+        "secondary": [
+          {
+            "runeId": 8453,
+            "name": "Revitalize",
+            "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Resolve/Revitalize/Revitalize.png"
+          },
+          {
+            "runeId": 8463,
+            "name": "Font of Life",
+            "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Resolve/FontOfLife/FontOfLife.png"
+          }
+        ],
+        "shards": [
+          {
+            "runeId": 5007,
+            "name": "Ability Haste",
+            "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/StatModsCDRScalingIcon.png"
+          },
+          {
+            "runeId": 5008,
+            "name": "Adaptive Force",
+            "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/StatModsAdaptiveForceIcon.png"
+          },
+          {
+            "runeId": 5011,
+            "name": "Health",
+            "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/StatModsHealthScalingIcon.png"
+          }
+        ],
+        "perkIds": [
+          8214,
+          8226,
+          8210,
+          8237,
+          8453,
+          8463,
+          5007,
+          5008,
+          5011
+        ],
+        "altKeystones": []
+      },
+      "early": [
+        {
+          "itemId": 3070,
+          "name": "Tear of the Goddess",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/16.23.1/img/item/3070.png",
+          "games": 117,
+          "pct": 61.6
+        }
+      ],
+      "boots": [
+        {
+          "itemId": 3158,
+          "name": "Ionian Boots of Lucidity",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/16.23.1/img/item/3158.png",
+          "games": 173,
+          "pct": 97.7,
+          "winRate": 52.6
+        }
+      ],
+      "badge": "Most played"
+    },
+    {
+      "id": "p2",
+      "label": "Rylai's Crystal Scepter \u00b7 Battle-mage",
+      "style": "Battle-mage",
+      "description": "Rush Rylai's Crystal Scepter \u2192 Imperial Mandate. Adds health so you can stay in extended fights.",
+      "games": 57,
+      "pct": 19.4,
+      "winRate": 38.6,
+      "lowSample": false,
+      "core": [
+        {
+          "itemId": 3116,
+          "name": "Rylai's Crystal Scepter",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/16.23.1/img/item/3116.png"
+        },
+        {
+          "itemId": 4005,
+          "name": "Imperial Mandate",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/16.23.1/img/item/4005.png"
+        }
+      ],
+      "tree": [
+        {
+          "itemId": 4005,
+          "name": "Imperial Mandate",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/16.23.1/img/item/4005.png",
+          "games": 17,
+          "pct": 47.2,
+          "winRate": 47.1,
+          "next": []
+        },
+        {
+          "itemId": 6620,
+          "name": "Echoes of Helia",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/16.23.1/img/item/6620.png",
+          "games": 9,
+          "pct": 25.0,
+          "winRate": 44.4,
+          "next": [
+            {
+              "itemId": 3109,
+              "name": "Knight's Vow",
+              "icon": "https://ddragon.leagueoflegends.com/cdn/16.23.1/img/item/3109.png",
+              "games": 2,
+              "pct": 66.7,
+              "winRate": 100.0
+            }
+          ]
+        }
+      ],
+      "late": [],
+      "starting": [
+        {
+          "itemId": 3865,
+          "name": "World Atlas",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/16.23.1/img/item/3865.png",
+          "games": 57,
+          "pct": 100.0
+        }
+      ],
+      "startingSet": {
+        "items": [
+          {
+            "itemId": 3865,
+            "name": "World Atlas",
+            "icon": "https://ddragon.leagueoflegends.com/cdn/16.23.1/img/item/3865.png",
+            "count": 1
+          },
+          {
+            "itemId": 2003,
+            "name": "Health Potion",
+            "icon": "https://ddragon.leagueoflegends.com/cdn/16.23.1/img/item/2003.png",
+            "count": 2
+          }
+        ],
+        "games": 56,
+        "pct": 98.2
+      },
+      "runes": {
+        "games": 29,
+        "pct": 50.9,
+        "keystone": {
+          "runeId": 8214,
+          "name": "Summon Aery",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/SummonAery/SummonAery.png"
+        },
+        "primaryStyle": {
+          "runeId": 8200,
+          "name": "Sorcery",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/7202_Sorcery.png"
+        },
+        "subStyle": {
+          "runeId": 8300,
+          "name": "Inspiration",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/7203_Whimsy.png"
+        },
+        "primary": [
+          {
+            "runeId": 8226,
+            "name": "Manaflow Band",
+            "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/ManaflowBand/ManaflowBand.png"
+          },
+          {
+            "runeId": 8210,
+            "name": "Transcendence",
+            "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/Transcendence/Transcendence.png"
+          },
+          {
+            "runeId": 8237,
+            "name": "Scorch",
+            "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/Scorch/Scorch.png"
+          }
+        ],
+        "secondary": [
+          {
+            "runeId": 8304,
+            "name": "Magical Footwear",
+            "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Inspiration/MagicalFootwear/MagicalFootwear.png"
+          },
+          {
+            "runeId": 8347,
+            "name": "Cosmic Insight",
+            "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Inspiration/CosmicInsight/CosmicInsight.png"
+          }
+        ],
+        "shards": [
+          {
+            "runeId": 5007,
+            "name": "Ability Haste",
+            "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/StatModsCDRScalingIcon.png"
+          },
+          {
+            "runeId": 5008,
+            "name": "Adaptive Force",
+            "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/StatModsAdaptiveForceIcon.png"
+          },
+          {
+            "runeId": 5011,
+            "name": "Health",
+            "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/StatModsHealthScalingIcon.png"
+          }
+        ],
+        "perkIds": [
+          8214,
+          8226,
+          8210,
+          8237,
+          8304,
+          8347,
+          5007,
+          5008,
+          5011
+        ],
+        "altKeystones": [
+          {
+            "runeId": 8229,
+            "name": "Arcane Comet",
+            "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/ArcaneComet/ArcaneComet.png",
+            "pct": 40.4
+          }
+        ]
+      },
+      "early": [
+        {
+          "itemId": 3070,
+          "name": "Tear of the Goddess",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/16.23.1/img/item/3070.png",
+          "games": 17,
+          "pct": 29.8
+        }
+      ],
+      "boots": [
+        {
+          "itemId": 3158,
+          "name": "Ionian Boots of Lucidity",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/16.23.1/img/item/3158.png",
+          "games": 50,
+          "pct": 94.3,
+          "winRate": 38.0
+        }
+      ]
+    }
+  ],
+  "buildPathsMeta": {
+    "games": 294,
+    "otherPct": 16.0
+  },
   "summonerSpells": {
-    "totalGames": 78,
+    "totalGames": 301,
     "items": [
       {
         "spellId": 4,
         "name": "Flash",
-        "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/spell/SummonerFlash.png",
-        "games": 78,
+        "icon": "https://ddragon.leagueoflegends.com/cdn/16.23.1/img/spell/SummonerFlash.png",
+        "games": 301,
         "pct": 100.0
       },
       {
         "spellId": 7,
         "name": "Heal",
-        "icon": "https://ddragon.leagueoflegends.com/cdn/16.21.1/img/spell/SummonerHeal.png",
-        "games": 75,
-        "pct": 96.2
+        "icon": "https://ddragon.leagueoflegends.com/cdn/16.23.1/img/spell/SummonerHeal.png",
+        "games": 289,
+        "pct": 96.0
       }
     ]
   },
   "keystones": {
-    "totalGames": 78,
+    "totalGames": 301,
     "items": [
       {
         "runeId": 8214,
         "name": "Summon Aery",
         "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/SummonAery/SummonAery.png",
-        "games": 49,
-        "pct": 62.8
+        "games": 227,
+        "pct": 75.4
       },
       {
         "runeId": 8229,
         "name": "Arcane Comet",
         "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/ArcaneComet/ArcaneComet.png",
-        "games": 18,
-        "pct": 23.1
-      },
-      {
-        "runeId": 8465,
-        "name": "Guardian",
-        "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Resolve/Guardian/Guardian.png",
-        "games": 11,
-        "pct": 14.1
+        "games": 46,
+        "pct": 15.3
       }
     ]
   },
   "primaryStyles": {
-    "totalGames": 78,
+    "totalGames": 301,
     "items": [
       {
         "runeId": 8200,
         "name": "Sorcery",
         "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/7202_Sorcery.png",
-        "games": 67,
-        "pct": 85.9
-      },
-      {
-        "runeId": 8400,
-        "name": "Resolve",
-        "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/7204_Resolve.png",
-        "games": 11,
-        "pct": 14.1
+        "games": 273,
+        "pct": 90.7
       }
     ]
   },
   "secondaryStyles": {
-    "totalGames": 78,
+    "totalGames": 301,
     "items": [
       {
         "runeId": 8300,
         "name": "Inspiration",
         "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/7203_Whimsy.png",
-        "games": 47,
-        "pct": 60.3
+        "games": 140,
+        "pct": 46.5
       },
       {
         "runeId": 8400,
         "name": "Resolve",
         "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/7204_Resolve.png",
-        "games": 23,
-        "pct": 29.5
+        "games": 122,
+        "pct": 40.5
       }
     ]
   },
   "primaryRunes": {
-    "totalGames": 78,
+    "totalGames": 301,
     "slots": [
       {
         "slot": 1,
@@ -312,15 +679,15 @@
             "runeId": 8226,
             "name": "Manaflow Band",
             "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/ManaflowBand/ManaflowBand.png",
-            "games": 60,
-            "pct": 76.9
+            "games": 232,
+            "pct": 77.1
           },
           {
-            "runeId": 8401,
-            "name": "Shield Bash",
-            "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Resolve/MirrorShell/MirrorShell.png",
-            "games": 10,
-            "pct": 12.8
+            "runeId": 8275,
+            "name": "Nimbus Cloak",
+            "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/NimbusCloak/6361.png",
+            "games": 33,
+            "pct": 11.0
           }
         ]
       },
@@ -331,8 +698,8 @@
             "runeId": 8210,
             "name": "Transcendence",
             "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/Transcendence/Transcendence.png",
-            "games": 63,
-            "pct": 80.8
+            "games": 261,
+            "pct": 86.7
           }
         ]
       },
@@ -343,69 +710,55 @@
             "runeId": 8237,
             "name": "Scorch",
             "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/Scorch/Scorch.png",
-            "games": 39,
-            "pct": 50.0
+            "games": 162,
+            "pct": 53.8
           },
           {
             "runeId": 8236,
             "name": "Gathering Storm",
             "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/GatheringStorm/GatheringStorm.png",
-            "games": 28,
-            "pct": 35.9
-          },
-          {
-            "runeId": 8453,
-            "name": "Revitalize",
-            "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Resolve/Revitalize/Revitalize.png",
-            "games": 10,
-            "pct": 12.8
+            "games": 110,
+            "pct": 36.5
           }
         ]
       }
     ]
   },
   "secondaryRunes": {
-    "totalGames": 78,
+    "totalGames": 301,
     "items": [
-      {
-        "runeId": 8304,
-        "name": "Magical Footwear",
-        "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Inspiration/MagicalFootwear/MagicalFootwear.png",
-        "games": 42,
-        "pct": 53.8
-      },
       {
         "runeId": 8347,
         "name": "Cosmic Insight",
         "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Inspiration/CosmicInsight/CosmicInsight.png",
-        "games": 41,
-        "pct": 52.6
+        "games": 121,
+        "pct": 40.2
       },
       {
         "runeId": 8453,
         "name": "Revitalize",
         "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Resolve/Revitalize/Revitalize.png",
-        "games": 22,
-        "pct": 28.2
+        "games": 119,
+        "pct": 39.5
+      },
+      {
+        "runeId": 8304,
+        "name": "Magical Footwear",
+        "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Inspiration/MagicalFootwear/MagicalFootwear.png",
+        "games": 115,
+        "pct": 38.2
       },
       {
         "runeId": 8463,
         "name": "Font of Life",
         "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Resolve/FontOfLife/FontOfLife.png",
-        "games": 12,
-        "pct": 15.4
-      },
-      {
-        "runeId": 8473,
-        "name": "Bone Plating",
-        "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Resolve/BonePlating/BonePlating.png",
-        "games": 8,
-        "pct": 10.3
+        "games": 93,
+        "pct": 30.9
       }
     ]
   },
   "statShards": {
-    "totalGames": 78,
+    "totalGames": 301,
     "slots": [
       {
         "slot": 0,
@@ -415,15 +768,15 @@
             "runeId": 5007,
             "name": "Ability Haste",
             "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/StatModsCDRScalingIcon.png",
-            "games": 54,
-            "pct": 69.2
+            "games": 227,
+            "pct": 75.4
           },
           {
             "runeId": 5008,
             "name": "Adaptive Force",
             "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/StatModsAdaptiveForceIcon.png",
-            "games": 24,
-            "pct": 30.8
+            "games": 70,
+            "pct": 23.3
           }
         ]
       },
@@ -435,15 +788,15 @@
             "runeId": 5008,
             "name": "Adaptive Force",
             "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/StatModsAdaptiveForceIcon.png",
-            "games": 46,
-            "pct": 59.0
+            "games": 247,
+            "pct": 82.1
           },
           {
             "runeId": 5010,
             "name": "Move Speed",
             "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/StatModsMovementSpeedIcon.png",
-            "games": 31,
-            "pct": 39.7
+            "games": 54,
+            "pct": 17.9
           }
         ]
       },
@@ -455,15 +808,15 @@
             "runeId": 5011,
             "name": "Health",
             "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/StatModsHealthScalingIcon.png",
-            "games": 69,
-            "pct": 88.5
+            "games": 266,
+            "pct": 88.4
           },
           {
             "runeId": 5001,
             "name": "Health Scaling",
             "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/StatModsHealthPlusIcon.png",
-            "games": 8,
-            "pct": 10.3
+            "games": 34,
+            "pct": 11.3
           }
         ]
       }
@@ -476,12 +829,12 @@
         "runeId": 8214,
         "name": "Summon Aery",
         "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/SummonAery/SummonAery.png",
-        "games": 49,
-        "pct": 62.8
+        "games": 227,
+        "pct": 75.4
       },
-      "games": 49,
-      "pct": 62.8,
-      "secondaryStyleId": 8300,
+      "games": 227,
+      "pct": 75.4,
+      "secondaryStyleId": 8400,
       "primaryRows": [
         {
           "slot": 1,
@@ -490,8 +843,15 @@
               "runeId": 8226,
               "name": "Manaflow Band",
               "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/ManaflowBand/ManaflowBand.png",
-              "games": 45,
-              "pct": 91.8
+              "games": 192,
+              "pct": 84.6
+            },
+            {
+              "runeId": 8275,
+              "name": "Nimbus Cloak",
+              "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/NimbusCloak/6361.png",
+              "games": 31,
+              "pct": 13.7
             }
           ]
         },
@@ -502,8 +862,8 @@
               "runeId": 8210,
               "name": "Transcendence",
               "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/Transcendence/Transcendence.png",
-              "games": 46,
-              "pct": 93.9
+              "games": 217,
+              "pct": 95.6
             }
           ]
         },
@@ -514,61 +874,47 @@
               "runeId": 8237,
               "name": "Scorch",
               "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/Scorch/Scorch.png",
-              "games": 25,
-              "pct": 51.0
+              "games": 129,
+              "pct": 56.8
             },
             {
               "runeId": 8236,
               "name": "Gathering Storm",
               "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/GatheringStorm/GatheringStorm.png",
-              "games": 24,
-              "pct": 49.0
+              "games": 97,
+              "pct": 42.7
             }
           ]
         }
       ],
       "secondary": [
         {
-          "runeId": 8304,
-          "name": "Magical Footwear",
-          "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Inspiration/MagicalFootwear/MagicalFootwear.png",
-          "games": 22,
-          "pct": 44.9
-        },
-        {
-          "runeId": 8347,
-          "name": "Cosmic Insight",
-          "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Inspiration/CosmicInsight/CosmicInsight.png",
-          "games": 21,
-          "pct": 42.9
-        },
-        {
           "runeId": 8453,
           "name": "Revitalize",
           "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Resolve/Revitalize/Revitalize.png",
-          "games": 18,
-          "pct": 36.7
+          "games": 111,
+          "pct": 48.9
         },
         {
           "runeId": 8463,
           "name": "Font of Life",
           "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Resolve/FontOfLife/FontOfLife.png",
-          "games": 10,
-          "pct": 20.4
+          "games": 92,
+          "pct": 40.5
         },
         {
-          "runeId": 8473,
-          "name": "Bone Plating",
-          "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Resolve/BonePlating/BonePlating.png",
-          "games": 5,
-          "pct": 10.2
+          "runeId": 8347,
+          "name": "Cosmic Insight",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Inspiration/CosmicInsight/CosmicInsight.png",
+          "games": 91,
+          "pct": 40.1
         },
         {
-          "runeId": 9105,
-          "name": "Legend: Haste",
-          "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Precision/LegendHaste/LegendHaste.png",
-          "games": 5,
-          "pct": 10.2
+          "runeId": 8304,
+          "name": "Magical Footwear",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Inspiration/MagicalFootwear/MagicalFootwear.png",
+          "games": 90,
+          "pct": 39.6
         }
       ],
       "shards": [
@@ -580,15 +926,15 @@
               "runeId": 5007,
               "name": "Ability Haste",
               "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/StatModsCDRScalingIcon.png",
-              "games": 34,
-              "pct": 69.4
+              "games": 175,
+              "pct": 77.1
             },
             {
               "runeId": 5008,
               "name": "Adaptive Force",
               "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/StatModsAdaptiveForceIcon.png",
-              "games": 15,
-              "pct": 30.6
+              "games": 50,
+              "pct": 22.0
             }
           ]
         },
@@ -600,15 +946,15 @@
               "runeId": 5008,
               "name": "Adaptive Force",
               "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/StatModsAdaptiveForceIcon.png",
-              "games": 32,
-              "pct": 65.3
+              "games": 193,
+              "pct": 85.0
             },
             {
               "runeId": 5010,
               "name": "Move Speed",
               "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/StatModsMovementSpeedIcon.png",
-              "games": 17,
-              "pct": 34.7
+              "games": 34,
+              "pct": 15.0
             }
           ]
         },
@@ -620,8 +966,8 @@
               "runeId": 5011,
               "name": "Health",
               "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/StatModsHealthScalingIcon.png",
-              "games": 47,
-              "pct": 95.9
+              "games": 205,
+              "pct": 90.3
             }
           ]
         }
@@ -633,11 +979,11 @@
         "runeId": 8229,
         "name": "Arcane Comet",
         "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/ArcaneComet/ArcaneComet.png",
-        "games": 18,
-        "pct": 23.1
+        "games": 46,
+        "pct": 15.3
       },
-      "games": 18,
-      "pct": 23.1,
+      "games": 46,
+      "pct": 15.3,
       "secondaryStyleId": 8300,
       "primaryRows": [
         {
@@ -647,15 +993,8 @@
               "runeId": 8226,
               "name": "Manaflow Band",
               "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/ManaflowBand/ManaflowBand.png",
-              "games": 15,
-              "pct": 83.3
-            },
-            {
-              "runeId": 8275,
-              "name": "Nimbus Cloak",
-              "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/NimbusCloak/6361.png",
-              "games": 3,
-              "pct": 16.7
+              "games": 40,
+              "pct": 87.0
             }
           ]
         },
@@ -666,8 +1005,8 @@
               "runeId": 8210,
               "name": "Transcendence",
               "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/Transcendence/Transcendence.png",
-              "games": 17,
-              "pct": 94.4
+              "games": 44,
+              "pct": 95.7
             }
           ]
         },
@@ -678,15 +1017,15 @@
               "runeId": 8237,
               "name": "Scorch",
               "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/Scorch/Scorch.png",
-              "games": 14,
-              "pct": 77.8
+              "games": 33,
+              "pct": 71.7
             },
             {
               "runeId": 8236,
               "name": "Gathering Storm",
               "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Sorcery/GatheringStorm/GatheringStorm.png",
-              "games": 4,
-              "pct": 22.2
+              "games": 13,
+              "pct": 28.3
             }
           ]
         }
@@ -696,50 +1035,50 @@
           "runeId": 8347,
           "name": "Cosmic Insight",
           "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Inspiration/CosmicInsight/CosmicInsight.png",
-          "games": 10,
-          "pct": 55.6
+          "games": 17,
+          "pct": 37.0
+        },
+        {
+          "runeId": 8009,
+          "name": "Presence of Mind",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Precision/PresenceOfMind/PresenceOfMind.png",
+          "games": 16,
+          "pct": 34.8
+        },
+        {
+          "runeId": 9105,
+          "name": "Legend: Haste",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Precision/LegendHaste/LegendHaste.png",
+          "games": 15,
+          "pct": 32.6
         },
         {
           "runeId": 8304,
           "name": "Magical Footwear",
           "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Inspiration/MagicalFootwear/MagicalFootwear.png",
-          "games": 10,
-          "pct": 55.6
-        },
-        {
-          "runeId": 8453,
-          "name": "Revitalize",
-          "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Resolve/Revitalize/Revitalize.png",
-          "games": 4,
-          "pct": 22.2
+          "games": 11,
+          "pct": 23.9
         },
         {
           "runeId": 8473,
           "name": "Bone Plating",
           "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Resolve/BonePlating/BonePlating.png",
-          "games": 3,
-          "pct": 16.7
+          "games": 8,
+          "pct": 17.4
+        },
+        {
+          "runeId": 8453,
+          "name": "Revitalize",
+          "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Resolve/Revitalize/Revitalize.png",
+          "games": 8,
+          "pct": 17.4
         },
         {
           "runeId": 8345,
           "name": "Biscuit Delivery",
           "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Inspiration/BiscuitDelivery/BiscuitDelivery.png",
-          "games": 3,
-          "pct": 16.7
-        },
-        {
-          "runeId": 8313,
-          "name": "Triple Tonic",
-          "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Inspiration/PerfectTiming/AlchemistCabinet.png",
-          "games": 3,
-          "pct": 16.7
-        },
-        {
-          "runeId": 8463,
-          "name": "Font of Life",
-          "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/Resolve/FontOfLife/FontOfLife.png",
-          "games": 2,
-          "pct": 11.1
+          "games": 6,
+          "pct": 13.0
         }
       ],
       "shards": [
@@ -751,15 +1090,15 @@
               "runeId": 5007,
               "name": "Ability Haste",
               "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/StatModsCDRScalingIcon.png",
-              "games": 9,
-              "pct": 50.0
+              "games": 30,
+              "pct": 65.2
             },
             {
               "runeId": 5008,
               "name": "Adaptive Force",
               "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/StatModsAdaptiveForceIcon.png",
-              "games": 9,
-              "pct": 50.0
+              "games": 15,
+              "pct": 32.6
             }
           ]
         },
@@ -771,15 +1110,8 @@
               "runeId": 5008,
               "name": "Adaptive Force",
               "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/StatModsAdaptiveForceIcon.png",
-              "games": 13,
-              "pct": 72.2
-            },
-            {
-              "runeId": 5010,
-              "name": "Move Speed",
-              "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/StatModsMovementSpeedIcon.png",
-              "games": 5,
-              "pct": 27.8
+              "games": 44,
+              "pct": 95.7
             }
           ]
         },
@@ -791,15 +1123,15 @@
               "runeId": 5011,
               "name": "Health",
               "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/StatModsHealthScalingIcon.png",
-              "games": 13,
-              "pct": 72.2
+              "games": 38,
+              "pct": 82.6
             },
             {
               "runeId": 5001,
               "name": "Health Scaling",
               "icon": "https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/StatModsHealthPlusIcon.png",
-              "games": 5,
-              "pct": 27.8
+              "games": 8,
+              "pct": 17.4
             }
           ]
         }
@@ -808,32 +1140,32 @@
   ],
   "skillOrder": {
     "available": true,
-    "games": 78,
+    "games": 301,
     "maxOrder": [
+      "Q",
       "W",
-      "E",
-      "Q"
+      "E"
     ],
-    "maxOrderPct": 30.8,
+    "maxOrderPct": 36.9,
     "perLevel": [
       "Q",
       "E",
       "W",
       "Q",
-      "W",
-      "R",
-      "W",
-      "W",
-      "W",
-      "E",
-      "R",
-      "E",
-      "E",
-      "E",
       "Q",
       "R",
       "Q",
-      "Q"
+      "W",
+      "Q",
+      "W",
+      "R",
+      "W",
+      "W",
+      "E",
+      "E",
+      "R",
+      "E",
+      "E"
     ],
     "openings": [
       {
@@ -843,7 +1175,16 @@
           "W",
           "Q"
         ],
-        "pct": 41.0
+        "pct": 53.8
+      },
+      {
+        "sequence": [
+          "Q",
+          "W",
+          "E",
+          "Q"
+        ],
+        "pct": 11.6
       },
       {
         "sequence": [
@@ -852,9 +1193,9 @@
           "W",
           "Q"
         ],
-        "pct": 12.8
+        "pct": 11.3
       }
     ]
   },
-  "_cached_at": "2026-10-26T02:53:19.515544+00:00"
+  "_cached_at": "2026-11-28T03:49:56.953239+00:00"
 }

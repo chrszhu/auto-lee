@@ -65,8 +65,36 @@ async function pickSecondary(secondaryRunes, primaryStyleId, preferredStyleId) {
 }
 
 // Assemble a complete, client-valid rune page (overall, or matchup-specific).
-async function buildRunePage(champion, opponent, position) {
+// With build paths, the page follows the chosen path (or the most played one)
+// unless a matchup page applies and the user hasn't picked a path.
+async function buildRunePage(champion, opponent, position, pathId) {
   const { src: r, scope, opponent: oppName } = await resolveRuneSource(champion, opponent, position);
+
+  if (scope === 'overall' || pathId) {
+    const build = scope === 'overall' ? r : await dataClient.getBuildOrder(champion, '', position);
+    const paths = build && Array.isArray(build.buildPaths) ? build.buildPaths : [];
+    const path = paths.find((p) => p.id === pathId) || paths[0];
+    const pr = path && path.runes;
+    if (pr && Array.isArray(pr.perkIds) && pr.perkIds.length === 9 && pr.primaryStyle.runeId !== pr.subStyle.runeId) {
+      const lite = (x) => ({ name: x.name, icon: x.icon || null });
+      return {
+        page: {
+          name: `${PAGE_PREFIX} ${champion}`.slice(0, 50),
+          primaryStyleId: pr.primaryStyle.runeId,
+          subStyleId: pr.subStyle.runeId,
+          selectedPerkIds: pr.perkIds,
+          current: true,
+        },
+        meta: {
+          scope: scope === 'overall' ? 'overall' : 'path',
+          opponent: null,
+          pathLabel: path.label,
+          summonerSpells: (build.summonerSpells && build.summonerSpells.items) || [],
+        },
+        display: { keystone: lite(pr.keystone), primaryStyle: lite(pr.primaryStyle), secondaryStyle: lite(pr.subStyle) },
+      };
+    }
+  }
 
   const keystone = topId(r.keystones);
   const primaryStyleId = topId(r.primaryStyles);
@@ -195,31 +223,59 @@ async function applySummonerSpells(lcu, selection) {
 // ---- Item set ----
 
 function block(title, group, limit) {
-  const items = ((group && group.items) || []).slice(0, limit).map((it) => ({ id: String(it.itemId), count: 1 }));
+  const items = ((group && group.items) || []).slice(0, limit).map((it) => ({ id: String(it.itemId), count: it.count || 1 }));
   return items.length ? { type: title, items } : null;
 }
 
-async function buildItemSet(champion, championId, opponent, position) {
+async function buildItemSet(champion, championId, opponent, position, pathId) {
   const build = await dataClient.getBuildOrder(champion, opponent, position);
   if (!build || build.available === false) throw new Error(`No build data for ${champion}`);
 
-  // One item per core slot, in order — but the same item can be the top pick in
-  // consecutive slots, so dedupe to a clean build path (keep first occurrence).
-  const seenCore = new Set();
-  const coreRanked = (build.slots || [])
-    .sort((a, b) => a.slot - b.slot)
-    .map((s) => (s.items && s.items[0] ? s.items[0] : null))
-    .filter((it) => it && !seenCore.has(it.itemId) && seenCore.add(it.itemId));
-  const coreItems = coreRanked.map((it) => ({ id: String(it.itemId), count: 1 }));
+  const paths = Array.isArray(build.buildPaths) ? build.buildPaths : [];
+  const chosen = paths.find((p) => p.id === pathId) || paths[0] || null;
 
-  const blocks = [
-    block('Starting', build.starting, 3),
-    block('Early', build.earlyItems, 2),
-    coreItems.length ? { type: 'Core (highest win rate)', items: coreItems } : null,
-    block('Boots', build.boots, 2),
-    block('Support Item', build.supportItem, 1),
-    block('Trinket', build.trinket, 1),
-  ].filter(Boolean);
+  // Fallback for data without paths: one item per slot, deduped.
+  const seenCore = new Set();
+  const coreRanked = chosen
+    ? chosen.core
+    : (build.slots || [])
+        .sort((a, b) => a.slot - b.slot)
+        .map((s) => (s.items && s.items[0] ? s.items[0] : null))
+        .filter((it) => it && !seenCore.has(it.itemId) && seenCore.add(it.itemId));
+  const ids = (list) => list.map((it) => ({ id: String(it.itemId), count: 1 }));
+  const pctTag = (p) => `${Math.round(p.pct)}% of games${p.winRate != null ? `, ${Math.round(p.winRate)}% WR` : ''}`;
+
+  let blocks;
+  if (chosen) {
+    // Path items only: Tear etc. appear only when this path actually buys them.
+    const early = (chosen.early || []).filter((e) => e.pct >= 40);
+    const alts = (chosen.tree || []).slice(1);
+    const opening = chosen.startingSet && chosen.startingSet.items.length
+      ? chosen.startingSet
+      : { items: chosen.starting && chosen.starting.length ? chosen.starting : (build.starting || {}).items };
+    blocks = [
+      block('Starting', opening, 4),
+      { type: `Core: ${chosen.label} (${pctTag(chosen)})`, items: ids([...early, ...chosen.core]) },
+      alts.length ? { type: 'Or for item 2', items: ids(alts) } : null,
+      chosen.late && chosen.late.length ? { type: 'Situational', items: ids(chosen.late) } : null,
+      ...paths
+        .filter((p) => p !== chosen)
+        .slice(0, 2)
+        .map((p) => ({ type: `Alt: ${p.label} (${pctTag(p)})`, items: ids(p.core) })),
+      block('Boots', { items: chosen.boots && chosen.boots.length ? chosen.boots : (build.boots || {}).items }, 2),
+      block('Support Item', build.supportItem, 1),
+      block('Trinket', build.trinket, 1),
+    ].filter((b) => b && b.items.length);
+  } else {
+    blocks = [
+      block('Starting', build.starting, 3),
+      block('Early', build.earlyItems, 2),
+      coreRanked.length ? { type: 'Core', items: ids(coreRanked) } : null,
+      block('Boots', build.boots, 2),
+      block('Support Item', build.supportItem, 1),
+      block('Trinket', build.trinket, 1),
+    ].filter(Boolean);
+  }
 
   const itemSet = {
     associatedChampions: [Number(championId)],
@@ -234,13 +290,28 @@ async function buildItemSet(champion, championId, opponent, position) {
     blocks,
   };
   const icons = (group, limit) => ((group && group.items) || []).slice(0, limit).map((it) => ({ name: it.name, icon: it.icon || null }));
+  const lite = (list) => (list || []).map((it) => ({ name: it.count > 1 ? `${it.name} ×${it.count}` : it.name, icon: it.icon || null }));
   return {
     itemSet,
     display: {
-      starting: icons(build.starting, 3),
-      core: coreRanked.map((it) => ({ name: it.name, icon: it.icon || null })),
-      boots: icons(build.boots, 1),
+      starting: chosen && chosen.startingSet
+        ? lite(chosen.startingSet.items)
+        : chosen && chosen.starting && chosen.starting.length ? lite(chosen.starting.slice(0, 3)) : icons(build.starting, 3),
+      early: chosen ? lite((chosen.early || []).filter((e) => e.pct >= 40)) : [],
+      core: lite(coreRanked),
+      boots: chosen && chosen.boots && chosen.boots.length ? lite(chosen.boots.slice(0, 1)) : icons(build.boots, 1),
       position: build.position || null,
+      selectedPathId: chosen ? chosen.id : null,
+      paths: paths.map((p) => ({
+        id: p.id,
+        label: p.label,
+        description: p.description,
+        pct: p.pct,
+        winRate: p.winRate,
+        lowSample: !!p.lowSample,
+        badge: p.badge || null,
+        icon: p.core[0] ? p.core[0].icon || null : null,
+      })),
     },
   };
 }
