@@ -52,10 +52,21 @@
           </div>
 
           <div class="rec-block">
-            <h3>Build</h3>
+            <h3>Your build</h3>
             <div id="item-rec" class="rec"></div>
+          </div>
+
+          <div class="rec-block hidden" id="paths-block">
+            <h3>Builds you can branch into</h3>
+            <div class="hint">Most played is picked by default. Click another to switch — runes and the imported item set follow it.</div>
             <div id="path-rec" class="paths"></div>
           </div>
+
+          <details class="rec-block slot-stats hidden" id="slot-block">
+            <summary>All item options by slot</summary>
+            <div class="hint">Every common pick per slot across all games. Options to consider for your game — not a list to build blindly.</div>
+            <div id="slot-rec"></div>
+          </details>
 
           <div id="rec-error" class="error hidden"></div>
         </div>

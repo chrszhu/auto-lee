@@ -106,24 +106,35 @@ main { flex: 1; padding: 14px 16px; display: flex; flex-direction: column; gap: 
 .chip img { width: 18px; height: 18px; border-radius: 4px; }
 .chip.key { border-color: var(--accent-2); color: #cfe3ff; }
 
-.paths { display: flex; flex-direction: column; gap: 4px; margin-top: 8px; }
+.paths { display: flex; flex-direction: column; gap: 6px; margin-top: 6px; }
 .path {
   display: flex;
-  align-items: center;
-  gap: 6px;
+  flex-direction: column;
+  gap: 5px;
   text-align: left;
   background: var(--card-2);
   border: 1px solid var(--border);
   border-radius: 8px;
-  padding: 4px 8px;
+  padding: 6px 8px;
   color: var(--muted);
   font-size: 12px;
   cursor: pointer;
 }
-.path img { width: 18px; height: 18px; border-radius: 4px; }
-.path span { flex: 1; }
+.path-head { display: flex; align-items: center; gap: 6px; }
+.path-head span { flex: 1; }
 .path em { font-style: normal; font-size: 10px; color: var(--good); }
+.path .rec { align-items: center; gap: 4px; font-size: 11px; }
+.path .chip { padding: 2px 6px; font-size: 11px; }
 .path.on { border-color: var(--accent); color: var(--text); }
+
+.hint { font-size: 11px; color: var(--muted); margin-bottom: 4px; }
+.slot-stats summary {
+  cursor: pointer; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted);
+}
+.slot-stats[open] summary { margin-bottom: 6px; }
+.slot-row { display: flex; gap: 8px; align-items: flex-start; margin-top: 6px; }
+.slot-label { flex: 0 0 56px; font-size: 11px; color: var(--muted); padding-top: 4px; }
+.slot-row .chip { font-size: 11px; padding: 2px 6px; }
 
 .field { display: flex; flex-direction: column; gap: 5px; margin-bottom: 12px; }
 .field span { font-size: 12px; color: var(--muted); }

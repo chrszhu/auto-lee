@@ -88,7 +88,7 @@ async function buildRunePage(champion, opponent, position, pathId) {
         meta: {
           scope: scope === 'overall' ? 'overall' : 'path',
           opponent: null,
-          pathLabel: path.label,
+          pathLabel: path.core && path.core[0] ? `${path.core[0].name} build` : path.label,
           summonerSpells: (build.summonerSpells && build.summonerSpells.items) || [],
         },
         display: { keystone: lite(pr.keystone), primaryStyle: lite(pr.primaryStyle), secondaryStyle: lite(pr.subStyle) },
@@ -244,6 +244,7 @@ async function buildItemSet(champion, championId, opponent, position, pathId) {
         .filter((it) => it && !seenCore.has(it.itemId) && seenCore.add(it.itemId));
   const ids = (list) => list.map((it) => ({ id: String(it.itemId), count: 1 }));
   const pctTag = (p) => `${Math.round(p.pct)}% of games${p.winRate != null ? `, ${Math.round(p.winRate)}% WR` : ''}`;
+  const pathName = (p) => `${p.core[0] ? p.core[0].name : p.label} build`;
 
   let blocks;
   if (chosen) {
@@ -255,13 +256,13 @@ async function buildItemSet(champion, championId, opponent, position, pathId) {
       : { items: chosen.starting && chosen.starting.length ? chosen.starting : (build.starting || {}).items };
     blocks = [
       block('Starting', opening, 4),
-      { type: `Core: ${chosen.label} (${pctTag(chosen)})`, items: ids([...early, ...chosen.core]) },
+      { type: `Core: ${pathName(chosen)} (${pctTag(chosen)})`, items: ids([...early, ...chosen.core]) },
       alts.length ? { type: 'Or for item 2', items: ids(alts) } : null,
       chosen.late && chosen.late.length ? { type: 'Situational', items: ids(chosen.late) } : null,
       ...paths
         .filter((p) => p !== chosen)
         .slice(0, 2)
-        .map((p) => ({ type: `Alt: ${p.label} (${pctTag(p)})`, items: ids(p.core) })),
+        .map((p) => ({ type: `Alt: ${pathName(p)} (${pctTag(p)})`, items: ids(p.core) })),
       block('Boots', { items: chosen.boots && chosen.boots.length ? chosen.boots : (build.boots || {}).items }, 2),
       block('Support Item', build.supportItem, 1),
       block('Trinket', build.trinket, 1),
@@ -291,6 +292,15 @@ async function buildItemSet(champion, championId, opponent, position, pathId) {
   };
   const icons = (group, limit) => ((group && group.items) || []).slice(0, limit).map((it) => ({ name: it.name, icon: it.icon || null }));
   const lite = (list) => (list || []).map((it) => ({ name: it.count > 1 ? `${it.name} ×${it.count}` : it.name, icon: it.icon || null }));
+  const withPct = (group, limit) => ((group && group.items) || []).slice(0, limit)
+    .map((it) => ({ name: it.name, icon: it.icon || null, pct: it.pct, winRate: it.winRate ?? null }));
+  const slotStats = [
+    { label: 'Starting', items: withPct(build.starting, 4) },
+    { label: 'Early', items: withPct(build.earlyItems, 3) },
+    ...(build.slots || []).slice().sort((a, b) => a.slot - b.slot)
+      .map((s) => ({ label: `Item ${s.slot}`, items: withPct(s, 4) })),
+    { label: 'Boots', items: withPct(build.boots, 3) },
+  ].filter((s) => s.items.length);
   return {
     itemSet,
     display: {
@@ -304,14 +314,15 @@ async function buildItemSet(champion, championId, opponent, position, pathId) {
       selectedPathId: chosen ? chosen.id : null,
       paths: paths.map((p) => ({
         id: p.id,
-        label: p.label,
-        description: p.description,
+        name: pathName(p),
         pct: p.pct,
         winRate: p.winRate,
         lowSample: !!p.lowSample,
         badge: p.badge || null,
         icon: p.core[0] ? p.core[0].icon || null : null,
+        core: lite([...(p.early || []).filter((e) => e.pct >= 40), ...p.core]),
       })),
+      slotStats,
     },
   };
 }

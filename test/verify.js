@@ -109,19 +109,19 @@ async function run() {
       const { itemSet, display } = await importer.buildItemSet('Veigar', 45, '', 'MIDDLE', p.id);
       assert(display.selectedPathId === p.id, `path ${p.id} should be selected`);
       const core = itemSet.blocks.find((b) => b.type.startsWith('Core'));
-      assert(core && core.type.includes(p.label), `core block should be ${p.label}`);
+      assert(core && core.type.includes(p.name), `core block should be ${p.name}`);
       const hasTear = core.items.some((it) => it.id === '3070');
-      assert(hasTear === display.early.some((e) => e.name === 'Tear of the Goddess'), `Tear in ${p.label} must match that path's early items`);
+      assert(hasTear === display.early.some((e) => e.name === 'Tear of the Goddess'), `Tear in ${p.name} must match that path's early items`);
       const start = itemSet.blocks.find((b) => b.type === 'Starting');
       const pot = start && start.items.find((it) => it.id === '2003');
-      assert(pot && pot.count >= 1, `${p.label} starting block should include Health Potion(s)`);
+      assert(pot && pot.count >= 1, `${p.name} starting block should include Health Potion(s)`);
       const { page } = await importer.buildRunePage('Veigar', '', 'MIDDLE', p.id);
       const raw = (await require('../src/dataClient').getBuildOrder('Veigar', '', 'MIDDLE')).buildPaths.find((x) => x.id === p.id);
       if (raw.runes) {
-        assert(JSON.stringify(page.selectedPerkIds) === JSON.stringify(raw.runes.perkIds), `${p.label} rune page should follow the path`);
+        assert(JSON.stringify(page.selectedPerkIds) === JSON.stringify(raw.runes.perkIds), `${p.name} rune page should follow the path`);
       }
     }
-    console.log(`\n✓ build paths: Veigar MIDDLE -> ${paths.map((p) => p.label).join(' | ')}`);
+    console.log(`\n✓ build paths: Veigar MIDDLE -> ${paths.map((p) => p.name).join(' | ')}`);
   } catch (e) {
     failures++;
     console.error(`\n✗ build paths: ${e.message}`);

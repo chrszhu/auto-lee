@@ -118,6 +118,7 @@ function renderChampion(s) {
     (it.boots || []).forEach((n) => itemEl.appendChild(chip(n)));
   }
   renderPaths(rec && rec.itemDisplay);
+  renderSlotStats(rec && rec.itemDisplay);
 }
 
 // Build paths: each is a coherent build keyed by the first item; picking one
@@ -125,29 +126,57 @@ function renderChampion(s) {
 function renderPaths(it) {
   const el = $('path-rec');
   el.innerHTML = '';
-  if (!it || !it.paths || it.paths.length < 2) return;
+  const show = !!(it && it.paths && it.paths.length >= 2);
+  $('paths-block').classList.toggle('hidden', !show);
+  if (!show) return;
   it.paths.forEach((p) => {
     const btn = document.createElement('button');
     btn.className = 'path' + (p.id === it.selectedPathId ? ' on' : '');
-    btn.title = p.description || '';
-    if (p.icon) {
-      const img = document.createElement('img');
-      img.src = p.icon;
-      img.alt = '';
-      img.onerror = () => img.remove();
-      btn.appendChild(img);
-    }
+    const head = document.createElement('div');
+    head.className = 'path-head';
     const text = document.createElement('span');
     const wr = p.winRate != null ? ` · ${Math.round(p.winRate)}% WR` : '';
-    text.textContent = `${p.label} — ${Math.round(p.pct)}%${wr}${p.lowSample ? ' (small sample)' : ''}`;
-    btn.appendChild(text);
+    text.textContent = `${p.name} — ${Math.round(p.pct)}%${wr}${p.lowSample ? ' (small sample)' : ''}`;
+    head.appendChild(text);
     if (p.badge) {
       const b = document.createElement('em');
       b.textContent = p.badge;
-      btn.appendChild(b);
+      head.appendChild(b);
     }
+    btn.appendChild(head);
+    const items = document.createElement('div');
+    items.className = 'rec';
+    (p.core || []).forEach((n, i) => {
+      if (i) items.appendChild(document.createTextNode('→'));
+      items.appendChild(chip(n));
+    });
+    btn.appendChild(items);
     btn.addEventListener('click', () => window.companion.setBuildPath(p.id));
     el.appendChild(btn);
+  });
+}
+
+// Raw per-slot play rates (all games), for players who want the full menu.
+function renderSlotStats(it) {
+  const el = $('slot-rec');
+  el.innerHTML = '';
+  const stats = (it && it.slotStats) || [];
+  $('slot-block').classList.toggle('hidden', !stats.length);
+  stats.forEach((s) => {
+    const row = document.createElement('div');
+    row.className = 'slot-row';
+    const label = document.createElement('span');
+    label.className = 'slot-label';
+    label.textContent = s.label;
+    row.appendChild(label);
+    const items = document.createElement('div');
+    items.className = 'rec';
+    s.items.forEach((n) => {
+      const wr = n.winRate != null ? ` · ${Math.round(n.winRate)}% WR` : '';
+      items.appendChild(chip({ name: `${n.name} ${Math.round(n.pct)}%${wr}`, icon: n.icon }));
+    });
+    row.appendChild(items);
+    el.appendChild(row);
   });
 }
 
