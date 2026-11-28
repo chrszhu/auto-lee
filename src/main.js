@@ -1,6 +1,6 @@
 'use strict';
 
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain, shell } = require('electron');
 const path = require('path');
 const { LcuClient } = require('./lcu');
 const ddragon = require('./ddragon');
@@ -9,6 +9,7 @@ const dataClient = require('./dataClient');
 const positions = require('./positions');
 const config = require('./config');
 const { autoUpdater } = require('electron-updater');
+const macUpdate = require('./macUpdate');
 
 const POLL_MS = 2000;
 
@@ -308,31 +309,64 @@ function startLoop() {
   pollTimer = setInterval(tick, POLL_MS);
 }
 
-// ---- App auto-update (electron-updater via GitHub Releases) ----
+// ---- App update (GitHub Releases): detect automatically, install only when the user clicks ----
+let macRelease = null; // newer release found by macUpdate.latest()
+
+function setUpdate(patch) {
+  state.appUpdate = { ...state.appUpdate, ...patch };
+  push();
+}
+
+async function checkForAppUpdate() {
+  const busy = ['downloading', 'installing'].includes(state.appUpdate.status);
+  if (busy) return;
+  if (process.platform === 'darwin') {
+    try {
+      macRelease = await macUpdate.latest(app.getVersion());
+      setUpdate(macRelease ? { status: 'available', version: macRelease.version, error: null } : { status: 'idle' });
+    } catch {
+      /* offline etc. — try again next round */
+    }
+    return;
+  }
+  autoUpdater.checkForUpdates().catch(() => {});
+}
+
 function setupAutoUpdate() {
   if (!app.isPackaged) return; // only in installed builds
-  autoUpdater.autoDownload = true;
+  autoUpdater.autoDownload = false;
   autoUpdater.autoInstallOnAppQuit = true;
-
-  const setUpdate = (patch) => {
-    state.appUpdate = { ...state.appUpdate, ...patch };
-    push();
-  };
-
-  autoUpdater.on('checking-for-update', () => setUpdate({ status: 'checking' }));
-  autoUpdater.on('update-not-available', () => setUpdate({ status: 'idle' }));
-  autoUpdater.on('update-available', (info) => setUpdate({ status: 'downloading', version: info && info.version, percent: 0 }));
+  autoUpdater.on('update-available', (info) => setUpdate({ status: 'available', version: info && info.version, error: null }));
   autoUpdater.on('download-progress', (p) => setUpdate({ status: 'downloading', percent: Math.round(p.percent || 0) }));
-  autoUpdater.on('update-downloaded', (info) => setUpdate({ status: 'ready', version: info && info.version, percent: 100 }));
+  autoUpdater.on('update-downloaded', () => {
+    setUpdate({ status: 'installing', percent: 100 });
+    autoUpdater.quitAndInstall(true, true); // user already asked for it: silent install, relaunch
+  });
   autoUpdater.on('error', (err) => {
-    // Unsigned macOS can't self-update (Squirrel requires a signature) — don't
-    // crash, just surface it quietly.
-    setUpdate({ status: 'error', error: String((err && err.message) || err) });
+    if (state.appUpdate.status === 'downloading') setUpdate({ status: 'error', error: String((err && err.message) || err) });
   });
 
-  // Check now and then hourly.
-  autoUpdater.checkForUpdates().catch(() => {});
-  setInterval(() => autoUpdater.checkForUpdates().catch(() => {}), 60 * 60 * 1000);
+  checkForAppUpdate();
+  setInterval(checkForAppUpdate, 60 * 60 * 1000);
+}
+
+async function installAppUpdate() {
+  if (process.platform !== 'darwin') {
+    setUpdate({ status: 'downloading', percent: 0 });
+    await autoUpdater.downloadUpdate();
+    return;
+  }
+  const appPath = macUpdate.installableAppPath();
+  if (!macRelease || !appPath) {
+    // e.g. running from the DMG or a quarantined copy — hand off to the release page.
+    shell.openExternal(macUpdate.RELEASES_PAGE);
+    return;
+  }
+  setUpdate({ status: 'downloading', percent: 0 });
+  const dmg = await macUpdate.download(macRelease, (percent) => setUpdate({ percent }));
+  setUpdate({ status: 'installing', percent: 100 });
+  macUpdate.install(dmg, appPath);
+  app.quit();
 }
 
 // ---- IPC ----
@@ -430,14 +464,17 @@ ipcMain.handle('update-data', async () => {
   }
 });
 
-ipcMain.handle('restart-to-update', () => {
+ipcMain.handle('restart-to-update', async () => {
   try {
-    autoUpdater.quitAndInstall(true, true); // silent, then relaunch
+    await installAppUpdate();
   } catch (e) {
-    return { ok: false, error: String((e && e.message) || e) };
+    setUpdate({ status: 'error', error: String((e && e.message) || e) });
+    return { ok: false, error: state.appUpdate.error };
   }
   return { ok: true };
 });
+
+ipcMain.handle('open-release-page', () => shell.openExternal(macUpdate.RELEASES_PAGE));
 
 app.whenReady().then(async () => {
   dataClient.configure({ userDir: path.join(app.getPath('userData'), 'data') });

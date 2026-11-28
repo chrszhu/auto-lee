@@ -20,5 +20,6 @@ contextBridge.exposeInMainWorld('companion', {
   getChampions: () => ipcRenderer.invoke('get-champions'),
   updateData: () => ipcRenderer.invoke('update-data'),
   restartToUpdate: () => ipcRenderer.invoke('restart-to-update'),
+  openReleasePage: () => ipcRenderer.invoke('open-release-page'),
   importNow: (what) => ipcRenderer.invoke('import', what), // 'runes' | 'spells' | 'items' | 'all'
 });
